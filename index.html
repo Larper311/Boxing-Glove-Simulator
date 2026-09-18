@@ -277,27 +277,71 @@
   .modal .sub{color:var(--ink-dim);font-size:12px;margin-bottom:16px;}
  
   .reel-viewport{
-    position:relative;height:110px;overflow:hidden;border-radius:12px;
-    background:var(--bg-0);border:1px solid var(--line);margin-bottom:18px;
+    position:relative;height:132px;overflow:hidden;border-radius:14px;
+    background:
+      radial-gradient(ellipse at 50% 120%, rgba(255,90,54,0.12), transparent 60%),
+      var(--bg-0);
+    border:1px solid var(--line);margin-bottom:18px;
+    box-shadow:inset 0 0 30px rgba(0,0,0,0.5);
   }
+  .reel-viewport::before, .reel-viewport::after{
+    content:"";position:absolute;top:0;bottom:0;width:70px;z-index:6;pointer-events:none;
+  }
+  .reel-viewport::before{left:0;background:linear-gradient(90deg, #1a0705, transparent);}
+  .reel-viewport::after{right:0;background:linear-gradient(-90deg, #1a0705, transparent);}
   .reel-strip{position:absolute;top:0;left:0;height:100%;display:flex;align-items:center;
     will-change:transform;}
   .reel-item{
-    width:88px;height:88px;margin:0 6px;border-radius:11px;flex:0 0 auto;
+    width:96px;height:104px;margin:0 7px;border-radius:14px;flex:0 0 auto;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    background:var(--bg-0);border:2px solid var(--class-color,#666);font-size:30px;
+    font-size:32px;position:relative;overflow:hidden;isolation:isolate;
+    border:1.5px solid var(--class-color,#666);
+    background:var(--bg-0);
+    box-shadow:0 4px 12px rgba(0,0,0,0.4);
+    transition:transform .25s ease;
   }
-  .reel-item .rlabel{font-size:8.5px;font-weight:800;color:var(--ink-dim);margin-top:2px;}
+  .reel-item .rlabel{font-size:9px;font-weight:800;color:rgba(255,255,255,0.8);margin-top:3px;letter-spacing:.5px;}
+  .reel-item.rc-E{background:linear-gradient(150deg, rgba(220,220,225,0.28), rgba(255,255,255,0.04));}
+  .reel-item.rc-D{background:linear-gradient(150deg, rgba(79,191,90,0.30), rgba(255,255,255,0.04));}
+  .reel-item.rc-C{background:linear-gradient(150deg, rgba(58,160,255,0.30), rgba(255,255,255,0.04));}
+  .reel-item.rc-B{background:linear-gradient(150deg, rgba(178,91,255,0.32), rgba(255,255,255,0.04));}
+  .reel-item.rc-A{background:linear-gradient(150deg, rgba(255,205,45,0.34), rgba(255,255,255,0.04));}
+  .reel-item.rc-S{
+    background:linear-gradient(150deg, rgba(255,95,208,0.30), rgba(95,208,255,0.18));
+    background-size:220% 220%;animation:sGradient 2.4s ease-in-out infinite;
+  }
+  .reel-item.rc-S::before{
+    content:"";position:absolute;inset:-60%;z-index:-1;
+    background:conic-gradient(from 0deg, #ff5fd0, #5fd0ff, #7bff9e, #ff5fd0);
+    animation:sSpin 2s linear infinite;opacity:0.35;filter:blur(10px);
+  }
+  .reel-item.rc-X{
+    background:radial-gradient(120% 140% at 50% 0%, rgba(255,210,58,0.35), transparent 60%),
+      linear-gradient(150deg, #0a0705, #1a0e05);
+    box-shadow:0 0 18px rgba(255,90,54,0.4);
+  }
+  .reel-item.rc-X::before{
+    content:"";position:absolute;inset:-70%;z-index:-1;
+    background:conic-gradient(from 0deg, #ffd23a, #ff5a36, #ff5fd0, #5fd0ff, #ffd23a);
+    animation:sSpin 1.4s linear infinite;opacity:0.5;filter:blur(10px);
+  }
+  .reel-item.landed{animation:landPulse .6s ease-out;}
+  @keyframes landPulse{
+    0%{transform:scale(1);}
+    35%{transform:scale(1.18);box-shadow:0 0 30px 6px rgba(255,178,56,0.55);}
+    100%{transform:scale(1.06);}
+  }
   .reel-center-line{
-    position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--gold);
-    box-shadow:0 0 8px var(--gold);transform:translateX(-1px);z-index:5;
+    position:absolute;top:0;bottom:0;left:50%;width:3px;
+    background:linear-gradient(180deg, transparent, var(--gold), transparent);
+    box-shadow:0 0 14px var(--gold);transform:translateX(-1.5px);z-index:7;
   }
   .reel-center-line::before,.reel-center-line::after{
     content:'';position:absolute;left:50%;transform:translateX(-50%);
-    border:7px solid transparent;
+    border:8px solid transparent;
   }
-  .reel-center-line::before{top:-2px;border-top-color:var(--gold);}
-  .reel-center-line::after{bottom:-2px;border-bottom-color:var(--gold);}
+  .reel-center-line::before{top:-3px;border-top-color:var(--gold);}
+  .reel-center-line::after{bottom:-3px;border-bottom-color:var(--gold);}
  
   .result-box{display:none;margin-bottom:16px;}
   .result-box.show{display:block;}
@@ -636,8 +680,10 @@ function openModalFor(p, chest){
   rolledResult = null;
   document.getElementById("modalTitle").textContent = chest.name;
   document.getElementById("resultBox").classList.remove("show");
-  document.getElementById("openBtn").disabled = false;
-  document.getElementById("openBtn").textContent = "Open Case";
+  const btn = document.getElementById("openBtn");
+  btn.disabled = false;
+  btn.textContent = "Open Case";
+  btn.onclick = startSpin;
   buildIdleReel(chest);
   document.getElementById("openModalBg").style.display = "flex";
 }
@@ -656,13 +702,13 @@ function buildIdleReel(chest){
  
 function makeReelItem(cls){
   const div = document.createElement("div");
-  div.className = "reel-item";
+  div.className = "reel-item rc-"+cls;
   div.style.setProperty("--class-color", CLASSES[cls].color);
   div.innerHTML = `${CLASSES[cls].emoji}<div class="rlabel">${cls}</div>`;
   return div;
 }
  
-document.getElementById("openBtn").onclick = ()=>{
+function startSpin(){
   document.getElementById("openBtn").disabled = true;
  
   // determine luck bonus: shift odds slightly toward better classes based on equipped luck
@@ -696,20 +742,23 @@ document.getElementById("openBtn").onclick = ()=>{
 function spinReelTo(result){
   const strip = document.getElementById("reelStrip");
   const viewport = strip.parentElement;
-  const itemW = 88+12; // width + margins
-  const totalItems = 40;
-  const landIndex = 32; // near the end, so it scrolls far before landing
+  const itemW = 96+14; // width + margins
+  const totalItems = 55;
+  const landIndex = 46; // far out, so it scrolls a long way before landing
  
   strip.innerHTML = "";
   const pool = Object.keys(currentChest.odds);
+  let landedEl = null;
   for(let i=0;i<totalItems;i++){
     if(i === landIndex){
       const cls = result.type==="money" ? (pool[pool.length-1]) : result.cls;
       const item = makeReelItem(cls);
       if(result.type==="money"){
         item.innerHTML = `💵<div class="rlabel">CASH</div>`;
+        item.className = "reel-item rc-A";
         item.style.setProperty("--class-color","var(--gold)");
       }
+      landedEl = item;
       strip.appendChild(item);
     } else {
       const cls = pool[Math.floor(Math.random()*pool.length)];
@@ -718,18 +767,22 @@ function spinReelTo(result){
   }
  
   const viewportCenter = viewport.clientWidth/2;
-  const targetX = viewportCenter - (landIndex*itemW + itemW/2) + (Math.random()*30-15);
+  const targetX = viewportCenter - (landIndex*itemW + itemW/2) + (Math.random()*24-12);
  
   strip.style.transition = "none";
   strip.style.transform = "translateX(0px)";
   // force reflow
   void strip.offsetWidth;
-  strip.style.transition = "transform 3.4s cubic-bezier(0.12,0.75,0.1,1)";
+  strip.style.transition = "transform 5.2s cubic-bezier(0.08,0.75,0.06,1)";
   strip.style.transform = `translateX(${targetX}px)`;
  
   setTimeout(()=>{
+    if(landedEl) landedEl.classList.add("landed");
+  }, 5250);
+ 
+  setTimeout(()=>{
     showResult(result);
-  }, 3500);
+  }, 5850);
 }
  
 function showResult(result){
@@ -850,6 +903,13 @@ document.getElementById("closeDetailBtn").onclick = ()=>{
 function toggleEquip(uid){
   const g = state.inventory.find(x=>x.uid===uid);
   if(!g) return;
+  if(!g.equipped){
+    const equippedCount = state.inventory.filter(x=>x.equipped).length;
+    if(equippedCount >= 2){
+      toast("You can only equip 2 gloves at once (a pair)");
+      return;
+    }
+  }
   g.equipped = !g.equipped;
   saveState();
   renderTop();
