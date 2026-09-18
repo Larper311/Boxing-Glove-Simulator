@@ -6,16 +6,16 @@
 <title>Glove Vault</title>
 <style>
   :root{
-    --bg-0:#1a0605;
-    --bg-1:#2b0b09;
-    --bg-2:#3d0f0c;
-    --panel:#241009;
-    --panel-2:#2e140c;
-    --ink:#f5e9df;
+    --bg-0:#120403;
+    --bg-1:#1f0806;
+    --bg-2:#2e0c09;
+    --panel:#1e0c08;
+    --panel-2:#29110c;
+    --ink:#f7ebe3;
     --ink-dim:#c9a89a;
     --accent:#ff5a36;
     --gold:#ffb238;
-    --line:rgba(255,255,255,0.08);
+    --line:rgba(255,255,255,0.09);
  
     --c-E:#9a9a9a;
     --c-D:#4fbf5a;
@@ -32,147 +32,161 @@
   html,body{margin:0;padding:0;}
   body{
     background:
-      radial-gradient(1200px 700px at 15% -10%, #4a1310 0%, transparent 60%),
-      radial-gradient(1000px 700px at 100% 0%, #3a0f0c 0%, transparent 55%),
-      linear-gradient(180deg, var(--bg-0), var(--bg-1) 40%, var(--bg-2));
+      radial-gradient(1200px 700px at 12% -12%, #5a1814 0%, transparent 58%),
+      radial-gradient(900px 600px at 100% 0%, #3d100c 0%, transparent 55%),
+      linear-gradient(180deg, var(--bg-0), var(--bg-1) 42%, var(--bg-2));
     color:var(--ink);
     font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
     min-height:100vh;
     -webkit-font-smoothing:antialiased;
   }
  
-  .wrap{max-width:1180px;margin:0 auto;padding:18px 18px 60px;}
+  .wrap{max-width:1200px;margin:0 auto;padding:18px 18px 70px;}
  
   /* ---------- Top bar ---------- */
   .topbar{
     display:flex;align-items:center;justify-content:space-between;
     gap:12px;margin-bottom:18px;flex-wrap:wrap;
   }
-  .brand{display:flex;align-items:center;gap:10px;}
+  .brand{display:flex;align-items:center;gap:12px;}
   .brand-mark{
-    width:40px;height:40px;border-radius:11px;
+    width:44px;height:44px;border-radius:13px;
     background:linear-gradient(135deg,var(--gold),var(--accent));
     display:flex;align-items:center;justify-content:center;
-    font-size:21px;box-shadow:0 4px 18px rgba(255,90,54,0.45), inset 0 1px 0 rgba(255,255,255,0.35);
+    font-size:22px;box-shadow:0 4px 22px rgba(255,90,54,0.5), inset 0 1px 0 rgba(255,255,255,0.4);
     position:relative;overflow:hidden;
   }
   .brand-mark::after{
-    content:"";position:absolute;inset:-50%;
-    background:conic-gradient(from 0deg, transparent, rgba(255,255,255,0.5), transparent 30%);
-    animation:sSpin 3.5s linear infinite;
+    content:"";position:absolute;inset:-60%;
+    background:conic-gradient(from 0deg, transparent, rgba(255,255,255,0.55), transparent 28%);
+    animation:sSpin 3.2s linear infinite;
   }
-  .brand-name{font-weight:800;font-size:19px;letter-spacing:0.2px;}
-  .brand-sub{font-size:11px;color:var(--ink-dim);margin-top:-2px;}
+  .brand-name{font-weight:800;font-size:20px;letter-spacing:0.3px;}
+  .brand-sub{font-size:11.5px;color:var(--ink-dim);margin-top:-2px;}
  
   .stats{display:flex;gap:10px;flex-wrap:wrap;}
   .chip{
     display:flex;align-items:center;gap:7px;
     background:var(--panel);border:1px solid var(--line);
-    padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px;
+    padding:8px 15px;border-radius:999px;font-weight:700;font-size:14px;
   }
   .chip .ic{font-size:15px;}
   .chip.money{color:var(--gold);}
   .chip.luck{color:#8fe0ff;}
  
   /* ---------- Tabs ---------- */
-  .tabs{display:flex;gap:2px;margin-bottom:16px;background:var(--panel);
-    border-radius:12px;padding:5px;border:1px solid var(--line);}
+  .tabs{display:flex;gap:3px;margin-bottom:16px;background:var(--panel);
+    border-radius:13px;padding:5px;border:1px solid var(--line);}
   .tab{
-    flex:1;text-align:center;padding:11px 10px;border-radius:9px;
-    font-weight:800;font-size:13.5px;letter-spacing:0.3px;cursor:pointer;
+    flex:1;text-align:center;padding:11px 8px;border-radius:10px;
+    font-weight:800;font-size:13.5px;letter-spacing:0.4px;cursor:pointer;
     color:var(--ink-dim);transition:background .15s, color .15s;
     user-select:none;
   }
   .tab.active{background:linear-gradient(135deg,#4a1a12,#5c1a10);color:var(--gold);
-    box-shadow:inset 0 0 0 1px rgba(255,178,56,0.35);}
+    box-shadow:inset 0 0 0 1px rgba(255,178,56,0.4);}
   .tab:hover:not(.active){color:var(--ink);}
  
   .panel{
     background:linear-gradient(180deg, var(--panel), var(--panel-2));
-    border:1px solid var(--line);border-radius:16px;padding:18px;
+    border:1px solid var(--line);border-radius:18px;padding:18px;
   }
  
   .section-title{font-size:13px;font-weight:800;color:var(--ink-dim);
-    margin:2px 0 12px;letter-spacing:0.3px;}
+    margin:2px 0 12px;letter-spacing:0.4px;}
+ 
+  /* ---------- Multi bar ---------- */
+  .multi-bar{
+    display:none;align-items:center;gap:12px;margin-bottom:14px;
+    background:linear-gradient(90deg,#2a1208,#1a0905);
+    border:1px solid var(--gold);border-radius:13px;padding:11px 16px;
+    font-weight:800;font-size:13px;color:var(--gold);
+    box-shadow:0 0 20px rgba(255,178,56,0.15);
+  }
  
   /* ---------- Pending chests ---------- */
-  .pending-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;min-height:0;}
+  .pending-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;min-height:0;}
   .pending-row:empty{margin-bottom:0;}
   .pending-chest{
-    width:64px;height:64px;border-radius:12px;cursor:pointer;
-    display:flex;align-items:center;justify-content:center;font-size:28px;
-    border:2px solid var(--gold);background:radial-gradient(circle at 30% 20%, #4a2410, #1e0d06);
-    box-shadow:0 0 0 3px rgba(255,178,56,0.12), 0 6px 16px rgba(0,0,0,0.4);
-    animation:bob 2s ease-in-out infinite;
-    position:relative;
+    width:68px;height:68px;border-radius:14px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-size:30px;
+    border:2px solid var(--gold);background:radial-gradient(circle at 30% 20%, #4a2410, #1a0b05);
+    box-shadow:0 0 0 3px rgba(255,178,56,0.15), 0 8px 20px rgba(0,0,0,0.45);
+    animation:bob 2.1s ease-in-out infinite;
+    position:relative;transition:all .2s;
   }
-  .pending-chest .tag{position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);
-    background:var(--gold);color:#2a1400;font-size:9px;font-weight:800;padding:2px 6px;
+  .pending-chest.selected{
+    border-color:#7bff9e;
+    box-shadow:0 0 0 3px rgba(123,255,158,0.4), 0 8px 22px rgba(0,0,0,0.5);
+    animation:none;transform:translateY(-4px) scale(1.05);
+  }
+  .pending-chest .tag{position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);
+    background:var(--gold);color:#2a1400;font-size:9.5px;font-weight:800;padding:2px 7px;
     border-radius:6px;white-space:nowrap;}
-  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+  .pending-chest.selected .tag{background:#7bff9e;color:#0a2a12;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
  
-  /* ---------- Chest grid (shop) ---------- */
-  .chest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;}
+  /* ---------- Chest grid ---------- */
+  .chest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px;}
   .chest-card{
-    background:linear-gradient(160deg, rgba(255,255,255,0.05), rgba(0,0,0,0.15));
+    background:linear-gradient(160deg, rgba(255,255,255,0.06), rgba(0,0,0,0.18));
     border:1px solid var(--line);border-radius:16px;
     padding:16px 12px;text-align:center;transition:transform .18s, border-color .18s, box-shadow .18s;
-    backdrop-filter:blur(6px);
+    backdrop-filter:blur(8px);
   }
-  .chest-card:hover{transform:translateY(-4px);border-color:var(--gold);
-    box-shadow:0 12px 26px rgba(0,0,0,0.4), 0 0 0 1px rgba(255,178,56,0.25);}
-  .chest-icon{font-size:42px;margin-bottom:8px;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.5));
+  .chest-card:hover{transform:translateY(-5px);border-color:var(--gold);
+    box-shadow:0 14px 30px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,178,56,0.3);}
+  .chest-icon{font-size:44px;margin-bottom:8px;filter:drop-shadow(0 5px 12px rgba(0,0,0,0.55));
     transition:transform .18s;}
-  .chest-card:hover .chest-icon{transform:scale(1.1) rotate(-4deg);}
-  .chest-name{font-weight:800;font-size:14px;margin-bottom:2px;}
-  .chest-desc{font-size:10.5px;color:var(--ink-dim);margin-bottom:10px;min-height:26px;}
-  .chest-price{font-weight:800;color:var(--gold);font-size:13px;margin-bottom:9px;}
+  .chest-card:hover .chest-icon{transform:scale(1.12) rotate(-5deg);}
+  .chest-name{font-weight:800;font-size:14.5px;margin-bottom:3px;}
+  .chest-desc{font-size:11px;color:var(--ink-dim);margin-bottom:10px;min-height:28px;}
+  .chest-price{font-weight:800;color:var(--gold);font-size:13.5px;margin-bottom:10px;}
   .buy-btn{
-    width:100%;padding:8px 0;border:none;border-radius:9px;font-weight:800;font-size:12.5px;
+    width:100%;padding:9px 0;border:none;border-radius:10px;font-weight:800;font-size:13px;
     background:linear-gradient(135deg,#ff7a4a,var(--accent));color:#2a0a04;cursor:pointer;
-    letter-spacing:0.3px;
+    letter-spacing:0.3px;transition:filter .15s;
   }
   .buy-btn:disabled{background:#3a2a24;color:#7a655d;cursor:not-allowed;}
-  .buy-btn:not(:disabled):hover{filter:brightness(1.08);}
-  .odds-link{display:block;margin-top:7px;font-size:10px;color:var(--ink-dim);cursor:pointer;text-decoration:underline;}
+  .buy-btn:not(:disabled):hover{filter:brightness(1.1);}
+  .odds-link{display:block;margin-top:8px;font-size:10.5px;color:var(--ink-dim);cursor:pointer;text-decoration:underline;}
  
   /* ---------- Inventory ---------- */
   .inv-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
   .inv-toolbar input, .inv-toolbar select{
     background:var(--bg-0);border:1px solid var(--line);color:var(--ink);
-    padding:8px 12px;border-radius:9px;font-size:13px;outline:none;
+    padding:9px 13px;border-radius:10px;font-size:13.5px;outline:none;
   }
-  .inv-toolbar input{flex:1;min-width:140px;}
-  .inv-empty{color:var(--ink-dim);text-align:center;padding:40px 10px;font-size:13.5px;}
+  .inv-toolbar input{flex:1;min-width:150px;}
+  .inv-empty{color:var(--ink-dim);text-align:center;padding:48px 12px;font-size:14px;}
  
-  .glove-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:14px;}
+  .glove-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(162px,1fr));gap:14px;}
  
   .glove-card{
-    border-radius:16px;padding:13px 11px 11px;text-align:center;position:relative;
+    border-radius:16px;padding:14px 12px 12px;text-align:center;position:relative;
     cursor:pointer;overflow:hidden;isolation:isolate;
     border:1.5px solid rgba(255,255,255,0.14);
-    backdrop-filter:blur(10px) saturate(140%);
-    -webkit-backdrop-filter:blur(10px) saturate(140%);
-    box-shadow:0 6px 18px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08);
+    backdrop-filter:blur(12px) saturate(150%);
+    -webkit-backdrop-filter:blur(12px) saturate(150%);
+    box-shadow:0 7px 20px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.09);
     transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
   }
-  .glove-card:hover{transform:translateY(-4px) scale(1.015);
-    box-shadow:0 14px 28px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12);}
+  .glove-card:hover{transform:translateY(-5px) scale(1.02);
+    box-shadow:0 16px 32px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.14);}
   .glove-card.equipped{border-color:var(--gold);
-    box-shadow:0 0 0 2px rgba(255,178,56,0.5), 0 10px 22px rgba(0,0,0,0.4);}
+    box-shadow:0 0 0 2px rgba(255,178,56,0.55), 0 12px 26px rgba(0,0,0,0.45);}
  
-  /* glass gradient backgrounds per class */
-  .glove-card.class-E{background:linear-gradient(150deg, rgba(220,220,225,0.30), rgba(120,120,130,0.08) 60%, rgba(255,255,255,0.04));}
-  .glove-card.class-D{background:linear-gradient(150deg, rgba(79,191,90,0.32), rgba(79,191,90,0.06) 60%, rgba(255,255,255,0.04));}
-  .glove-card.class-C{background:linear-gradient(150deg, rgba(58,160,255,0.32), rgba(58,160,255,0.06) 60%, rgba(255,255,255,0.04));}
-  .glove-card.class-B{background:linear-gradient(150deg, rgba(178,91,255,0.34), rgba(178,91,255,0.07) 60%, rgba(255,255,255,0.04));}
-  .glove-card.class-A{background:linear-gradient(150deg, rgba(255,205,45,0.36), rgba(255,205,45,0.07) 60%, rgba(255,255,255,0.04));}
+  .glove-card.class-E{background:linear-gradient(150deg, rgba(220,220,225,0.32), rgba(120,120,130,0.09) 60%, rgba(255,255,255,0.04));}
+  .glove-card.class-D{background:linear-gradient(150deg, rgba(79,191,90,0.34), rgba(79,191,90,0.07) 60%, rgba(255,255,255,0.04));}
+  .glove-card.class-C{background:linear-gradient(150deg, rgba(58,160,255,0.34), rgba(58,160,255,0.07) 60%, rgba(255,255,255,0.04));}
+  .glove-card.class-B{background:linear-gradient(150deg, rgba(178,91,255,0.36), rgba(178,91,255,0.08) 60%, rgba(255,255,255,0.04));}
+  .glove-card.class-A{background:linear-gradient(150deg, rgba(255,79,163,0.36), rgba(255,79,163,0.08) 60%, rgba(255,255,255,0.04));}
  
   .glove-card.class-S{
-    background:linear-gradient(150deg, rgba(255,95,208,0.28), rgba(95,208,255,0.14) 55%, rgba(255,255,255,0.05));
+    background:linear-gradient(150deg, rgba(255,95,208,0.30), rgba(95,208,255,0.16) 55%, rgba(255,255,255,0.05));
     background-size:220% 220%;
-    animation:sGradient 6s ease-in-out infinite;
-    border-color:rgba(255,255,255,0.22);
+    animation:sGradient 5.5s ease-in-out infinite;
+    border-color:rgba(255,255,255,0.25);
   }
   @keyframes sGradient{
     0%{background-position:0% 30%;}
@@ -180,199 +194,272 @@
     100%{background-position:0% 30%;}
   }
   .glove-card.class-S::before{
-    content:"";position:absolute;inset:-40%;z-index:-1;
+    content:"";position:absolute;inset:-45%;z-index:-1;
     background:conic-gradient(from 0deg, #ff5fd0, #5fd0ff, #7bff9e, #ff5fd0);
-    animation:sSpin 5s linear infinite;
-    opacity:0.18;filter:blur(14px);
+    animation:sSpin 4.5s linear infinite;
+    opacity:0.22;filter:blur(16px);
   }
   @keyframes sSpin{to{transform:rotate(360deg);}}
  
   .glove-card.class-X{
-    border-radius:8px;
-    clip-path:polygon(14% 0%, 86% 0%, 100% 18%, 100% 82%, 86% 100%, 14% 100%, 0% 82%, 0% 18%);
+    border-radius:10px;
+    clip-path:polygon(13% 0%, 87% 0%, 100% 17%, 100% 83%, 87% 100%, 13% 100%, 0% 83%, 0% 17%);
     background:
-      radial-gradient(120% 140% at 50% 0%, rgba(255,210,58,0.30), transparent 60%),
+      radial-gradient(130% 150% at 50% 0%, rgba(255,210,58,0.35), transparent 58%),
       linear-gradient(150deg, #0a0705, #1a0e05 45%, #0a0705);
-    background-size:100% 100%, 220% 220%;
-    border:1.5px solid rgba(255,210,58,0.4);
-    box-shadow:0 0 22px rgba(255,90,54,0.25), inset 0 1px 0 rgba(255,255,255,0.08);
+    border:1.5px solid rgba(255,210,58,0.45);
+    box-shadow:0 0 26px rgba(255,90,54,0.3), inset 0 1px 0 rgba(255,255,255,0.1);
   }
   .glove-card.class-X::before{
-    content:"";position:absolute;inset:-50%;z-index:-1;
+    content:"";position:absolute;inset:-55%;z-index:-1;
     background:conic-gradient(from 0deg, #ffd23a, #ff5a36, #ff5fd0, #5fd0ff, #ffd23a);
-    animation:sSpin 4s linear infinite;
-    opacity:0.28;filter:blur(16px);
+    animation:sSpin 3.6s linear infinite;
+    opacity:0.32;filter:blur(18px);
   }
  
   .class-badge{
-    position:absolute;top:8px;left:8px;font-size:8.5px;font-weight:800;letter-spacing:.3px;
-    padding:2px 7px;border-radius:999px;background:rgba(10,5,3,0.55);
-    color:var(--ink);border:1px solid rgba(255,255,255,0.25);
+    position:absolute;top:9px;left:9px;font-size:9px;font-weight:800;letter-spacing:.35px;
+    padding:3px 8px;border-radius:999px;background:rgba(10,5,3,0.6);
+    color:var(--ink);border:1px solid rgba(255,255,255,0.28);
   }
-  .glove-emoji{font-size:34px;margin:16px 0 4px;filter:drop-shadow(0 3px 6px rgba(0,0,0,0.4));}
-  .glove-name{font-weight:800;font-size:13px;margin-bottom:6px;color:#fff;
-    text-shadow:0 1px 3px rgba(0,0,0,0.5);}
-  .stat-row{display:flex;justify-content:space-between;font-size:10.5px;color:rgba(255,255,255,0.75);
-    margin-bottom:2px;padding:0 2px;}
+  .glove-emoji{font-size:36px;margin:18px 0 5px;filter:drop-shadow(0 4px 8px rgba(0,0,0,0.45));}
+  .glove-name{font-weight:800;font-size:13.5px;margin-bottom:7px;color:#fff;
+    text-shadow:0 1px 4px rgba(0,0,0,0.55);}
+  .stat-row{display:flex;justify-content:space-between;font-size:11px;color:rgba(255,255,255,0.78);
+    margin-bottom:2px;padding:0 3px;}
   .stat-row b{color:#fff;}
-  .glove-actions{display:flex;gap:6px;margin-top:9px;}
+  .glove-actions{display:flex;gap:7px;margin-top:10px;}
   .glove-actions button{
-    flex:1;padding:6px 0;border:none;border-radius:8px;font-weight:800;font-size:10.5px;cursor:pointer;
+    flex:1;padding:7px 0;border:none;border-radius:9px;font-weight:800;font-size:11px;cursor:pointer;
   }
-  .btn-equip{background:rgba(47,92,58,0.9);color:#d9ffe0;}
-  .btn-unequip{background:rgba(92,47,47,0.9);color:#ffd9d9;}
-  .btn-sell{background:rgba(58,42,74,0.9);color:#e6d9ff;}
+  .btn-equip{background:rgba(47,92,58,0.92);color:#d9ffe0;}
+  .btn-unequip{background:rgba(92,47,47,0.92);color:#ffd9d9;}
+  .btn-sell{background:rgba(58,42,74,0.92);color:#e6d9ff;}
  
   .class-S .glove-name, .class-X .glove-name{
     background:linear-gradient(90deg, var(--g1), var(--g2), var(--g1));
     background-size:200% auto;
     -webkit-background-clip:text;background-clip:text;color:transparent;
-    animation:textShine 3s linear infinite;
+    animation:textShine 2.8s linear infinite;
   }
   .class-S{--g1:#ff5fd0;--g2:#5fd0ff;}
   .class-X{--g1:#ffd23a;--g2:#ff5a36;}
   @keyframes textShine{to{background-position:200% center;}}
  
-  /* ---------- Glove detail modal ---------- */
+  /* ---------- Detail modal ---------- */
   .detail-hero{
-    width:110px;height:110px;border-radius:18px;margin:0 auto 14px;
-    display:flex;align-items:center;justify-content:center;font-size:52px;
+    width:116px;height:116px;border-radius:20px;margin:0 auto 14px;
+    display:flex;align-items:center;justify-content:center;font-size:54px;
     border:2px solid var(--class-color,#666);
-    background:radial-gradient(circle at 35% 25%, rgba(255,255,255,0.12), rgba(0,0,0,0.2));
+    background:radial-gradient(circle at 35% 25%, rgba(255,255,255,0.14), rgba(0,0,0,0.25));
   }
-  .detail-stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0;}
+  .detail-stats{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin:16px 0;}
   .detail-stat{background:rgba(255,255,255,0.05);border:1px solid var(--line);
-    border-radius:11px;padding:10px;text-align:left;}
-  .detail-stat .lbl{font-size:10px;color:var(--ink-dim);font-weight:700;margin-bottom:3px;}
-  .detail-stat .val{font-size:16px;font-weight:800;}
+    border-radius:12px;padding:11px;text-align:left;}
+  .detail-stat .lbl{font-size:10.5px;color:var(--ink-dim);font-weight:700;margin-bottom:3px;}
+  .detail-stat .val{font-size:17px;font-weight:800;}
  
   /* ---------- Upgrade ---------- */
   .recipe-card{
-    background:var(--bg-0);border:1px solid var(--line);border-radius:13px;
-    padding:14px;margin-bottom:12px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+    background:var(--bg-0);border:1px solid var(--line);border-radius:14px;
+    padding:15px;margin-bottom:13px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
   }
-  .recipe-arrow{font-size:20px;color:var(--ink-dim);}
-  .recipe-need{display:flex;gap:10px;flex-wrap:wrap;}
-  .need-item{text-align:center;font-size:11px;}
-  .need-item .n{font-weight:800;font-size:15px;}
+  .recipe-arrow{font-size:22px;color:var(--ink-dim);}
+  .recipe-need{display:flex;gap:12px;flex-wrap:wrap;}
+  .need-item{text-align:center;font-size:11.5px;}
+  .need-item .n{font-weight:800;font-size:16px;}
   .need-item .ok{color:#7be08a;}
   .need-item .bad{color:#ff8a7a;}
-  .recipe-result{text-align:center;min-width:90px;}
+  .recipe-result{text-align:center;min-width:95px;}
   .recipe-btn{
-    margin-left:auto;padding:10px 18px;border:none;border-radius:9px;font-weight:800;
-    background:linear-gradient(135deg,#ff7a4a,var(--accent));color:#2a0a04;cursor:pointer;font-size:12.5px;
+    margin-left:auto;padding:11px 20px;border:none;border-radius:10px;font-weight:800;
+    background:linear-gradient(135deg,#ff7a4a,var(--accent));color:#2a0a04;cursor:pointer;font-size:13px;
   }
   .recipe-btn:disabled{background:#3a2a24;color:#7a655d;cursor:not-allowed;}
  
-  /* ---------- Modal / reel ---------- */
+  /* ---------- Modals ---------- */
   .modal-bg{
-    position:fixed;inset:0;background:rgba(8,2,1,0.78);backdrop-filter:blur(3px);
-    display:flex;align-items:center;justify-content:center;z-index:50;padding:16px;
+    position:fixed;inset:0;background:rgba(6,1,1,0.82);backdrop-filter:blur(5px);
+    display:flex;align-items:center;justify-content:center;z-index:60;padding:16px;
   }
   .modal{
-    background:linear-gradient(180deg,#2b100b,#1a0705);border:1px solid var(--line);
-    border-radius:18px;padding:22px;width:100%;max-width:640px;text-align:center;
+    background:linear-gradient(180deg,#2c110b,#170605);border:1px solid var(--line);
+    border-radius:20px;padding:24px;width:100%;max-width:660px;text-align:center;
+    box-shadow:0 25px 60px rgba(0,0,0,0.6);
   }
-  .modal h3{margin:0 0 4px;font-size:16px;}
-  .modal .sub{color:var(--ink-dim);font-size:12px;margin-bottom:16px;}
+  .modal h3{margin:0 0 5px;font-size:17px;}
+  .modal .sub{color:var(--ink-dim);font-size:12.5px;margin-bottom:16px;}
  
   .reel-viewport{
-    position:relative;height:132px;overflow:hidden;border-radius:14px;
+    position:relative;height:138px;overflow:hidden;border-radius:15px;
     background:
-      radial-gradient(ellipse at 50% 120%, rgba(255,90,54,0.12), transparent 60%),
+      radial-gradient(ellipse at 50% 120%, rgba(255,90,54,0.15), transparent 60%),
       var(--bg-0);
     border:1px solid var(--line);margin-bottom:18px;
-    box-shadow:inset 0 0 30px rgba(0,0,0,0.5);
+    box-shadow:inset 0 0 35px rgba(0,0,0,0.55);
   }
   .reel-viewport::before, .reel-viewport::after{
-    content:"";position:absolute;top:0;bottom:0;width:70px;z-index:6;pointer-events:none;
+    content:"";position:absolute;top:0;bottom:0;width:75px;z-index:6;pointer-events:none;
   }
-  .reel-viewport::before{left:0;background:linear-gradient(90deg, #1a0705, transparent);}
-  .reel-viewport::after{right:0;background:linear-gradient(-90deg, #1a0705, transparent);}
+  .reel-viewport::before{left:0;background:linear-gradient(90deg, #170605, transparent);}
+  .reel-viewport::after{right:0;background:linear-gradient(-90deg, #170605, transparent);}
   .reel-strip{position:absolute;top:0;left:0;height:100%;display:flex;align-items:center;
     will-change:transform;}
   .reel-item{
-    width:96px;height:104px;margin:0 7px;border-radius:14px;flex:0 0 auto;
+    width:98px;height:108px;margin:0 7px;border-radius:15px;flex:0 0 auto;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    font-size:32px;position:relative;overflow:hidden;isolation:isolate;
+    font-size:34px;position:relative;overflow:hidden;isolation:isolate;
     border:1.5px solid var(--class-color,#666);
     background:var(--bg-0);
-    box-shadow:0 4px 12px rgba(0,0,0,0.4);
+    box-shadow:0 5px 14px rgba(0,0,0,0.45);
     transition:transform .25s ease;
   }
-  .reel-item .rlabel{font-size:9px;font-weight:800;color:rgba(255,255,255,0.8);margin-top:3px;letter-spacing:.5px;}
-  .reel-item.rc-E{background:linear-gradient(150deg, rgba(220,220,225,0.28), rgba(255,255,255,0.04));}
-  .reel-item.rc-D{background:linear-gradient(150deg, rgba(79,191,90,0.30), rgba(255,255,255,0.04));}
-  .reel-item.rc-C{background:linear-gradient(150deg, rgba(58,160,255,0.30), rgba(255,255,255,0.04));}
-  .reel-item.rc-B{background:linear-gradient(150deg, rgba(178,91,255,0.32), rgba(255,255,255,0.04));}
-  .reel-item.rc-A{background:linear-gradient(150deg, rgba(255,205,45,0.34), rgba(255,255,255,0.04));}
+  .reel-item .rlabel{font-size:9.5px;font-weight:800;color:rgba(255,255,255,0.85);margin-top:3px;letter-spacing:.5px;}
+  .reel-item.rc-E{background:linear-gradient(150deg, rgba(220,220,225,0.3), rgba(255,255,255,0.04));}
+  .reel-item.rc-D{background:linear-gradient(150deg, rgba(79,191,90,0.32), rgba(255,255,255,0.04));}
+  .reel-item.rc-C{background:linear-gradient(150deg, rgba(58,160,255,0.32), rgba(255,255,255,0.04));}
+  .reel-item.rc-B{background:linear-gradient(150deg, rgba(178,91,255,0.34), rgba(255,255,255,0.04));}
+  .reel-item.rc-A{background:linear-gradient(150deg, rgba(255,79,163,0.34), rgba(255,255,255,0.04));}
   .reel-item.rc-S{
-    background:linear-gradient(150deg, rgba(255,95,208,0.30), rgba(95,208,255,0.18));
-    background-size:220% 220%;animation:sGradient 2.4s ease-in-out infinite;
+    background:linear-gradient(150deg, rgba(255,95,208,0.32), rgba(95,208,255,0.2));
+    background-size:220% 220%;animation:sGradient 2.2s ease-in-out infinite;
   }
   .reel-item.rc-S::before{
-    content:"";position:absolute;inset:-60%;z-index:-1;
+    content:"";position:absolute;inset:-65%;z-index:-1;
     background:conic-gradient(from 0deg, #ff5fd0, #5fd0ff, #7bff9e, #ff5fd0);
-    animation:sSpin 2s linear infinite;opacity:0.35;filter:blur(10px);
+    animation:sSpin 1.8s linear infinite;opacity:0.4;filter:blur(11px);
   }
   .reel-item.rc-X{
-    background:radial-gradient(120% 140% at 50% 0%, rgba(255,210,58,0.35), transparent 60%),
+    background:radial-gradient(130% 150% at 50% 0%, rgba(255,210,58,0.4), transparent 58%),
       linear-gradient(150deg, #0a0705, #1a0e05);
-    box-shadow:0 0 18px rgba(255,90,54,0.4);
+    box-shadow:0 0 22px rgba(255,90,54,0.45);
   }
   .reel-item.rc-X::before{
-    content:"";position:absolute;inset:-70%;z-index:-1;
+    content:"";position:absolute;inset:-75%;z-index:-1;
     background:conic-gradient(from 0deg, #ffd23a, #ff5a36, #ff5fd0, #5fd0ff, #ffd23a);
-    animation:sSpin 1.4s linear infinite;opacity:0.5;filter:blur(10px);
+    animation:sSpin 1.3s linear infinite;opacity:0.55;filter:blur(11px);
   }
-  .reel-item.landed{animation:landPulse .6s ease-out;}
+  .reel-item.landed{animation:landPulse .65s ease-out;}
   @keyframes landPulse{
     0%{transform:scale(1);}
-    35%{transform:scale(1.18);box-shadow:0 0 30px 6px rgba(255,178,56,0.55);}
-    100%{transform:scale(1.06);}
+    35%{transform:scale(1.2);box-shadow:0 0 35px 8px rgba(255,178,56,0.6);}
+    100%{transform:scale(1.07);}
   }
   .reel-center-line{
     position:absolute;top:0;bottom:0;left:50%;width:3px;
     background:linear-gradient(180deg, transparent, var(--gold), transparent);
-    box-shadow:0 0 14px var(--gold);transform:translateX(-1.5px);z-index:7;
+    box-shadow:0 0 16px var(--gold);transform:translateX(-1.5px);z-index:7;
   }
   .reel-center-line::before,.reel-center-line::after{
     content:'';position:absolute;left:50%;transform:translateX(-50%);
-    border:8px solid transparent;
+    border:9px solid transparent;
   }
-  .reel-center-line::before{top:-3px;border-top-color:var(--gold);}
-  .reel-center-line::after{bottom:-3px;border-bottom-color:var(--gold);}
+  .reel-center-line::before{top:-4px;border-top-color:var(--gold);}
+  .reel-center-line::after{bottom:-4px;border-bottom-color:var(--gold);}
+ 
+  /* Multi reel */
+  .multi-reel-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:18px;}
+  .multi-col{width:155px;}
+  .multi-col .mc-label{font-size:11px;font-weight:800;color:var(--ink-dim);margin-bottom:7px;
+    white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .multi-col .reel-viewport{height:100px;margin-bottom:8px;}
+  .multi-col .reel-item{width:76px;height:84px;font-size:26px;margin:0 5px;}
+  .multi-col .mc-result{font-size:11px;font-weight:800;min-height:16px;color:var(--ink-dim);}
+  .multi-col .mc-result.ready{color:#fff;}
  
   .result-box{display:none;margin-bottom:16px;}
   .result-box.show{display:block;}
-  .result-emoji{font-size:48px;}
-  .result-name{font-weight:800;font-size:17px;margin-top:4px;}
-  .result-class{font-size:11.5px;color:var(--ink-dim);margin-top:2px;}
+  .result-emoji{font-size:52px;}
+  .result-name{font-weight:800;font-size:18px;margin-top:5px;}
+  .result-class{font-size:12px;color:var(--ink-dim);margin-top:3px;}
  
-  .modal-actions{display:flex;gap:10px;justify-content:center;}
+  .modal-actions{display:flex;gap:11px;justify-content:center;flex-wrap:wrap;}
   .modal-actions button{
-    padding:10px 20px;border:none;border-radius:9px;font-weight:800;cursor:pointer;font-size:13px;
+    padding:11px 22px;border:none;border-radius:10px;font-weight:800;cursor:pointer;font-size:13.5px;
   }
   .btn-open{background:linear-gradient(135deg,#ff7a4a,var(--accent));color:#2a0a04;}
   .btn-close{background:#3a2622;color:var(--ink);}
   .btn-open:disabled{background:#3a2a24;color:#7a655d;cursor:not-allowed;}
  
-  /* odds modal */
-  .odds-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px;}
-  .odds-table th,.odds-table td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:center;}
+  /* odds */
+  .odds-table{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:10px;}
+  .odds-table th,.odds-table td{padding:7px 9px;border-bottom:1px solid var(--line);text-align:center;}
   .odds-table th{color:var(--ink-dim);font-weight:700;}
  
   .toast{
-    position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
     background:#1c0d09;border:1px solid var(--gold);color:var(--gold);
-    padding:10px 18px;border-radius:10px;font-weight:700;font-size:12.5px;
-    z-index:80;opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;
+    padding:11px 20px;border-radius:11px;font-weight:700;font-size:13px;
+    z-index:90;opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;
   }
-  .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(-8px);}
  
-  @media (max-width:520px){
+  /* ---------- Achievements ---------- */
+  .ach-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;}
+  .ach-card{
+    border-radius:16px;padding:16px;text-align:center;position:relative;overflow:hidden;isolation:isolate;
+    border:1.5px solid rgba(255,255,255,0.12);background:var(--bg-0);opacity:0.42;filter:grayscale(0.65);
+    transition:opacity .25s, filter .25s, transform .2s;
+  }
+  .ach-card.unlocked{opacity:1;filter:none;}
+  .ach-card.unlocked:hover{transform:translateY(-4px);}
+  .ach-icon{font-size:36px;margin-bottom:9px;}
+  .ach-name{font-weight:800;font-size:14px;margin-bottom:5px;}
+  .ach-desc{font-size:11px;color:var(--ink-dim);line-height:1.35;}
+ 
+  .ach-card.tier-low.unlocked{background:linear-gradient(150deg, rgba(79,191,90,0.3), rgba(255,255,255,0.04));border-color:rgba(79,191,90,0.55);}
+  .ach-card.tier-mid.unlocked{background:linear-gradient(150deg, rgba(178,91,255,0.32), rgba(255,255,255,0.04));border-color:rgba(178,91,255,0.55);}
+  .ach-card.tier-high.unlocked{background:linear-gradient(150deg, rgba(255,205,45,0.36), rgba(255,255,255,0.04));border-color:rgba(255,205,45,0.65);}
+  .ach-card.tier-epic.unlocked{
+    background:linear-gradient(150deg, rgba(255,95,208,0.32), rgba(95,208,255,0.2));
+    background-size:220% 220%;animation:sGradient 4s ease-in-out infinite;border-color:rgba(255,255,255,0.35);
+  }
+  .ach-card.tier-epic.unlocked::before{
+    content:"";position:absolute;inset:-65%;z-index:-1;
+    background:conic-gradient(from 0deg, #ff5fd0, #5fd0ff, #7bff9e, #ff5fd0);
+    animation:sSpin 4.5s linear infinite;opacity:0.25;filter:blur(15px);
+  }
+  .ach-card.tier-legend.unlocked{
+    background:radial-gradient(130% 150% at 50% 0%, rgba(255,210,58,0.35), transparent 58%),
+      linear-gradient(150deg, #0a0705, #1a0e05);
+    border-color:rgba(255,210,58,0.6);box-shadow:0 0 28px rgba(255,90,54,0.35);
+  }
+  .ach-card.tier-legend.unlocked::before{
+    content:"";position:absolute;inset:-65%;z-index:-1;
+    background:conic-gradient(from 0deg, #ffd23a, #ff5a36, #ff5fd0, #5fd0ff, #ffd23a);
+    animation:sSpin 3.2s linear infinite;opacity:0.4;filter:blur(16px);
+  }
+  .ach-card.tier-epic.unlocked .ach-name,
+  .ach-card.tier-legend.unlocked .ach-name{
+    background:linear-gradient(90deg, #ffd23a, #ff5fd0, #5fd0ff, #ffd23a);
+    background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:textShine 2.8s linear infinite;
+  }
+ 
+  /* Achievement popup toasts */
+  .ach-toast-layer{position:fixed;bottom:22px;right:22px;z-index:100;display:flex;flex-direction:column;gap:12px;pointer-events:none;}
+  .ach-popup{
+    width:290px;padding:13px 15px;border-radius:14px;display:flex;gap:12px;align-items:center;
+    background:linear-gradient(150deg,#2b1206,#160605);border:1.5px solid var(--gold);
+    box-shadow:0 12px 30px rgba(0,0,0,0.55), 0 0 24px rgba(255,178,56,0.28);
+    transform:translateX(340px);opacity:0;transition:transform .45s cubic-bezier(.2,.9,.3,1), opacity .45s;
+    position:relative;overflow:hidden;isolation:isolate;
+  }
+  .ach-popup.show{transform:translateX(0);opacity:1;}
+  .ach-popup.tier-epic::before, .ach-popup.tier-legend::before{
+    content:"";position:absolute;inset:-90%;z-index:-1;
+    background:conic-gradient(from 0deg, #ffd23a, #ff5fd0, #5fd0ff, #7bff9e, #ffd23a);
+    animation:sSpin 2.8s linear infinite;opacity:0.3;filter:blur(18px);
+  }
+  .ach-popup .ap-icon{font-size:32px;flex:0 0 auto;}
+  .ach-popup .ap-label{font-size:10px;font-weight:800;color:var(--gold);letter-spacing:.5px;}
+  .ach-popup .ap-name{font-size:14px;font-weight:800;color:#fff;}
+ 
+  @media (max-width:540px){
     .stats{width:100%;justify-content:flex-start;}
-    .chip{padding:7px 11px;font-size:12.5px;}
+    .chip{padding:7px 12px;font-size:13px;}
+    .ach-toast-layer{right:12px;bottom:16px;}
+    .ach-popup{width:260px;}
   }
 </style>
 </head>
@@ -394,14 +481,15 @@
     </div>
   </div>
  
-  <div class="panel" id="debugPanel" style="display:none;margin-bottom:14px;padding:14px 16px;">
-    <div class="section-title" style="margin-bottom:10px;">DEBUG TOOLS (testing only)</div>
+  <div class="panel" id="debugPanel" style="display:none;margin-bottom:14px;padding:15px 17px;">
+    <div class="section-title" style="margin-bottom:11px;">DEBUG TOOLS (testing only)</div>
     <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
-      <button class="buy-btn" style="width:auto;padding:8px 16px;" id="debugAdd1k">+$1,000</button>
-      <button class="buy-btn" style="width:auto;padding:8px 16px;" id="debugAdd100k">+$100,000</button>
-      <button class="buy-btn" style="width:auto;padding:8px 16px;" id="debugAdd1m">+$1,000,000</button>
-      <button class="btn-close" style="padding:8px 16px;border-radius:9px;font-weight:800;cursor:pointer;" id="debugClearInv">Clear Inventory</button>
-      <button class="btn-close" style="padding:8px 16px;border-radius:9px;font-weight:800;cursor:pointer;background:#5c2f2f;color:#ffd9d9;" id="debugReset">Full Reset</button>
+      <button class="buy-btn" style="width:auto;padding:9px 16px;" id="debugAdd1k">+$1,000</button>
+      <button class="buy-btn" style="width:auto;padding:9px 16px;" id="debugAdd100k">+$100,000</button>
+      <button class="buy-btn" style="width:auto;padding:9px 16px;" id="debugAdd1m">+$1,000,000</button>
+      <button class="btn-close" style="padding:9px 16px;border-radius:10px;font-weight:800;cursor:pointer;" id="debugClearInv">Clear Inventory</button>
+      <button class="btn-close" style="padding:9px 16px;border-radius:10px;font-weight:800;cursor:pointer;background:#5c2f2f;color:#ffd9d9;" id="debugReset">Full Reset</button>
+      <button class="btn-close" style="padding:9px 16px;border-radius:10px;font-weight:800;cursor:pointer;background:#7a1a1a;color:#ffbdbd;" id="debugErase">⚠ Erase All Data</button>
     </div>
   </div>
  
@@ -409,12 +497,18 @@
     <div class="tab active" data-tab="shop">SHOP</div>
     <div class="tab" data-tab="inventory">INVENTORY</div>
     <div class="tab" data-tab="upgrade">UPGRADE</div>
+    <div class="tab" data-tab="achievements">ACHIEVEMENTS</div>
   </div>
  
   <div class="panel">
  
     <!-- SHOP -->
     <div id="tab-shop">
+      <div id="multiBar" class="multi-bar">
+        <span id="multiCount">0/5 selected</span>
+        <button class="buy-btn" style="width:auto;padding:8px 16px;" id="multiOpenBtn">Open Selected</button>
+        <button class="btn-close" style="padding:8px 16px;border-radius:10px;font-weight:800;cursor:pointer;" id="multiClearBtn">Clear</button>
+      </div>
       <div id="pendingRow" class="pending-row"></div>
       <div class="section-title">CASES</div>
       <div class="chest-grid" id="chestGrid"></div>
@@ -439,10 +533,16 @@
       <div id="recipeList"></div>
     </div>
  
+    <!-- ACHIEVEMENTS -->
+    <div id="tab-achievements" style="display:none;">
+      <div class="section-title">ACHIEVEMENTS</div>
+      <div id="achGrid" class="ach-grid"></div>
+    </div>
+ 
   </div>
 </div>
  
-<!-- Open-chest modal -->
+<!-- Single open modal -->
 <div class="modal-bg" id="openModalBg" style="display:none;">
   <div class="modal">
     <h3 id="modalTitle">Silver Case</h3>
@@ -463,13 +563,27 @@
   </div>
 </div>
  
+<!-- Multi-open modal -->
+<div class="modal-bg" id="multiModalBg" style="display:none;">
+  <div class="modal" style="max-width:960px;">
+    <h3>Multi Open</h3>
+    <div class="sub">Watch all reels land, then collect everything at once.</div>
+    <div class="multi-reel-row" id="multiReelRow"></div>
+    <div class="modal-actions">
+      <button class="btn-open" id="multiStartBtn">Open All</button>
+      <button class="btn-open" id="multiCollectBtn" style="display:none;">Collect All</button>
+      <button class="btn-close" id="closeMultiModalBtn">Close</button>
+    </div>
+  </div>
+</div>
+ 
 <!-- Odds modal -->
 <div class="modal-bg" id="oddsModalBg" style="display:none;">
   <div class="modal">
     <h3 id="oddsTitle">Odds</h3>
     <div class="sub">Drop chances by class</div>
     <table class="odds-table" id="oddsTable"></table>
-    <div class="modal-actions" style="margin-top:14px;">
+    <div class="modal-actions" style="margin-top:15px;">
       <button class="btn-close" id="closeOddsBtn">Close</button>
     </div>
   </div>
@@ -477,7 +591,7 @@
  
 <!-- Glove detail modal -->
 <div class="modal-bg" id="detailModalBg" style="display:none;">
-  <div class="modal" style="max-width:380px;">
+  <div class="modal" style="max-width:390px;">
     <div class="detail-hero" id="detailHero">🥊</div>
     <h3 id="detailName">Glove Name</h3>
     <div class="sub" id="detailClass">Class E</div>
@@ -496,6 +610,7 @@
 </div>
  
 <div class="toast" id="toast"></div>
+<div id="achToastLayer" class="ach-toast-layer"></div>
  
 <script>
 /* ================= DATA ================= */
@@ -545,21 +660,47 @@ const RECIPES = [
   {id:"r6", need:{S:10,A:5}, result:"X", label:"Ultimate Combine"}
 ];
  
+const ACHIEVEMENTS = [
+  // First class discoveries
+  {id:"first_E", name:"First Punch",      desc:"Pull your first Class E glove", icon:"🥊", tier:"low",   check: s => s.seenClasses.includes("E")},
+  {id:"first_D", name:"Rookie Gloves",    desc:"Pull your first Class D glove", icon:"🥊", tier:"low",   check: s => s.seenClasses.includes("D")},
+  {id:"first_C", name:"Getting Serious",  desc:"Pull your first Class C glove", icon:"🧤", tier:"mid",   check: s => s.seenClasses.includes("C")},
+  {id:"first_B", name:"Veteran Hands",    desc:"Pull your first Class B glove", icon:"🧤", tier:"mid",   check: s => s.seenClasses.includes("B")},
+  {id:"first_A", name:"Elite Acquisition",desc:"Pull your first Class A glove", icon:"🧤", tier:"high",  check: s => s.seenClasses.includes("A")},
+  {id:"first_S", name:"Mythic Drop",      desc:"Pull your first Class S glove", icon:"🔥", tier:"epic",  check: s => s.seenClasses.includes("S")},
+  {id:"first_X", name:"God Tier",         desc:"Pull your first Class X glove", icon:"👑", tier:"legend",check: s => s.seenClasses.includes("X")},
+ 
+  // Inventory value milestones
+  {id:"val_100k",  name:"Six Figures",     desc:"Inventory worth $100,000+",   icon:"💰", tier:"mid",   check: s => invValue(s) >= 100000},
+  {id:"val_1m",    name:"Millionaire",     desc:"Inventory worth $1,000,000+", icon:"💎", tier:"high",  check: s => invValue(s) >= 1000000},
+  {id:"val_10m",   name:"Vault Overlord",  desc:"Inventory worth $10,000,000+",icon:"🏦", tier:"legend",check: s => invValue(s) >= 10000000},
+  {id:"val_50m",   name:"Absolute Legend", desc:"Inventory worth $50,000,000+",icon:"🌟", tier:"legend",check: s => invValue(s) >= 50000000},
+];
+ 
+function invValue(s){
+  return (s.inventory||[]).reduce((sum,g)=>sum + (CLASSES[g.cls]?.value||0), 0);
+}
+ 
 /* ================= STATE ================= */
 let state = {
   money: 500,
-  inventory: [], // {uid, cls, name, equipped}
-  pending: []    // {uid, chestId}
+  inventory: [],
+  pending: [],
+  seenClasses: [],
+  unlockedAch: []
 };
  
 function loadState(){
   try{
-    const raw = localStorage.getItem("gloveVaultState");
-    if(raw){ state = JSON.parse(raw); }
-  }catch(e){ /* fresh start */ }
+    const raw = localStorage.getItem("gloveVaultState_v2");
+    if(raw){
+      const parsed = JSON.parse(raw);
+      state = Object.assign({money:500,inventory:[],pending:[],seenClasses:[],unlockedAch:[]}, parsed);
+    }
+  }catch(e){}
 }
 function saveState(){
-  try{ localStorage.setItem("gloveVaultState", JSON.stringify(state)); }catch(e){}
+  try{ localStorage.setItem("gloveVaultState_v2", JSON.stringify(state)); }catch(e){}
 }
  
 let uidCounter = 1;
@@ -577,11 +718,11 @@ function toast(msg){
   t.textContent = msg;
   t.classList.add("show");
   clearTimeout(toast._h);
-  toast._h = setTimeout(()=>t.classList.remove("show"), 2200);
+  toast._h = setTimeout(()=>t.classList.remove("show"), 2300);
 }
  
 function weightedPick(odds){
-  const entries = Object.entries(odds); // [cls or 'money', weight]
+  const entries = Object.entries(odds);
   const total = entries.reduce((s,[,w])=>s+w,0);
   let r = Math.random()*total;
   for(const [k,w] of entries){
@@ -594,6 +735,58 @@ function weightedPick(odds){
 function randomGloveName(cls){
   const list = GLOVE_NAMES[cls];
   return list[Math.floor(Math.random()*list.length)];
+}
+ 
+/* ================= ACHIEVEMENTS ================= */
+function checkAchievements(){
+  let newly = [];
+  ACHIEVEMENTS.forEach(a=>{
+    if(state.unlockedAch.includes(a.id)) return;
+    if(a.check(state)){
+      state.unlockedAch.push(a.id);
+      newly.push(a);
+    }
+  });
+  if(newly.length){
+    saveState();
+    newly.forEach((a,i)=> setTimeout(()=>showAchPopup(a), i*700));
+    renderAchievements();
+  }
+}
+ 
+function showAchPopup(a){
+  const layer = document.getElementById("achToastLayer");
+  const el = document.createElement("div");
+  el.className = "ach-popup tier-"+a.tier;
+  el.innerHTML = `
+    <div class="ap-icon">${a.icon}</div>
+    <div>
+      <div class="ap-label">ACHIEVEMENT UNLOCKED</div>
+      <div class="ap-name">${a.name}</div>
+    </div>
+  `;
+  layer.appendChild(el);
+  requestAnimationFrame(()=> el.classList.add("show"));
+  setTimeout(()=>{
+    el.classList.remove("show");
+    setTimeout(()=> el.remove(), 500);
+  }, 4200);
+}
+ 
+function renderAchievements(){
+  const grid = document.getElementById("achGrid");
+  grid.innerHTML = "";
+  ACHIEVEMENTS.forEach(a=>{
+    const unlocked = state.unlockedAch.includes(a.id);
+    const el = document.createElement("div");
+    el.className = "ach-card tier-"+a.tier + (unlocked ? " unlocked" : "");
+    el.innerHTML = `
+      <div class="ach-icon">${a.icon}</div>
+      <div class="ach-name">${a.name}</div>
+      <div class="ach-desc">${a.desc}</div>
+    `;
+    grid.appendChild(el);
+  });
 }
  
 /* ================= RENDER: TOP BAR ================= */
@@ -634,21 +827,67 @@ function buyChest(chest){
   toast(`Bought ${chest.name}`);
 }
  
+/* ---- Pending + multi select ---- */
+let selectedPending = [];
+ 
 function renderPending(){
   const row = document.getElementById("pendingRow");
   row.innerHTML = "";
   state.pending.forEach(p=>{
     const chest = CHESTS.find(c=>c.id===p.chestId);
     const el = document.createElement("div");
-    el.className = "pending-chest";
-    el.innerHTML = `${chest.icon}<span class="tag">OPEN</span>`;
-    el.title = chest.name;
-    el.onclick = ()=>openModalFor(p, chest);
+    el.className = "pending-chest" + (selectedPending.includes(p.uid) ? " selected" : "");
+    el.innerHTML = `${chest.icon}<span class="tag">${selectedPending.includes(p.uid)?"PICKED":"OPEN"}</span>`;
+    el.title = chest.name + " (click to select / open)";
+    el.onclick = (e)=>{
+      if(e.shiftKey || e.ctrlKey || e.metaKey){
+        toggleSelectPending(p.uid);
+      } else if(selectedPending.length > 0){
+        toggleSelectPending(p.uid);
+      } else {
+        openModalFor(p, chest);
+      }
+    };
     row.appendChild(el);
   });
+  updateMultiBar();
 }
  
-/* ================= ODDS MODAL ================= */
+function toggleSelectPending(uid){
+  const idx = selectedPending.indexOf(uid);
+  if(idx >= 0){
+    selectedPending.splice(idx,1);
+  } else {
+    if(selectedPending.length >= 5){
+      toast("You can only open 5 cases at once");
+      return;
+    }
+    selectedPending.push(uid);
+  }
+  renderPending();
+}
+ 
+function updateMultiBar(){
+  const bar = document.getElementById("multiBar");
+  const count = document.getElementById("multiCount");
+  if(selectedPending.length > 0){
+    bar.style.display = "flex";
+    count.textContent = `${selectedPending.length}/5 selected`;
+  } else {
+    bar.style.display = "none";
+  }
+}
+ 
+document.getElementById("multiClearBtn").onclick = ()=>{
+  selectedPending = [];
+  renderPending();
+};
+document.getElementById("multiOpenBtn").onclick = ()=>{
+  if(selectedPending.length === 0) return;
+  openMultiModal(selectedPending.slice());
+};
+ 
+/* ================= ODDS ================= */
 function showOdds(chest){
   document.getElementById("oddsTitle").textContent = chest.name + " Odds";
   const tbl = document.getElementById("oddsTable");
@@ -669,10 +908,84 @@ document.getElementById("closeOddsBtn").onclick = ()=>{
   document.getElementById("oddsModalBg").style.display = "none";
 };
  
-/* ================= OPEN MODAL / REEL ================= */
+/* ================= ROLL LOGIC ================= */
+function rollChest(chest){
+  const luck = totalLuck();
+  const odds = Object.assign({}, chest.odds);
+  if(chest.money) odds["money"] = chest.money;
+  const order = ["E","D","C","B","A","S","X"];
+  const present = order.filter(c=>odds[c]!==undefined);
+  if(luck > 0 && present.length > 1){
+    const top = present[present.length-1];
+    const second = present[present.length-2];
+    const boost = Math.min(luck * 0.4, odds[top] * 0.6);
+    odds[top] += boost;
+    if(odds[second] !== undefined) odds[second] = Math.max(0.1, odds[second] - boost * 0.5);
+  }
+  const pick = weightedPick(odds);
+  if(pick === "money"){
+    const amount = Math.round(chest.price * (0.3 + Math.random()*0.9));
+    return {type:"money", amount};
+  }
+  return {type:"glove", cls:pick, name:randomGloveName(pick)};
+}
+ 
+function makeReelItem(cls){
+  const div = document.createElement("div");
+  div.className = "reel-item rc-"+cls;
+  div.style.setProperty("--class-color", CLASSES[cls].color);
+  div.innerHTML = `${CLASSES[cls].emoji}<div class="rlabel">${cls}</div>`;
+  return div;
+}
+ 
+function buildIdleReel(stripEl, pool){
+  stripEl.style.transition = "none";
+  stripEl.style.transform = "translateX(0)";
+  stripEl.innerHTML = "";
+  for(let i=0;i<11;i++){
+    const cls = pool[Math.floor(Math.random()*pool.length)];
+    stripEl.appendChild(makeReelItem(cls));
+  }
+}
+ 
+function animateReel(stripEl, viewportEl, pool, result, itemW, onLanded){
+  const totalItems = 55;
+  const landIndex = 46;
+  stripEl.innerHTML = "";
+  let landedEl = null;
+  for(let i=0;i<totalItems;i++){
+    if(i === landIndex){
+      const cls = result.type==="money" ? "A" : result.cls;
+      const item = makeReelItem(cls);
+      if(result.type==="money"){
+        item.innerHTML = `💵<div class="rlabel">CASH</div>`;
+        item.className = "reel-item rc-A";
+        item.style.setProperty("--class-color","var(--gold)");
+      }
+      landedEl = item;
+      stripEl.appendChild(item);
+    } else {
+      const cls = pool[Math.floor(Math.random()*pool.length)];
+      stripEl.appendChild(makeReelItem(cls));
+    }
+  }
+  const viewportCenter = viewportEl.clientWidth / 2;
+  const targetX = viewportCenter - (landIndex * itemW + itemW/2) + (Math.random()*18-9);
+ 
+  stripEl.style.transition = "none";
+  stripEl.style.transform = "translateX(0px)";
+  void stripEl.offsetWidth;
+  stripEl.style.transition = "transform 5.1s cubic-bezier(0.08,0.75,0.06,1)";
+  stripEl.style.transform = `translateX(${targetX}px)`;
+ 
+  setTimeout(()=>{ if(landedEl) landedEl.classList.add("landed"); }, 5150);
+  setTimeout(()=>{ onLanded(); }, 5750);
+}
+ 
+/* ================= SINGLE OPEN ================= */
 let currentPending = null;
 let currentChest = null;
-let rolledResult = null; // {type:'glove'|'money', cls, name, amount}
+let rolledResult = null;
  
 function openModalFor(p, chest){
   currentPending = p;
@@ -684,105 +997,19 @@ function openModalFor(p, chest){
   btn.disabled = false;
   btn.textContent = "Open Case";
   btn.onclick = startSpin;
-  buildIdleReel(chest);
-  document.getElementById("openModalBg").style.display = "flex";
-}
- 
-function buildIdleReel(chest){
   const strip = document.getElementById("reelStrip");
-  strip.style.transition = "none";
-  strip.style.transform = "translateX(0)";
-  strip.innerHTML = "";
-  const pool = Object.keys(chest.odds);
-  for(let i=0;i<12;i++){
-    const cls = pool[Math.floor(Math.random()*pool.length)];
-    strip.appendChild(makeReelItem(cls));
-  }
-}
- 
-function makeReelItem(cls){
-  const div = document.createElement("div");
-  div.className = "reel-item rc-"+cls;
-  div.style.setProperty("--class-color", CLASSES[cls].color);
-  div.innerHTML = `${CLASSES[cls].emoji}<div class="rlabel">${cls}</div>`;
-  return div;
+  buildIdleReel(strip, Object.keys(chest.odds));
+  document.getElementById("openModalBg").style.display = "flex";
 }
  
 function startSpin(){
   document.getElementById("openBtn").disabled = true;
- 
-  // determine luck bonus: shift odds slightly toward better classes based on equipped luck
-  const luck = totalLuck();
-  const odds = Object.assign({}, currentChest.odds);
-  if(currentChest.money) odds["money"] = currentChest.money;
-  // luck softly boosts the two highest classes present, small effect only
-  const order = ["E","D","C","B","A","S","X"];
-  const present = order.filter(c=>odds[c]!==undefined);
-  if(luck>0 && present.length>1){
-    const top = present[present.length-1];
-    const second = present[present.length-2];
-    const boost = Math.min(luck*0.4, odds[top]*0.6); // capped, gentle
-    odds[top] += boost;
-    if(odds[second]!==undefined) odds[second] = Math.max(0.1, odds[second]-boost*0.5);
-  }
- 
-  const pick = weightedPick(odds);
- 
-  if(pick === "money"){
-    const amount = Math.round(currentChest.price * (0.3 + Math.random()*0.9));
-    rolledResult = {type:"money", amount};
-  } else {
-    const name = randomGloveName(pick);
-    rolledResult = {type:"glove", cls:pick, name};
-  }
- 
-  spinReelTo(rolledResult);
-};
- 
-function spinReelTo(result){
+  rolledResult = rollChest(currentChest);
   const strip = document.getElementById("reelStrip");
   const viewport = strip.parentElement;
-  const itemW = 96+14; // width + margins
-  const totalItems = 55;
-  const landIndex = 46; // far out, so it scrolls a long way before landing
- 
-  strip.innerHTML = "";
-  const pool = Object.keys(currentChest.odds);
-  let landedEl = null;
-  for(let i=0;i<totalItems;i++){
-    if(i === landIndex){
-      const cls = result.type==="money" ? (pool[pool.length-1]) : result.cls;
-      const item = makeReelItem(cls);
-      if(result.type==="money"){
-        item.innerHTML = `💵<div class="rlabel">CASH</div>`;
-        item.className = "reel-item rc-A";
-        item.style.setProperty("--class-color","var(--gold)");
-      }
-      landedEl = item;
-      strip.appendChild(item);
-    } else {
-      const cls = pool[Math.floor(Math.random()*pool.length)];
-      strip.appendChild(makeReelItem(cls));
-    }
-  }
- 
-  const viewportCenter = viewport.clientWidth/2;
-  const targetX = viewportCenter - (landIndex*itemW + itemW/2) + (Math.random()*24-12);
- 
-  strip.style.transition = "none";
-  strip.style.transform = "translateX(0px)";
-  // force reflow
-  void strip.offsetWidth;
-  strip.style.transition = "transform 5.2s cubic-bezier(0.08,0.75,0.06,1)";
-  strip.style.transform = `translateX(${targetX}px)`;
- 
-  setTimeout(()=>{
-    if(landedEl) landedEl.classList.add("landed");
-  }, 5250);
- 
-  setTimeout(()=>{
-    showResult(result);
-  }, 5850);
+  animateReel(strip, viewport, Object.keys(currentChest.odds), rolledResult, 112, ()=>{
+    showResult(rolledResult);
+  });
 }
  
 function showResult(result){
@@ -797,7 +1024,7 @@ function showResult(result){
     document.getElementById("resultEmoji").textContent = c.emoji;
     document.getElementById("resultName").textContent = result.name;
     document.getElementById("resultClass").textContent = c.label;
-    document.getElementById("resultClass").style.color = c.color.startsWith("var")? "#ffd23a" : c.color;
+    document.getElementById("resultClass").style.color = c.color.startsWith("var") ? "#ffd23a" : c.color;
   }
   box.classList.add("show");
   document.getElementById("openBtn").textContent = "Collect";
@@ -806,21 +1033,28 @@ function showResult(result){
 }
  
 function collectResult(){
-  if(rolledResult.type==="money"){
-    state.money += rolledResult.amount;
-    toast(`+${fmt(rolledResult.amount)}`);
-  } else {
-    state.inventory.push({
-      uid:nextUid(), cls:rolledResult.cls, name:rolledResult.name, equipped:false
-    });
-    toast(`Got ${rolledResult.name} (${CLASSES[rolledResult.cls].label})`);
-  }
-  state.pending = state.pending.filter(p=>p.uid !== currentPending.uid);
+  applyResult(rolledResult);
+  state.pending = state.pending.filter(p => p.uid !== currentPending.uid);
   saveState();
   renderTop();
   renderShop();
   renderInventory();
+  renderUpgrade();
+  checkAchievements();
   closeOpenModal();
+}
+ 
+function applyResult(result){
+  if(result.type === "money"){
+    state.money += result.amount;
+    toast(`+${fmt(result.amount)}`);
+  } else {
+    state.inventory.push({uid:nextUid(), cls:result.cls, name:result.name, equipped:false});
+    if(!state.seenClasses.includes(result.cls)){
+      state.seenClasses.push(result.cls);
+    }
+    toast(`Got ${result.name} (${CLASSES[result.cls].label})`);
+  }
 }
  
 function closeOpenModal(){
@@ -828,13 +1062,99 @@ function closeOpenModal(){
 }
 document.getElementById("closeModalBtn").onclick = closeOpenModal;
  
+/* ================= MULTI OPEN ================= */
+let multiSession = null;
+ 
+function openMultiModal(uids){
+  const row = document.getElementById("multiReelRow");
+  row.innerHTML = "";
+  const items = [];
+  uids.forEach(uid=>{
+    const p = state.pending.find(x=>x.uid===uid);
+    if(!p) return;
+    const chest = CHESTS.find(c=>c.id===p.chestId);
+    const col = document.createElement("div");
+    col.className = "multi-col";
+    col.innerHTML = `
+      <div class="mc-label">${chest.icon} ${chest.name}</div>
+      <div class="reel-viewport">
+        <div class="reel-center-line"></div>
+        <div class="reel-strip"></div>
+      </div>
+      <div class="mc-result">Ready</div>
+    `;
+    row.appendChild(col);
+    const stripEl = col.querySelector(".reel-strip");
+    const viewportEl = col.querySelector(".reel-viewport");
+    const resultEl = col.querySelector(".mc-result");
+    const pool = Object.keys(chest.odds);
+    buildIdleReel(stripEl, pool);
+    items.push({pendingUid:uid, chest, stripEl, viewportEl, resultEl, pool, result:null});
+  });
+ 
+  multiSession = {items};
+  document.getElementById("multiStartBtn").style.display = "inline-block";
+  document.getElementById("multiStartBtn").disabled = false;
+  document.getElementById("multiStartBtn").textContent = items.length > 1 ? "Open All" : "Open Case";
+  document.getElementById("multiCollectBtn").style.display = "none";
+  document.getElementById("multiModalBg").style.display = "flex";
+}
+ 
+document.getElementById("multiStartBtn").onclick = ()=>{
+  if(!multiSession) return;
+  document.getElementById("multiStartBtn").disabled = true;
+  let remaining = multiSession.items.length;
+  const itemW = multiSession.items.length === 1 ? 112 : 86;
+  multiSession.items.forEach(entry=>{
+    entry.result = rollChest(entry.chest);
+    entry.resultEl.textContent = "Rolling...";
+    animateReel(entry.stripEl, entry.viewportEl, entry.pool, entry.result, itemW, ()=>{
+      if(entry.result.type === "money"){
+        entry.resultEl.innerHTML = `💵 <b>${fmt(entry.result.amount)}</b>`;
+      } else {
+        const c = CLASSES[entry.result.cls];
+        entry.resultEl.innerHTML = `${entry.result.name} <b style="color:${c.color.startsWith('var')?'#ffd23a':c.color}">(${c.label})</b>`;
+      }
+      entry.resultEl.classList.add("ready");
+      remaining--;
+      if(remaining === 0){
+        document.getElementById("multiCollectBtn").style.display = "inline-block";
+        document.getElementById("multiStartBtn").style.display = "none";
+      }
+    });
+  });
+};
+ 
+document.getElementById("multiCollectBtn").onclick = ()=>{
+  if(!multiSession) return;
+  multiSession.items.forEach(entry=>{
+    applyResult(entry.result);
+    state.pending = state.pending.filter(p => p.uid !== entry.pendingUid);
+  });
+  toast(multiSession.items.length > 1 ? "Collected all!" : "Collected!");
+  selectedPending = [];
+  saveState();
+  renderTop();
+  renderShop();
+  renderInventory();
+  renderUpgrade();
+  checkAchievements();
+  closeMultiModal();
+};
+ 
+function closeMultiModal(){
+  document.getElementById("multiModalBg").style.display = "none";
+  multiSession = null;
+}
+document.getElementById("closeMultiModalBtn").onclick = closeMultiModal;
+ 
 /* ================= INVENTORY ================= */
 function renderInventory(){
   const grid = document.getElementById("gloveGrid");
   const search = document.getElementById("invSearch").value.trim().toLowerCase();
   const sort = document.getElementById("invSort").value;
  
-  let items = state.inventory.filter(g=>g.name.toLowerCase().includes(search));
+  let items = state.inventory.filter(g => g.name.toLowerCase().includes(search));
  
   const order = ["X","S","A","B","C","D","E"];
   if(sort==="class") items.sort((a,b)=>order.indexOf(a.cls)-order.indexOf(b.cls));
@@ -850,9 +1170,9 @@ function renderInventory(){
   items.forEach(g=>{
     const c = CLASSES[g.cls];
     const el = document.createElement("div");
-    el.className = "glove-card class-"+g.cls + (g.equipped ? " equipped":"");
+    el.className = "glove-card class-"+g.cls + (g.equipped ? " equipped" : "");
     el.style.setProperty("--class-color", c.color);
-    const resell = Math.round(c.value*0.05);
+    const resell = Math.round(c.value * 0.05);
     el.innerHTML = `
       <div class="class-badge">${c.label}</div>
       <div class="glove-emoji">${c.emoji}</div>
@@ -872,7 +1192,6 @@ function renderInventory(){
   });
 }
  
-/* ---- Glove detail modal ---- */
 let detailUid = null;
 function openDetail(uid){
   const g = state.inventory.find(x=>x.uid===uid);
@@ -904,8 +1223,7 @@ function toggleEquip(uid){
   const g = state.inventory.find(x=>x.uid===uid);
   if(!g) return;
   if(!g.equipped){
-    const equippedCount = state.inventory.filter(x=>x.equipped).length;
-    if(equippedCount >= 2){
+    if(state.inventory.filter(x=>x.equipped).length >= 2){
       toast("You can only equip 2 gloves at once (a pair)");
       return;
     }
@@ -918,15 +1236,16 @@ function toggleEquip(uid){
  
 function sellGlove(uid){
   const idx = state.inventory.findIndex(x=>x.uid===uid);
-  if(idx<0) return;
+  if(idx < 0) return;
   const g = state.inventory[idx];
-  const resell = Math.round(CLASSES[g.cls].value*0.05);
+  const resell = Math.round(CLASSES[g.cls].value * 0.05);
   state.inventory.splice(idx,1);
   state.money += resell;
   saveState();
   renderTop();
   renderInventory();
   renderUpgrade();
+  checkAchievements();
   toast(`Sold ${g.name} for ${fmt(resell)}`);
 }
  
@@ -945,7 +1264,7 @@ function renderUpgrade(){
     const resultC = CLASSES[r.result];
     const needParts = Object.entries(r.need).map(([cls,n])=>{
       const have = countClass(cls);
-      const ok = have>=n;
+      const ok = have >= n;
       return `<div class="need-item"><div class="n ${ok?'ok':'bad'}">${have}/${n}</div><div style="color:${CLASSES[cls].color.startsWith('var')?'#ccc':CLASSES[cls].color}">${cls}</div></div>`;
     }).join("");
     const canUpgrade = Object.entries(r.need).every(([cls,n])=>countClass(cls)>=n);
@@ -956,8 +1275,8 @@ function renderUpgrade(){
       <div class="recipe-need">${needParts}</div>
       <div class="recipe-arrow">→</div>
       <div class="recipe-result">
-        <div style="font-size:26px;">${resultC.emoji}</div>
-        <div style="font-size:11px;color:${resultC.color.startsWith('var')?'#ffd23a':resultC.color};font-weight:800;">${resultC.label}</div>
+        <div style="font-size:28px;">${resultC.emoji}</div>
+        <div style="font-size:12px;color:${resultC.color.startsWith('var')?'#ffd23a':resultC.color};font-weight:800;">${resultC.label}</div>
       </div>
       <button class="recipe-btn" ${canUpgrade?"":"disabled"}>${r.label}</button>
     `;
@@ -967,24 +1286,27 @@ function renderUpgrade(){
 }
  
 function doUpgrade(recipe){
-  // remove required gloves
   Object.entries(recipe.need).forEach(([cls,n])=>{
     let removed = 0;
     state.inventory = state.inventory.filter(g=>{
-      if(g.cls===cls && removed<n){ removed++; return false; }
+      if(g.cls===cls && removed < n){ removed++; return false; }
       return true;
     });
   });
   const name = randomGloveName(recipe.result);
   state.inventory.push({uid:nextUid(), cls:recipe.result, name, equipped:false});
+  if(!state.seenClasses.includes(recipe.result)){
+    state.seenClasses.push(recipe.result);
+  }
   saveState();
   renderTop();
   renderInventory();
   renderUpgrade();
+  checkAchievements();
   toast(`Upgraded into ${name} (${CLASSES[recipe.result].label})!`);
 }
  
-/* ================= DEBUG PANEL ================= */
+/* ================= DEBUG ================= */
 document.getElementById("debugToggle").onclick = ()=>{
   const p = document.getElementById("debugPanel");
   p.style.display = (p.style.display==="none") ? "block" : "none";
@@ -1005,17 +1327,33 @@ document.getElementById("debugClearInv").onclick = ()=>{
   renderTop();
   renderInventory();
   renderUpgrade();
-  toast("Inventory cleared (debug)");
+  checkAchievements();
+  toast("Inventory cleared");
 };
 document.getElementById("debugReset").onclick = ()=>{
-  if(!confirm("Full reset — wipes money, inventory and pending chests. Continue?")) return;
-  state = {money:500, inventory:[], pending:[]};
+  if(!confirm("Full reset — money, inventory, pending cases. Keep achievements?")) return;
+  state.money = 500;
+  state.inventory = [];
+  state.pending = [];
   saveState();
   renderTop();
   renderShop();
   renderInventory();
   renderUpgrade();
-  toast("Full reset done");
+  toast("Reset done (achievements kept)");
+};
+document.getElementById("debugErase").onclick = ()=>{
+  if(!confirm("⚠ ERASE EVERYTHING?\n\nThis deletes money, gloves, pending cases AND all achievements.\nThis cannot be undone.")) return;
+  localStorage.removeItem("gloveVaultState_v2");
+  state = {money:500, inventory:[], pending:[], seenClasses:[], unlockedAch:[]};
+  selectedPending = [];
+  saveState();
+  renderTop();
+  renderShop();
+  renderInventory();
+  renderUpgrade();
+  renderAchievements();
+  toast("All data erased");
 };
  
 /* ================= TABS ================= */
@@ -1023,11 +1361,12 @@ document.querySelectorAll(".tab").forEach(tab=>{
   tab.onclick = ()=>{
     document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
     tab.classList.add("active");
-    ["shop","inventory","upgrade"].forEach(name=>{
-      document.getElementById("tab-"+name).style.display = (name===tab.dataset.tab)?"block":"none";
+    ["shop","inventory","upgrade","achievements"].forEach(name=>{
+      document.getElementById("tab-"+name).style.display = (name === tab.dataset.tab) ? "block" : "none";
     });
     if(tab.dataset.tab==="inventory") renderInventory();
     if(tab.dataset.tab==="upgrade") renderUpgrade();
+    if(tab.dataset.tab==="achievements") renderAchievements();
   };
 });
  
@@ -1037,6 +1376,8 @@ renderTop();
 renderShop();
 renderInventory();
 renderUpgrade();
+renderAchievements();
+checkAchievements(); // in case of value milestones already met
 </script>
 </body>
 </html>
