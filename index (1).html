@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glove Vault</title>
+<style>
+  :root{
+    --bg-0:#1a0605;
+    --bg-1:#2b0b09;
+    --bg-2:#3d0f0c;
+    --panel:#241009;
+    --panel-2:#2e140c;
+    --ink:#f5e9df;
+    --ink-dim:#c9a89a;
+    --accent:#ff5a36;
+    --gold:#ffb238;
+    --line:rgba(255,255,255,0.08);
+
+    --c-E:#9a9a9a;
+    --c-D:#4fbf5a;
+    --c-C:#3aa0ff;
+    --c-B:#b25bff;
+    --c-A:#ff4fa3;
+    --c-S1:#ff5fd0;
+    --c-S2:#5fd0ff;
+    --c-X1:#ffd23a;
+    --c-X2:#ff5a36;
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 700px at 15% -10%, #4a1310 0%, transparent 60%),
+      radial-gradient(1000px 700px at 100% 0%, #3a0f0c 0%, transparent 55%),
+      linear-gradient(180deg, var(--bg-0), var(--bg-1) 40%, var(--bg-2));
+    color:var(--ink);
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{max-width:1180px;margin:0 auto;padding:18px 18px 60px;}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:12px;margin-bottom:18px;flex-wrap:wrap;
+  }
+  .brand{display:flex;align-items:center;gap:10px;}
+  .brand-mark{
+    width:38px;height:38px;border-radius:10px;
+    background:linear-gradient(135deg,var(--gold),var(--accent));
+    display:flex;align-items:center;justify-content:center;
+    font-size:20px;box-shadow:0 4px 14px rgba(255,90,54,0.35);
+  }
+  .brand-name{font-weight:800;font-size:19px;letter-spacing:0.2px;}
+  .brand-sub{font-size:11px;color:var(--ink-dim);margin-top:-2px;}
+
+  .stats{display:flex;gap:10px;flex-wrap:wrap;}
+  .chip{
+    display:flex;align-items:center;gap:7px;
+    background:var(--panel);border:1px solid var(--line);
+    padding:8px 14px;border-radius:999px;font-weight:700;font-size:14px;
+  }
+  .chip .ic{font-size:15px;}
+  .chip.money{color:var(--gold);}
+  .chip.luck{color:#8fe0ff;}
+
+  /* ---------- Tabs ---------- */
+  .tabs{display:flex;gap:2px;margin-bottom:16px;background:var(--panel);
+    border-radius:12px;padding:5px;border:1px solid var(--line);}
+  .tab{
+    flex:1;text-align:center;padding:11px 10px;border-radius:9px;
+    font-weight:800;font-size:13.5px;letter-spacing:0.3px;cursor:pointer;
+    color:var(--ink-dim);transition:background .15s, color .15s;
+    user-select:none;
+  }
+  .tab.active{background:linear-gradient(135deg,#4a1a12,#5c1a10);color:var(--gold);
+    box-shadow:inset 0 0 0 1px rgba(255,178,56,0.35);}
+  .tab:hover:not(.active){color:var(--ink);}
+
+  .panel{
+    background:linear-gradient(180deg, var(--panel), var(--panel-2));
+    border:1px solid var(--line);border-radius:16px;padding:18px;
+  }
+
+  .section-title{font-size:13px;font-weight:800;color:var(--ink-dim);
+    margin:2px 0 12px;letter-spacing:0.3px;}
+
+  /* ---------- Pending chests ---------- */
+  .pending-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:16px;min-height:0;}
+  .pending-row:empty{margin-bottom:0;}
+  .pending-chest{
+    width:64px;height:64px;border-radius:12px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;font-size:28px;
+    border:2px solid var(--gold);background:radial-gradient(circle at 30% 20%, #4a2410, #1e0d06);
+    box-shadow:0 0 0 3px rgba(255,178,56,0.12), 0 6px 16px rgba(0,0,0,0.4);
+    animation:bob 2s ease-in-out infinite;
+    position:relative;
+  }
+  .pending-chest .tag{position:absolute;bottom:-9px;left:50%;transform:translateX(-50%);
+    background:var(--gold);color:#2a1400;font-size:9px;font-weight:800;padding:2px 6px;
+    border-radius:6px;white-space:nowrap;}
+  @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
+
+  /* ---------- Chest grid (shop) ---------- */
+  .chest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;}
+  .chest-card{
+    background:var(--bg-0);border:1px solid var(--line);border-radius:14px;
+    padding:14px 12px;text-align:center;transition:transform .15s, border-color .15s;
+  }
+  .chest-card:hover{transform:translateY(-3px);border-color:var(--gold);}
+  .chest-icon{font-size:40px;margin-bottom:8px;filter:drop-shadow(0 4px 10px rgba(0,0,0,0.5));}
+  .chest-name{font-weight:800;font-size:14px;margin-bottom:2px;}
+  .chest-desc{font-size:10.5px;color:var(--ink-dim);margin-bottom:10px;min-height:26px;}
+  .chest-price{font-weight:800;color:var(--gold);font-size:13px;margin-bottom:9px;}
+  .buy-btn{
+    width:100%;padding:8px 0;border:none;border-radius:9px;font-weight:800;font-size:12.5px;
+    background:linear-gradient(135deg,#ff7a4a,var(--accent));color:#2a0a04;cursor:pointer;
+    letter-spacing:0.3px;
+  }
+  .buy-btn:disabled{background:#3a2a24;color:#7a655d;cursor:not-allowed;}
+  .buy-btn:not(:disabled):hover{filter:brightness(1.08);}
+  .odds-link{display:block;margin-top:7px;font-size:10px;color:var(--ink-dim);cursor:pointer;text-decoration:underline;}
+
+  /* ---------- Inventory ---------- */
+  .inv-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
+  .inv-toolbar input, .inv-toolbar select{
+    background:var(--bg-0);border:1px solid var(--line);color:var(--ink);
+    padding:8px 12px;border-radius:9px;font-size:13px;outline:none;
+  }
+  .inv-toolbar input{flex:1;min-width:140px;}
+  .inv-empty{color:var(--ink-dim);text-align:center;padding:40px 10px;font-size:13.5px;}
+
+  .glove-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;}
+  .glove-card{
+    border-radius:13px;padding:12px 10px 10px;text-align:center;position:relative;
+    background:var(--bg-0);border:2px solid var(--class-color, #666);
+  }
+  .glove-card.equipped{box-shadow:0 0 0 2px var(--gold) inset;}
+  .class-badge{
+    position:absolute;top:8px;left:8px;font-size:9px;font-weight:800;
+    padding:2px 6px;border-radius:6px;background:rgba(0,0,0,0.4);
+    color:var(--class-color,#ccc);border:1px solid var(--class-color,#666);
+  }
+  .glove-emoji{font-size:34px;margin:16px 0 4px;}
+  .glove-name{font-weight:800;font-size:13px;margin-bottom:6px;}
+  .stat-row{display:flex;justify-content:space-between;font-size:10.5px;color:var(--ink-dim);
+    margin-bottom:2px;padding:0 2px;}
+  .stat-row b{color:var(--ink);}
+  .glove-actions{display:flex;gap:6px;margin-top:9px;}
+  .glove-actions button{
+    flex:1;padding:6px 0;border:none;border-radius:7px;font-weight:800;font-size:10.5px;cursor:pointer;
+  }
+  .btn-equip{background:#2f5c3a;color:#d9ffe0;}
+  .btn-unequip{background:#5c2f2f;color:#ffd9d9;}
+  .btn-sell{background:#3a2a4a;color:#e6d9ff;}
+
+  .class-S .glove-name, .class-X .glove-name{
+    background:linear-gradient(90deg, var(--g1), var(--g2));
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .class-S{--g1:var(--c-S1);--g2:var(--c-S2);}
+  .class-X{--g1:var(--c-X1);--g2:var(--c-X2);}
+
+  /* ---------- Upgrade ---------- */
+  .recipe-card{
+    background:var(--bg-0);border:1px solid var(--line);border-radius:13px;
+    padding:14px;margin-bottom:12px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;
+  }
+  .recipe-arrow{font-size:20px;color:var(--ink-dim);}
+  .recipe-need{display:flex;gap:10px;flex-wrap:wrap;}
+  .need-item{text-align:center;font-size:11px;}
+  .need-item .n{font-weight:800;font-size:15px;}
+  .need-item .ok{color:#7be08a;}
+  .need-item .bad{color:#ff8a7a;}
+  .recipe-result{text-align:center;min-width:90px;}
+  .recipe-btn{
+    margin-left:auto;padding:10px 18px;border:none;border-radius:9px;font-weight:800;
+    background:linear-gradient(135deg,#ff7a4a,var(--accent));color:#2a0a04;cursor:pointer;font-size:12.5px;
+  }
+  .recipe-btn:disabled{background:#3a2a24;color:#7a655d;cursor:not-allowed;}
+
+  /* ---------- Modal / reel ---------- */
+  .modal-bg{
+    position:fixed;inset:0;background:rgba(8,2,1,0.78);backdrop-filter:blur(3px);
+    display:flex;align-items:center;justify-content:center;z-index:50;padding:16px;
+  }
+  .modal{
+    background:linear-gradient(180deg,#2b100b,#1a0705);border:1px solid var(--line);
+    border-radius:18px;padding:22px;width:100%;max-width:640px;text-align:center;
+  }
+  .modal h3{margin:0 0 4px;font-size:16px;}
+  .modal .sub{color:var(--ink-dim);font-size:12px;margin-bottom:16px;}
+
+  .reel-viewport{
+    position:relative;height:110px;overflow:hidden;border-radius:12px;
+    background:var(--bg-0);border:1px solid var(--line);margin-bottom:18px;
+  }
+  .reel-strip{position:absolute;top:0;left:0;height:100%;display:flex;align-items:center;
+    will-change:transform;}
+  .reel-item{
+    width:88px;height:88px;margin:0 6px;border-radius:11px;flex:0 0 auto;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:var(--bg-0);border:2px solid var(--class-color,#666);font-size:30px;
+  }
+  .reel-item .rlabel{font-size:8.5px;font-weight:800;color:var(--ink-dim);margin-top:2px;}
+  .reel-center-line{
+    position:absolute;top:0;bottom:0;left:50%;width:2px;background:var(--gold);
+    box-shadow:0 0 8px var(--gold);transform:translateX(-1px);z-index:5;
+  }
+  .reel-center-line::before,.reel-center-line::after{
+    content:'';position:absolute;left:50%;transform:translateX(-50%);
+    border:7px solid transparent;
+  }
+  .reel-center-line::before{top:-2px;border-top-color:var(--gold);}
+  .reel-center-line::after{bottom:-2px;border-bottom-color:var(--gold);}
+
+  .result-box{display:none;margin-bottom:16px;}
+  .result-box.show{display:block;}
+  .result-emoji{font-size:48px;}
+  .result-name{font-weight:800;font-size:17px;margin-top:4px;}
+  .result-class{font-size:11.5px;color:var(--ink-dim);margin-top:2px;}
+
+  .modal-actions{display:flex;gap:10px;justify-content:center;}
+  .modal-actions button{
+    padding:10px 20px;border:none;border-radius:9px;font-weight:800;cursor:pointer;font-size:13px;
+  }
+  .btn-open{background:linear-gradient(135deg,#ff7a4a,var(--accent));color:#2a0a04;}
+  .btn-close{background:#3a2622;color:var(--ink);}
+  .btn-open:disabled{background:#3a2a24;color:#7a655d;cursor:not-allowed;}
+
+  /* odds modal */
+  .odds-table{width:100%;border-collapse:collapse;font-size:12px;margin-top:10px;}
+  .odds-table th,.odds-table td{padding:6px 8px;border-bottom:1px solid var(--line);text-align:center;}
+  .odds-table th{color:var(--ink-dim);font-weight:700;}
+
+  .toast{
+    position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+    background:#1c0d09;border:1px solid var(--gold);color:var(--gold);
+    padding:10px 18px;border-radius:10px;font-weight:700;font-size:12.5px;
+    z-index:80;opacity:0;pointer-events:none;transition:opacity .25s, transform .25s;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(-6px);}
+
+  @media (max-width:520px){
+    .stats{width:100%;justify-content:flex-start;}
+    .chip{padding:7px 11px;font-size:12.5px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topbar">
+    <div class="brand">
+      <div class="brand-mark">🥊</div>
+      <div>
+        <div class="brand-name">Glove Vault</div>
+        <div class="brand-sub">case-opening simulator</div>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="chip money"><span class="ic">💰</span><span id="moneyDisplay">0</span></div>
+      <div class="chip luck"><span class="ic">🍀</span><span id="luckDisplay">0</span> luck</div>
+    </div>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-tab="shop">SHOP</div>
+    <div class="tab" data-tab="inventory">INVENTORY</div>
+    <div class="tab" data-tab="upgrade">UPGRADE</div>
+  </div>
+
+  <div class="panel">
+
+    <!-- SHOP -->
+    <div id="tab-shop">
+      <div id="pendingRow" class="pending-row"></div>
+      <div class="section-title">CASES</div>
+      <div class="chest-grid" id="chestGrid"></div>
+    </div>
+
+    <!-- INVENTORY -->
+    <div id="tab-inventory" style="display:none;">
+      <div class="inv-toolbar">
+        <input id="invSearch" type="text" placeholder="Search gloves...">
+        <select id="invSort">
+          <option value="class">Sort by Class</option>
+          <option value="name">Sort by Name</option>
+          <option value="value">Sort by Value</option>
+        </select>
+      </div>
+      <div id="gloveGrid" class="glove-grid"></div>
+    </div>
+
+    <!-- UPGRADE -->
+    <div id="tab-upgrade" style="display:none;">
+      <div class="section-title">UPGRADE RECIPES</div>
+      <div id="recipeList"></div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Open-chest modal -->
+<div class="modal-bg" id="openModalBg" style="display:none;">
+  <div class="modal">
+    <h3 id="modalTitle">Silver Case</h3>
+    <div class="sub">Click open, then watch the reel land on your item.</div>
+    <div class="reel-viewport">
+      <div class="reel-center-line"></div>
+      <div class="reel-strip" id="reelStrip"></div>
+    </div>
+    <div class="result-box" id="resultBox">
+      <div class="result-emoji" id="resultEmoji">🥊</div>
+      <div class="result-name" id="resultName">—</div>
+      <div class="result-class" id="resultClass">—</div>
+    </div>
+    <div class="modal-actions">
+      <button class="btn-open" id="openBtn">Open Case</button>
+      <button class="btn-close" id="closeModalBtn">Close</button>
+    </div>
+  </div>
+</div>
+
+<!-- Odds modal -->
+<div class="modal-bg" id="oddsModalBg" style="display:none;">
+  <div class="modal">
+    <h3 id="oddsTitle">Odds</h3>
+    <div class="sub">Drop chances by class</div>
+    <table class="odds-table" id="oddsTable"></table>
+    <div class="modal-actions" style="margin-top:14px;">
+      <button class="btn-close" id="closeOddsBtn">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ================= DATA ================= */
+const CLASSES = {
+  E:{label:"Class E", color:"var(--c-E)", value:50,    luck:0,  emoji:"🥊"},
+  D:{label:"Class D", color:"var(--c-D)", value:300,   luck:1,  emoji:"🥊"},
+  C:{label:"Class C", color:"var(--c-C)", value:2000,  luck:2,  emoji:"🧤"},
+  B:{label:"Class B", color:"var(--c-B)", value:15000, luck:4,  emoji:"🧤"},
+  A:{label:"Class A", color:"var(--c-A)", value:80000, luck:7,  emoji:"🧤"},
+  S:{label:"Class S", color:"var(--c-S1)",value:400000,luck:11, emoji:"🔥"},
+  X:{label:"Class X", color:"var(--c-X1)",value:4000000,luck:16,emoji:"👑"}
+};
+
+const GLOVE_NAMES = {
+  E:["Basic Red","Basic Blue","Basic White","Basic Black","Rust"],
+  D:["Rookie","Scrapper","Trainee","Denim","Sandstone"],
+  C:["Full Metal","Night","Bag","Cyan Wrap","Sans"],
+  B:["Marble","Gridiron","Marte","Hardwood","Pact"],
+  A:["Noobi","Aw Man","Giraffe","Owl","Fury"],
+  S:["Dragon","Biohazard","Wave","Skies","Mummy"],
+  X:["Overseer","Reactor","Voidbringer","Ember Core","Plasma King"]
+};
+
+const CHESTS = [
+  {id:"silver",  name:"Silver Case",   price:250,    icon:"🥈", desc:"Common — D & C mostly",
+    odds:{E:45,D:35,C:15,B:5}},
+  {id:"golden",  name:"Golden Case",   price:750,    icon:"🥇", desc:"Better D/C, real B, tiny A",
+    odds:{E:20,D:35,C:25,B:15,A:5}},
+  {id:"coffer",  name:"Coffer",        price:2500,   icon:"⚪", desc:"First chance at S",
+    odds:{E:8,D:22,C:30,B:25,A:12,S:3}},
+  {id:"obsidian",name:"Obsidian Case", price:8000,   icon:"⬛", desc:"Big jump — B/A common",
+    odds:{D:8,C:20,B:32,A:38,S:2}},
+  {id:"robux",   name:"Robux Chest",   price:15000,  icon:"💚", desc:"Chance of a cash payout",
+    odds:{D:5,C:18,B:27,A:30,S:5},money:15},
+  {id:"plasma",  name:"Plasma Chest",  price:40000,  icon:"🔷", desc:"Strong, but not too OP",
+    odds:{C:10,B:25,A:35,S:20,X:10}},
+  {id:"ember",   name:"Ember Crate",   price:100000, icon:"🔥", desc:"Best chest — real B floor, real X shot",
+    odds:{B:25,A:25,S:40,X:10}}
+];
+
+const RECIPES = [
+  {id:"r1", need:{E:10}, result:"D", label:"Basic Combine"},
+  {id:"r2", need:{D:10,E:5}, result:"C", label:"Trainee Combine"},
+  {id:"r3", need:{C:10,D:5}, result:"B", label:"Veteran Combine"},
+  {id:"r4", need:{B:10,C:5}, result:"A", label:"Elite Combine"},
+  {id:"r5", need:{A:10,B:5}, result:"S", label:"Mythic Combine"},
+  {id:"r6", need:{S:10,A:5}, result:"X", label:"Ultimate Combine"}
+];
+
+/* ================= STATE ================= */
+let state = {
+  money: 500,
+  inventory: [], // {uid, cls, name, equipped}
+  pending: []    // {uid, chestId}
+};
+
+function loadState(){
+  try{
+    const raw = localStorage.getItem("gloveVaultState");
+    if(raw){ state = JSON.parse(raw); }
+  }catch(e){ /* fresh start */ }
+}
+function saveState(){
+  try{ localStorage.setItem("gloveVaultState", JSON.stringify(state)); }catch(e){}
+}
+
+let uidCounter = 1;
+function nextUid(){ return "u"+(uidCounter++)+"_"+Date.now().toString(36); }
+
+/* ================= UTIL ================= */
+function fmt(n){
+  return "$"+Math.round(n).toLocaleString();
+}
+function totalLuck(){
+  return state.inventory.filter(g=>g.equipped).reduce((s,g)=>s+CLASSES[g.cls].luck,0);
+}
+function toast(msg){
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.classList.add("show");
+  clearTimeout(toast._h);
+  toast._h = setTimeout(()=>t.classList.remove("show"), 2200);
+}
+
+function weightedPick(odds){
+  const entries = Object.entries(odds); // [cls or 'money', weight]
+  const total = entries.reduce((s,[,w])=>s+w,0);
+  let r = Math.random()*total;
+  for(const [k,w] of entries){
+    if(r < w) return k;
+    r -= w;
+  }
+  return entries[entries.length-1][0];
+}
+
+function randomGloveName(cls){
+  const list = GLOVE_NAMES[cls];
+  return list[Math.floor(Math.random()*list.length)];
+}
+
+/* ================= RENDER: TOP BAR ================= */
+function renderTop(){
+  document.getElementById("moneyDisplay").textContent = fmt(state.money).replace("$","");
+  document.getElementById("luckDisplay").textContent = totalLuck();
+}
+
+/* ================= RENDER: SHOP ================= */
+function renderShop(){
+  const grid = document.getElementById("chestGrid");
+  grid.innerHTML = "";
+  CHESTS.forEach(chest=>{
+    const el = document.createElement("div");
+    el.className = "chest-card";
+    el.innerHTML = `
+      <div class="chest-icon">${chest.icon}</div>
+      <div class="chest-name">${chest.name}</div>
+      <div class="chest-desc">${chest.desc}</div>
+      <div class="chest-price">${fmt(chest.price)}</div>
+      <button class="buy-btn" ${state.money < chest.price ? "disabled":""}>Buy</button>
+      <span class="odds-link">view odds</span>
+    `;
+    el.querySelector(".buy-btn").onclick = ()=>buyChest(chest);
+    el.querySelector(".odds-link").onclick = ()=>showOdds(chest);
+    grid.appendChild(el);
+  });
+  renderPending();
+}
+
+function buyChest(chest){
+  if(state.money < chest.price) return;
+  state.money -= chest.price;
+  state.pending.push({uid:nextUid(), chestId:chest.id});
+  saveState();
+  renderTop();
+  renderShop();
+  toast(`Bought ${chest.name}`);
+}
+
+function renderPending(){
+  const row = document.getElementById("pendingRow");
+  row.innerHTML = "";
+  state.pending.forEach(p=>{
+    const chest = CHESTS.find(c=>c.id===p.chestId);
+    const el = document.createElement("div");
+    el.className = "pending-chest";
+    el.innerHTML = `${chest.icon}<span class="tag">OPEN</span>`;
+    el.title = chest.name;
+    el.onclick = ()=>openModalFor(p, chest);
+    row.appendChild(el);
+  });
+}
+
+/* ================= ODDS MODAL ================= */
+function showOdds(chest){
+  document.getElementById("oddsTitle").textContent = chest.name + " Odds";
+  const tbl = document.getElementById("oddsTable");
+  let rows = `<tr><th>Result</th><th>Chance</th></tr>`;
+  const entries = Object.entries(chest.odds);
+  const moneyWeight = chest.money || 0;
+  const total = entries.reduce((s,[,w])=>s+w,0) + moneyWeight;
+  entries.forEach(([cls,w])=>{
+    rows += `<tr><td style="color:${CLASSES[cls].color}">${CLASSES[cls].label}</td><td>${((w/total)*100).toFixed(1)}%</td></tr>`;
+  });
+  if(moneyWeight){
+    rows += `<tr><td style="color:var(--gold)">💵 Cash payout</td><td>${((moneyWeight/total)*100).toFixed(1)}%</td></tr>`;
+  }
+  tbl.innerHTML = rows;
+  document.getElementById("oddsModalBg").style.display = "flex";
+}
+document.getElementById("closeOddsBtn").onclick = ()=>{
+  document.getElementById("oddsModalBg").style.display = "none";
+};
+
+/* ================= OPEN MODAL / REEL ================= */
+let currentPending = null;
+let currentChest = null;
+let rolledResult = null; // {type:'glove'|'money', cls, name, amount}
+
+function openModalFor(p, chest){
+  currentPending = p;
+  currentChest = chest;
+  rolledResult = null;
+  document.getElementById("modalTitle").textContent = chest.name;
+  document.getElementById("resultBox").classList.remove("show");
+  document.getElementById("openBtn").disabled = false;
+  document.getElementById("openBtn").textContent = "Open Case";
+  buildIdleReel(chest);
+  document.getElementById("openModalBg").style.display = "flex";
+}
+
+function buildIdleReel(chest){
+  const strip = document.getElementById("reelStrip");
+  strip.style.transition = "none";
+  strip.style.transform = "translateX(0)";
+  strip.innerHTML = "";
+  const pool = Object.keys(chest.odds);
+  for(let i=0;i<12;i++){
+    const cls = pool[Math.floor(Math.random()*pool.length)];
+    strip.appendChild(makeReelItem(cls));
+  }
+}
+
+function makeReelItem(cls){
+  const div = document.createElement("div");
+  div.className = "reel-item";
+  div.style.setProperty("--class-color", CLASSES[cls].color);
+  div.innerHTML = `${CLASSES[cls].emoji}<div class="rlabel">${cls}</div>`;
+  return div;
+}
+
+document.getElementById("openBtn").onclick = ()=>{
+  document.getElementById("openBtn").disabled = true;
+
+  // determine luck bonus: shift odds slightly toward better classes based on equipped luck
+  const luck = totalLuck();
+  const odds = Object.assign({}, currentChest.odds);
+  if(currentChest.money) odds["money"] = currentChest.money;
+  // luck softly boosts the two highest classes present, small effect only
+  const order = ["E","D","C","B","A","S","X"];
+  const present = order.filter(c=>odds[c]!==undefined);
+  if(luck>0 && present.length>1){
+    const top = present[present.length-1];
+    const second = present[present.length-2];
+    const boost = Math.min(luck*0.4, odds[top]*0.6); // capped, gentle
+    odds[top] += boost;
+    if(odds[second]!==undefined) odds[second] = Math.max(0.1, odds[second]-boost*0.5);
+  }
+
+  const pick = weightedPick(odds);
+
+  if(pick === "money"){
+    const amount = Math.round(currentChest.price * (0.3 + Math.random()*0.9));
+    rolledResult = {type:"money", amount};
+  } else {
+    const name = randomGloveName(pick);
+    rolledResult = {type:"glove", cls:pick, name};
+  }
+
+  spinReelTo(rolledResult);
+};
+
+function spinReelTo(result){
+  const strip = document.getElementById("reelStrip");
+  const viewport = strip.parentElement;
+  const itemW = 88+12; // width + margins
+  const totalItems = 40;
+  const landIndex = 32; // near the end, so it scrolls far before landing
+
+  strip.innerHTML = "";
+  const pool = Object.keys(currentChest.odds);
+  for(let i=0;i<totalItems;i++){
+    if(i === landIndex){
+      const cls = result.type==="money" ? (pool[pool.length-1]) : result.cls;
+      const item = makeReelItem(cls);
+      if(result.type==="money"){
+        item.innerHTML = `💵<div class="rlabel">CASH</div>`;
+        item.style.setProperty("--class-color","var(--gold)");
+      }
+      strip.appendChild(item);
+    } else {
+      const cls = pool[Math.floor(Math.random()*pool.length)];
+      strip.appendChild(makeReelItem(cls));
+    }
+  }
+
+  const viewportCenter = viewport.clientWidth/2;
+  const targetX = viewportCenter - (landIndex*itemW + itemW/2) + (Math.random()*30-15);
+
+  strip.style.transition = "none";
+  strip.style.transform = "translateX(0px)";
+  // force reflow
+  void strip.offsetWidth;
+  strip.style.transition = "transform 3.4s cubic-bezier(0.12,0.75,0.1,1)";
+  strip.style.transform = `translateX(${targetX}px)`;
+
+  setTimeout(()=>{
+    showResult(result);
+  }, 3500);
+}
+
+function showResult(result){
+  const box = document.getElementById("resultBox");
+  if(result.type==="money"){
+    document.getElementById("resultEmoji").textContent = "💵";
+    document.getElementById("resultName").textContent = fmt(result.amount);
+    document.getElementById("resultClass").textContent = "Cash payout";
+    document.getElementById("resultClass").style.color = "var(--gold)";
+  } else {
+    const c = CLASSES[result.cls];
+    document.getElementById("resultEmoji").textContent = c.emoji;
+    document.getElementById("resultName").textContent = result.name;
+    document.getElementById("resultClass").textContent = c.label;
+    document.getElementById("resultClass").style.color = c.color.startsWith("var")? "#ffd23a" : c.color;
+  }
+  box.classList.add("show");
+  document.getElementById("openBtn").textContent = "Collect";
+  document.getElementById("openBtn").disabled = false;
+  document.getElementById("openBtn").onclick = collectResult;
+}
+
+function collectResult(){
+  if(rolledResult.type==="money"){
+    state.money += rolledResult.amount;
+    toast(`+${fmt(rolledResult.amount)}`);
+  } else {
+    state.inventory.push({
+      uid:nextUid(), cls:rolledResult.cls, name:rolledResult.name, equipped:false
+    });
+    toast(`Got ${rolledResult.name} (${CLASSES[rolledResult.cls].label})`);
+  }
+  state.pending = state.pending.filter(p=>p.uid !== currentPending.uid);
+  saveState();
+  renderTop();
+  renderShop();
+  renderInventory();
+  closeOpenModal();
+}
+
+function closeOpenModal(){
+  document.getElementById("openModalBg").style.display = "none";
+}
+document.getElementById("closeModalBtn").onclick = closeOpenModal;
+
+/* ================= INVENTORY ================= */
+function renderInventory(){
+  const grid = document.getElementById("gloveGrid");
+  const search = document.getElementById("invSearch").value.trim().toLowerCase();
+  const sort = document.getElementById("invSort").value;
+
+  let items = state.inventory.filter(g=>g.name.toLowerCase().includes(search));
+
+  const order = ["X","S","A","B","C","D","E"];
+  if(sort==="class") items.sort((a,b)=>order.indexOf(a.cls)-order.indexOf(b.cls));
+  else if(sort==="name") items.sort((a,b)=>a.name.localeCompare(b.name));
+  else if(sort==="value") items.sort((a,b)=>CLASSES[b.cls].value-CLASSES[a.cls].value);
+
+  if(items.length===0){
+    grid.innerHTML = `<div class="inv-empty">No gloves yet — open a case from the Shop to get started.</div>`;
+    return;
+  }
+
+  grid.innerHTML = "";
+  items.forEach(g=>{
+    const c = CLASSES[g.cls];
+    const el = document.createElement("div");
+    el.className = "glove-card class-"+g.cls + (g.equipped ? " equipped":"");
+    el.style.setProperty("--class-color", c.color);
+    const resell = Math.round(c.value*0.05);
+    el.innerHTML = `
+      <div class="class-badge">${c.label}</div>
+      <div class="glove-emoji">${c.emoji}</div>
+      <div class="glove-name">${g.name}</div>
+      <div class="stat-row"><span>Luck Boost</span><b>+${c.luck}</b></div>
+      <div class="stat-row"><span>Value</span><b>${fmt(c.value)}</b></div>
+      <div class="stat-row"><span>Resell</span><b>${fmt(resell)}</b></div>
+      <div class="glove-actions">
+        <button class="${g.equipped?'btn-unequip':'btn-equip'}">${g.equipped?'Unequip':'Equip'}</button>
+        <button class="btn-sell">Sell</button>
+      </div>
+    `;
+    el.querySelector(g.equipped?".btn-unequip":".btn-equip").onclick = ()=>toggleEquip(g.uid);
+    el.querySelector(".btn-sell").onclick = ()=>sellGlove(g.uid);
+    grid.appendChild(el);
+  });
+}
+
+function toggleEquip(uid){
+  const g = state.inventory.find(x=>x.uid===uid);
+  if(!g) return;
+  g.equipped = !g.equipped;
+  saveState();
+  renderTop();
+  renderInventory();
+}
+
+function sellGlove(uid){
+  const idx = state.inventory.findIndex(x=>x.uid===uid);
+  if(idx<0) return;
+  const g = state.inventory[idx];
+  const resell = Math.round(CLASSES[g.cls].value*0.05);
+  state.inventory.splice(idx,1);
+  state.money += resell;
+  saveState();
+  renderTop();
+  renderInventory();
+  renderUpgrade();
+  toast(`Sold ${g.name} for ${fmt(resell)}`);
+}
+
+document.getElementById("invSearch").addEventListener("input", renderInventory);
+document.getElementById("invSort").addEventListener("change", renderInventory);
+
+/* ================= UPGRADE ================= */
+function countClass(cls){
+  return state.inventory.filter(g=>g.cls===cls).length;
+}
+
+function renderUpgrade(){
+  const list = document.getElementById("recipeList");
+  list.innerHTML = "";
+  RECIPES.forEach(r=>{
+    const resultC = CLASSES[r.result];
+    const needParts = Object.entries(r.need).map(([cls,n])=>{
+      const have = countClass(cls);
+      const ok = have>=n;
+      return `<div class="need-item"><div class="n ${ok?'ok':'bad'}">${have}/${n}</div><div style="color:${CLASSES[cls].color.startsWith('var')?'#ccc':CLASSES[cls].color}">${cls}</div></div>`;
+    }).join("");
+    const canUpgrade = Object.entries(r.need).every(([cls,n])=>countClass(cls)>=n);
+
+    const el = document.createElement("div");
+    el.className = "recipe-card";
+    el.innerHTML = `
+      <div class="recipe-need">${needParts}</div>
+      <div class="recipe-arrow">→</div>
+      <div class="recipe-result">
+        <div style="font-size:26px;">${resultC.emoji}</div>
+        <div style="font-size:11px;color:${resultC.color.startsWith('var')?'#ffd23a':resultC.color};font-weight:800;">${resultC.label}</div>
+      </div>
+      <button class="recipe-btn" ${canUpgrade?"":"disabled"}>${r.label}</button>
+    `;
+    el.querySelector(".recipe-btn").onclick = ()=>doUpgrade(r);
+    list.appendChild(el);
+  });
+}
+
+function doUpgrade(recipe){
+  // remove required gloves
+  Object.entries(recipe.need).forEach(([cls,n])=>{
+    let removed = 0;
+    state.inventory = state.inventory.filter(g=>{
+      if(g.cls===cls && removed<n){ removed++; return false; }
+      return true;
+    });
+  });
+  const name = randomGloveName(recipe.result);
+  state.inventory.push({uid:nextUid(), cls:recipe.result, name, equipped:false});
+  saveState();
+  renderTop();
+  renderInventory();
+  renderUpgrade();
+  toast(`Upgraded into ${name} (${CLASSES[recipe.result].label})!`);
+}
+
+/* ================= TABS ================= */
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.onclick = ()=>{
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    tab.classList.add("active");
+    ["shop","inventory","upgrade"].forEach(name=>{
+      document.getElementById("tab-"+name).style.display = (name===tab.dataset.tab)?"block":"none";
+    });
+    if(tab.dataset.tab==="inventory") renderInventory();
+    if(tab.dataset.tab==="upgrade") renderUpgrade();
+  };
+});
+
+/* ================= INIT ================= */
+loadState();
+renderTop();
+renderShop();
+renderInventory();
+renderUpgrade();
+</script>
+</body>
+</html>
