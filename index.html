@@ -346,6 +346,18 @@
     <div class="stats">
       <div class="chip money"><span class="ic">💰</span><span id="moneyDisplay">0</span></div>
       <div class="chip luck"><span class="ic">🍀</span><span id="luckDisplay">0</span> luck</div>
+      <div class="chip" id="debugToggle" style="cursor:pointer;opacity:0.55;" title="Debug tools">⚙️</div>
+    </div>
+  </div>
+ 
+  <div class="panel" id="debugPanel" style="display:none;margin-bottom:14px;padding:14px 16px;">
+    <div class="section-title" style="margin-bottom:10px;">DEBUG TOOLS (testing only)</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+      <button class="buy-btn" style="width:auto;padding:8px 16px;" id="debugAdd1k">+$1,000</button>
+      <button class="buy-btn" style="width:auto;padding:8px 16px;" id="debugAdd100k">+$100,000</button>
+      <button class="buy-btn" style="width:auto;padding:8px 16px;" id="debugAdd1m">+$1,000,000</button>
+      <button class="btn-close" style="padding:8px 16px;border-radius:9px;font-weight:800;cursor:pointer;" id="debugClearInv">Clear Inventory</button>
+      <button class="btn-close" style="padding:8px 16px;border-radius:9px;font-weight:800;cursor:pointer;background:#5c2f2f;color:#ffd9d9;" id="debugReset">Full Reset</button>
     </div>
   </div>
  
@@ -475,7 +487,7 @@ const CHESTS = [
   {id:"robux",   name:"Robux Chest",   price:15000,  icon:"💚", desc:"Chance of a cash payout",
     odds:{D:5,C:18,B:27,A:30,S:5},money:15},
   {id:"plasma",  name:"Plasma Chest",  price:40000,  icon:"🔷", desc:"Strong, but not too OP",
-    odds:{C:10,B:25,A:35,S:20,X:10}},
+    odds:{C:11.10,B:27.75,A:38.85,S:22.20,X:0.09}},
   {id:"ember",   name:"Ember Crate",   price:100000, icon:"🔥", desc:"Best chest — real B floor, real X shot",
     odds:{B:25,A:25,S:40,X:10}}
 ];
@@ -601,10 +613,10 @@ function showOdds(chest){
   const moneyWeight = chest.money || 0;
   const total = entries.reduce((s,[,w])=>s+w,0) + moneyWeight;
   entries.forEach(([cls,w])=>{
-    rows += `<tr><td style="color:${CLASSES[cls].color}">${CLASSES[cls].label}</td><td>${((w/total)*100).toFixed(1)}%</td></tr>`;
+    rows += `<tr><td style="color:${CLASSES[cls].color}">${CLASSES[cls].label}</td><td>${((w/total)*100).toFixed(2)}%</td></tr>`;
   });
   if(moneyWeight){
-    rows += `<tr><td style="color:var(--gold)">💵 Cash payout</td><td>${((moneyWeight/total)*100).toFixed(1)}%</td></tr>`;
+    rows += `<tr><td style="color:var(--gold)">💵 Cash payout</td><td>${((moneyWeight/total)*100).toFixed(2)}%</td></tr>`;
   }
   tbl.innerHTML = rows;
   document.getElementById("oddsModalBg").style.display = "flex";
@@ -911,6 +923,40 @@ function doUpgrade(recipe){
   renderUpgrade();
   toast(`Upgraded into ${name} (${CLASSES[recipe.result].label})!`);
 }
+ 
+/* ================= DEBUG PANEL ================= */
+document.getElementById("debugToggle").onclick = ()=>{
+  const p = document.getElementById("debugPanel");
+  p.style.display = (p.style.display==="none") ? "block" : "none";
+};
+function addMoney(n){
+  state.money += n;
+  saveState();
+  renderTop();
+  renderShop();
+  toast(`+${fmt(n)} (debug)`);
+}
+document.getElementById("debugAdd1k").onclick = ()=>addMoney(1000);
+document.getElementById("debugAdd100k").onclick = ()=>addMoney(100000);
+document.getElementById("debugAdd1m").onclick = ()=>addMoney(1000000);
+document.getElementById("debugClearInv").onclick = ()=>{
+  state.inventory = [];
+  saveState();
+  renderTop();
+  renderInventory();
+  renderUpgrade();
+  toast("Inventory cleared (debug)");
+};
+document.getElementById("debugReset").onclick = ()=>{
+  if(!confirm("Full reset — wipes money, inventory and pending chests. Continue?")) return;
+  state = {money:500, inventory:[], pending:[]};
+  saveState();
+  renderTop();
+  renderShop();
+  renderInventory();
+  renderUpgrade();
+  toast("Full reset done");
+};
  
 /* ================= TABS ================= */
 document.querySelectorAll(".tab").forEach(tab=>{
