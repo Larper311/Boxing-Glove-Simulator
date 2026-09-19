@@ -133,7 +133,7 @@
   .recipe-btn{margin-left:auto;padding:11px 20px;border:none;border-radius:10px;font-weight:800;background:linear-gradient(135deg,#ff7a4a,var(--accent));color:#2a0a04;cursor:pointer;font-size:13px;}
   .recipe-btn:disabled{background:#3a2a24;color:#7a655d;cursor:not-allowed;}
   .modal-bg{position:fixed;inset:0;background:rgba(6,1,1,0.82);backdrop-filter:blur(5px);display:flex;align-items:center;justify-content:center;z-index:60;padding:16px;}
-  .modal{background:linear-gradient(180deg,#2c110b,#170605);border:1px solid var(--line);border-radius:20px;padding:24px;width:100%;max-width:660px;text-align:center;box-shadow:0 25px 60px rgba(0,0,0,0.6);}
+  .modal{background:linear-gradient(180deg,#2c110b,#170605);border:1px solid var(--line);border-radius:20px;padding:24px;width:100%;max-width:660px;text-align:center;box-shadow:0 25px 60px rgba(0,0,0,0.6);max-height:90vh;overflow-y:auto;}
   .modal h3{margin:0 0 5px;font-size:17px;} .modal .sub{color:var(--ink-dim);font-size:12.5px;margin-bottom:16px;}
   .reel-viewport{position:relative;height:138px;overflow:hidden;border-radius:15px;background:radial-gradient(ellipse at 50% 120%,rgba(255,90,54,0.15),transparent 60%),var(--bg-0);
     border:1px solid var(--line);margin-bottom:18px;box-shadow:inset 0 0 35px rgba(0,0,0,0.55);}
@@ -158,13 +158,14 @@
     box-shadow:0 0 16px var(--gold);transform:translateX(-1.5px);z-index:7;}
   .reel-center-line::before,.reel-center-line::after{content:'';position:absolute;left:50%;transform:translateX(-50%);border:9px solid transparent;}
   .reel-center-line::before{top:-4px;border-top-color:var(--gold);} .reel-center-line::after{bottom:-4px;border-bottom-color:var(--gold);}
-  .multi-reel-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:18px;}
-  .multi-col{width:155px;} .multi-col .mc-label{font-size:11px;font-weight:800;color:var(--ink-dim);margin-bottom:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .multi-col .reel-viewport{height:100px;margin-bottom:8px;} .multi-col .reel-item{width:76px;height:84px;font-size:26px;margin:0 5px;}
+  .multi-reel-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:18px;max-height:55vh;overflow-y:auto;padding:8px;}
+  .multi-col{width:140px;flex-shrink:0;}
+  .multi-col .mc-label{font-size:11px;font-weight:800;color:var(--ink-dim);margin-bottom:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .multi-col .reel-viewport{height:90px;margin-bottom:8px;} .multi-col .reel-item{width:70px;height:78px;font-size:24px;margin:0 4px;}
   .multi-col .mc-result{font-size:11px;font-weight:800;min-height:16px;color:var(--ink-dim);} .multi-col .mc-result.ready{color:#fff;}
   .result-box{display:none;margin-bottom:16px;} .result-box.show{display:block;}
   .result-emoji{font-size:52px;} .result-name{font-weight:800;font-size:18px;margin-top:5px;} .result-class{font-size:12px;color:var(--ink-dim);margin-top:3px;}
-  .modal-actions{display:flex;gap:11px;justify-content:center;flex-wrap:wrap;}
+  .modal-actions{display:flex;gap:11px;justify-content:center;flex-wrap:wrap;position:sticky;bottom:0;background:linear-gradient(180deg,transparent,#170605 30%);padding-top:12px;}
   .modal-actions button{padding:11px 22px;border:none;border-radius:10px;font-weight:800;cursor:pointer;font-size:13.5px;}
   .btn-open{background:linear-gradient(135deg,#ff7a4a,var(--accent));color:#2a0a04;} .btn-close{background:#3a2622;color:var(--ink);}
   .btn-open:disabled{background:#3a2a24;color:#7a655d;cursor:not-allowed;}
@@ -206,7 +207,6 @@
     background:conic-gradient(from 0deg,#ffd23a,#ff5fd0,#5fd0ff,#7bff9e,#ffd23a);animation:sSpin 2.8s linear infinite;opacity:0.3;filter:blur(18px);}
   .ach-popup .ap-icon{font-size:32px;flex:0 0 auto;} .ach-popup .ap-label{font-size:10px;font-weight:800;color:var(--gold);letter-spacing:.5px;}
   .ach-popup .ap-name{font-size:14px;font-weight:800;color:#fff;}
-  /* X class special effect */
   .x-flash{position:fixed;inset:0;pointer-events:none;z-index:200;background:radial-gradient(circle,rgba(255,210,58,0.25),transparent 70%);
     opacity:0;animation:xFlash 1.8s ease-out forwards;}
   @keyframes xFlash{0%{opacity:0;}15%{opacity:1;}100%{opacity:0;}}
@@ -233,6 +233,7 @@
       <button class="buy-btn" style="width:auto;padding:9px 16px;" id="debugAdd1k">+$1k</button>
       <button class="buy-btn" style="width:auto;padding:9px 16px;" id="debugAdd100k">+$100k</button>
       <button class="buy-btn" style="width:auto;padding:9px 16px;" id="debugAdd1m">+$1M</button>
+      <button class="buy-btn" style="width:auto;padding:9px 16px;" id="debugAdd100m">+$100M</button>
       <button class="btn-close" style="padding:9px 16px;border-radius:10px;font-weight:800;cursor:pointer;" id="debugClearInv">Clear Inv</button>
       <button class="btn-close" style="padding:9px 16px;border-radius:10px;font-weight:800;cursor:pointer;background:#5c2f2f;color:#ffd9d9;" id="debugReset">Reset</button>
       <button class="btn-close" style="padding:9px 16px;border-radius:10px;font-weight:800;cursor:pointer;background:#7a1a1a;color:#ffbdbd;" id="debugErase">⚠ Erase All</button>
@@ -286,7 +287,6 @@
   </div>
 </div>
 
-<!-- Modals (same structure as before) -->
 <div class="modal-bg" id="openModalBg" style="display:none;">
   <div class="modal">
     <h3 id="modalTitle">Case</h3>
@@ -305,7 +305,7 @@
 </div>
 
 <div class="modal-bg" id="multiModalBg" style="display:none;">
-  <div class="modal" style="max-width:960px;">
+  <div class="modal" style="max-width:980px;">
     <h3>Multi Open</h3>
     <div class="sub">All reels will land, then collect everything.</div>
     <div class="multi-reel-row" id="multiReelRow"></div>
@@ -347,6 +347,7 @@
           </div>
         </div>
         <div style="margin-top:10px;font-size:12px;color:var(--ink-dim);" id="detailStatus">Unequipped</div>
+        <div style="margin-top:6px;font-size:13px;font-weight:700;" id="detailLuck">Luck: +0</div>
       </div>
     </div>
     <div class="modal-actions" style="margin-top:18px;">
@@ -361,7 +362,6 @@
 <div id="achToastLayer" class="ach-toast-layer"></div>
 
 <script>
-/* ================= DATA ================= */
 const CLASSES = {
   E:{label:"Class E", color:"var(--c-E)", luck:0,  emoji:"🥊"},
   D:{label:"Class D", color:"var(--c-D)", luck:1,  emoji:"🥊"},
@@ -374,33 +374,33 @@ const CLASSES = {
 
 const GLOVE_DATA = {
   // E
-  "Basic Red":{cls:"E",value:40},"Basic Blue":{cls:"E",value:45},"Basic White":{cls:"E",value:50},
-  "Basic Black":{cls:"E",value:55},"Rust":{cls:"E",value:70},"Faded":{cls:"E",value:35},"Torn":{cls:"E",value:30},
-  "Scrap":{cls:"E",value:42},"Dusty":{cls:"E",value:38},
+  "Basic Red":{cls:"E",value:40,luck:0},"Basic Blue":{cls:"E",value:45,luck:0},"Basic White":{cls:"E",value:50,luck:0},
+  "Basic Black":{cls:"E",value:55,luck:0},"Rust":{cls:"E",value:70,luck:0},"Faded":{cls:"E",value:35,luck:0},"Torn":{cls:"E",value:30,luck:0},
+  "Scrap":{cls:"E",value:42,luck:0},"Dusty":{cls:"E",value:38,luck:0},"Cash Scrap":{cls:"E",value:180,luck:-5},
   // D
-  "Rookie":{cls:"D",value:220},"Scrapper":{cls:"D",value:280},"Trainee":{cls:"D",value:310},
-  "Denim":{cls:"D",value:350},"Sandstone":{cls:"D",value:390},"Patchwork":{cls:"D",value:260},"Street":{cls:"D",value:340},
-  "Grit":{cls:"D",value:300},"Ironclad":{cls:"D",value:370},
+  "Rookie":{cls:"D",value:220,luck:1},"Scrapper":{cls:"D",value:280,luck:1},"Trainee":{cls:"D",value:310,luck:1},
+  "Denim":{cls:"D",value:350,luck:1},"Sandstone":{cls:"D",value:390,luck:1},"Patchwork":{cls:"D",value:260,luck:1},"Street":{cls:"D",value:340,luck:1},
+  "Grit":{cls:"D",value:300,luck:1},"Ironclad":{cls:"D",value:370,luck:1},"Cash Rookie":{cls:"D",value:950,luck:-5},
   // C
-  "Full Metal":{cls:"C",value:1600},"Night":{cls:"C",value:1900},"Bag":{cls:"C",value:2100},
-  "Cyan Wrap":{cls:"C",value:2400},"Sans":{cls:"C",value:2700},"Carbon":{cls:"C",value:2300},"Phantom":{cls:"C",value:2500},
-  "Shadow":{cls:"C",value:2200},"Pulse":{cls:"C",value:2600},
+  "Full Metal":{cls:"C",value:1600,luck:2},"Night":{cls:"C",value:1900,luck:2},"Bag":{cls:"C",value:2100,luck:2},
+  "Cyan Wrap":{cls:"C",value:2400,luck:2},"Sans":{cls:"C",value:2700,luck:2},"Carbon":{cls:"C",value:2300,luck:2},"Phantom":{cls:"C",value:2500,luck:2},
+  "Shadow":{cls:"C",value:2200,luck:2},"Pulse":{cls:"C",value:2600,luck:2},"Cash Metal":{cls:"C",value:6800,luck:-5},
   // B
-  "Marble":{cls:"B",value:12000},"Gridiron":{cls:"B",value:14500},"Marte":{cls:"B",value:16000},
-  "Hardwood":{cls:"B",value:17500},"Pact":{cls:"B",value:19000},"Viper":{cls:"B",value:15500},"Eclipse":{cls:"B",value:18000},
-  "Titan":{cls:"B",value:17000},"Blaze":{cls:"B",value:18500},
+  "Marble":{cls:"B",value:12000,luck:4},"Gridiron":{cls:"B",value:14500,luck:4},"Marte":{cls:"B",value:16000,luck:4},
+  "Hardwood":{cls:"B",value:17500,luck:4},"Pact":{cls:"B",value:19000,luck:4},"Viper":{cls:"B",value:15500,luck:4},"Eclipse":{cls:"B",value:18000,luck:4},
+  "Titan":{cls:"B",value:17000,luck:4},"Blaze":{cls:"B",value:18500,luck:4},"Cash Marble":{cls:"B",value:48000,luck:-5},
   // A
-  "Noobi":{cls:"A",value:65000},"Aw Man":{cls:"A",value:72000},"Giraffe":{cls:"A",value:80000},
-  "Owl":{cls:"A",value:88000},"Fury":{cls:"A",value:95000},"Nebula":{cls:"A",value:85000},"Crimson":{cls:"A",value:92000},
-  "Aurora":{cls:"A",value:90000},"Spectre":{cls:"A",value:87000},
+  "Noobi":{cls:"A",value:65000,luck:7},"Aw Man":{cls:"A",value:72000,luck:7},"Giraffe":{cls:"A",value:80000,luck:7},
+  "Owl":{cls:"A",value:88000,luck:7},"Fury":{cls:"A",value:95000,luck:7},"Nebula":{cls:"A",value:85000,luck:7},"Crimson":{cls:"A",value:92000,luck:7},
+  "Aurora":{cls:"A",value:90000,luck:7},"Spectre":{cls:"A",value:87000,luck:7},"Cash Fury":{cls:"A",value:210000,luck:-5},
   // S
-  "Dragon":{cls:"S",value:320000},"Biohazard":{cls:"S",value:380000},"Wave":{cls:"S",value:420000},
-  "Skies":{cls:"S",value:460000},"Mummy":{cls:"S",value:500000},"Inferno":{cls:"S",value:440000},"Void":{cls:"S",value:480000},
-  "Phoenix":{cls:"S",value:470000},"Abyss":{cls:"S",value:490000},
+  "Dragon":{cls:"S",value:320000,luck:11},"Biohazard":{cls:"S",value:380000,luck:11},"Wave":{cls:"S",value:420000,luck:11},
+  "Skies":{cls:"S",value:460000,luck:11},"Mummy":{cls:"S",value:500000,luck:11},"Inferno":{cls:"S",value:440000,luck:11},"Void":{cls:"S",value:480000,luck:11},
+  "Phoenix":{cls:"S",value:470000,luck:11},"Abyss":{cls:"S",value:490000,luck:11},"Cash Dragon":{cls:"S",value:1100000,luck:-5},
   // X
-  "Overseer":{cls:"X",value:3200000},"Reactor":{cls:"X",value:3600000},"Voidbringer":{cls:"X",value:4100000},
-  "Ember Core":{cls:"X",value:4500000},"Plasma King":{cls:"X",value:5000000},"Celestial":{cls:"X",value:4800000},"Apex":{cls:"X",value:5200000},
-  "Eternal":{cls:"X",value:5500000},"Omega":{cls:"X",value:5800000}
+  "Overseer":{cls:"X",value:3200000,luck:16},"Reactor":{cls:"X",value:3600000,luck:16},"Voidbringer":{cls:"X",value:4100000,luck:16},
+  "Ember Core":{cls:"X",value:4500000,luck:16},"Plasma King":{cls:"X",value:5000000,luck:16},"Celestial":{cls:"X",value:4800000,luck:16},"Apex":{cls:"X",value:5200000,luck:16},
+  "Eternal":{cls:"X",value:5500000,luck:16},"Omega":{cls:"X",value:5800000,luck:16},"Cash Overseer":{cls:"X",value:12500000,luck:-5}
 };
 
 const GLOVE_NAMES = {};
@@ -442,17 +442,17 @@ const ACHIEVEMENTS = [
   {id:"val_10m",name:"Vault Overlord",desc:"Inventory worth $10M+",icon:"🏦",tier:"legend",check:s=>invValue(s)>=10000000},
   {id:"open_50",name:"Case Addict",desc:"Open 50 cases",icon:"📦",tier:"mid",check:s=>(s.stats?.casesOpened||0)>=50},
   {id:"open_200",name:"Case Machine",desc:"Open 200 cases",icon:"🏭",tier:"high",check:s=>(s.stats?.casesOpened||0)>=200},
+  {id:"open_1000",name:"Case God",desc:"Open 1000 cases",icon:"🏆",tier:"legend",check:s=>(s.stats?.casesOpened||0)>=1000},
   {id:"multi_10",name:"Speedrunner",desc:"Reach 10 multi-open",icon:"🚀",tier:"high",check:s=>(s.maxMulti||1)>=10},
   {id:"multi_25",name:"God Speed",desc:"Reach 25 multi-open",icon:"⚡",tier:"legend",check:s=>(s.maxMulti||1)>=25},
   {id:"multi_50",name:"Maximum Overdrive",desc:"Reach max 50 multi-open",icon:"👑",tier:"legend",check:s=>(s.maxMulti||1)>=50},
   {id:"equip_3",name:"Triple Threat",desc:"Unlock 3-glove equip",icon:"🔥",tier:"legend",check:s=>(s.maxEquip||2)>=3},
-  {id:"meme_999",name:"999 Club",desc:"Obtain 999 of the SAME glove (lifetime)",icon:"🗿",tier:"mythic",
-    check:s=>Object.values(s.gloveCounts||{}).some(c=>c>=999)}
+  {id:"meme_999",name:"999 Club",desc:"Obtain 999 of the SAME glove (lifetime)",icon:"🗿",tier:"mythic",check:s=>Object.values(s.gloveCounts||{}).some(c=>c>=999)},
+  {id:"neg_luck",name:"Cursed Hands",desc:"Equip a negative luck glove",icon:"😈",tier:"mid",check:s=>s.inventory.some(g=>g.equipped && (GLOVE_DATA[g.name]?.luck||0)<0)},
+  {id:"rich_seller",name:"Cash Cow",desc:"Sell gloves for total $1M+",icon:"🤑",tier:"high",check:s=>(s.stats?.totalSold||0)>=1000000}
 ];
 
-function invValue(s){
-  return (s.inventory||[]).reduce((sum,g)=>sum+(GLOVE_DATA[g.name]?.value||50),0);
-}
+function invValue(s){ return (s.inventory||[]).reduce((sum,g)=>sum+(GLOVE_DATA[g.name]?.value||50),0); }
 
 function generateStats(cls){
   const ranges={E:[-8,12],D:[-5,18],C:[-3,24],B:[0,30],A:[5,35],S:[10,40],X:[15,42]};
@@ -461,27 +461,32 @@ function generateStats(cls){
   return {str:rand(),spd:rand(),dex:rand(),end:rand()};
 }
 
-/* ================= STATE ================= */
 let state={
   money:500, inventory:[], pending:[], seenClasses:[], unlockedAch:[],
-  maxMulti:1, maxEquip:2, gloveCounts:{}, stats:{casesOpened:0}
+  maxMulti:1, maxEquip:2, gloveCounts:{}, stats:{casesOpened:0, totalSold:0}
 };
 
 function loadState(){
   try{
-    const raw=localStorage.getItem("gloveVaultState_v5");
+    const raw=localStorage.getItem("gloveVaultState_v6");
     if(raw){
       const p=JSON.parse(raw);
-      state=Object.assign({money:500,inventory:[],pending:[],seenClasses:[],unlockedAch:[],maxMulti:1,maxEquip:2,gloveCounts:{},stats:{casesOpened:0}},p);
+      state=Object.assign({money:500,inventory:[],pending:[],seenClasses:[],unlockedAch:[],maxMulti:1,maxEquip:2,gloveCounts:{},stats:{casesOpened:0,totalSold:0}},p);
     }
   }catch(e){}
 }
-function saveState(){ try{localStorage.setItem("gloveVaultState_v5",JSON.stringify(state));}catch(e){} }
+function saveState(){ try{localStorage.setItem("gloveVaultState_v6",JSON.stringify(state));}catch(e){} }
 
 let uidCounter=1;
 function nextUid(){return "u"+(uidCounter++)+"_"+Date.now().toString(36);}
 function fmt(n){return "$"+Math.round(n).toLocaleString();}
-function totalLuck(){return state.inventory.filter(g=>g.equipped).reduce((s,g)=>s+CLASSES[g.cls].luck,0);}
+function totalLuck(){
+  return state.inventory.filter(g=>g.equipped).reduce((s,g)=>{
+    const base = CLASSES[g.cls]?.luck || 0;
+    const extra = GLOVE_DATA[g.name]?.luck ?? base;
+    return s + extra;
+  },0);
+}
 function toast(msg){
   const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show");
   clearTimeout(toast._h); toast._h=setTimeout(()=>t.classList.remove("show"),2300);
@@ -494,8 +499,8 @@ function weightedPick(odds){
 }
 function randomGloveName(cls){const list=GLOVE_NAMES[cls]; return list[Math.floor(Math.random()*list.length)];}
 function getGloveValue(name){return GLOVE_DATA[name]?.value||50;}
+function getGloveLuck(name){return GLOVE_DATA[name]?.luck ?? (CLASSES[GLOVE_DATA[name]?.cls]?.luck||0);}
 
-/* Achievements */
 function checkAchievements(){
   let newly=[];
   ACHIEVEMENTS.forEach(a=>{
@@ -529,7 +534,6 @@ function renderAchievements(){
   });
 }
 
-/* X flash effect */
 function triggerXEffect(){
   const flash=document.createElement("div");
   flash.className="x-flash";
@@ -537,7 +541,6 @@ function triggerXEffect(){
   setTimeout(()=>flash.remove(),2000);
 }
 
-/* Render */
 function renderTop(){
   document.getElementById("moneyDisplay").textContent=fmt(state.money).replace("$","");
   document.getElementById("luckDisplay").textContent=totalLuck();
@@ -565,15 +568,15 @@ function renderShop(){
 }
 
 function getNextMultiPrice(){
+  // Nerfed pricing
   const level=state.maxMulti;
-  return Math.floor(1500 * Math.pow(1.48, level-1));
+  return Math.floor(900 * Math.pow(1.38, level-1));
 }
 
 function renderUpgrades(){
   const grid=document.getElementById("multiUpgradeGrid");
   grid.innerHTML="";
 
-  // Multi open
   if(state.maxMulti>=50){
     grid.innerHTML+=`<div class="upgrade-card"><div class="upgrade-title">Max Multi-Open</div><div class="upgrade-desc">50 cases at once</div><div class="upgrade-price">✓ MAX</div></div>`;
   } else {
@@ -594,11 +597,10 @@ function renderUpgrades(){
     grid.appendChild(el);
   }
 
-  // Equip 3 upgrade
   if(state.maxEquip>=3){
     grid.innerHTML+=`<div class="upgrade-card"><div class="upgrade-title">Triple Equip</div><div class="upgrade-desc">Equip 3 gloves at once</div><div class="upgrade-price">✓ OWNED</div></div>`;
   } else {
-    const price=2500000;
+    const price=1800000;
     const el=document.createElement("div");
     el.className="upgrade-card";
     el.innerHTML=`
@@ -623,7 +625,6 @@ function buyChest(chest){
   saveState(); renderTop(); renderShop(); toast(`Bought ${chest.name}`);
 }
 
-/* Select Mode + Select All */
 let selectMode=false, selectedPending=[];
 function renderPending(){
   const row=document.getElementById("pendingRow");
@@ -669,7 +670,7 @@ document.getElementById("selectModeBtn").onclick=()=>{
   renderPending();
 };
 document.getElementById("selectAllBtn").onclick=()=>{
-  if(!selectMode){ selectMode=true; }
+  if(!selectMode) selectMode=true;
   selectedPending=[];
   const limit=Math.min(state.pending.length, state.maxMulti);
   for(let i=0;i<limit;i++) selectedPending.push(state.pending[i].uid);
@@ -682,7 +683,6 @@ document.getElementById("multiOpenBtn").onclick=()=>{
   openMultiModal(selectedPending.slice());
 };
 
-/* Odds */
 function showOdds(chest){
   document.getElementById("oddsTitle").textContent=chest.name+" Odds";
   const tbl=document.getElementById("oddsTable");
@@ -699,19 +699,18 @@ function showOdds(chest){
 }
 document.getElementById("closeOddsBtn").onclick=()=>document.getElementById("oddsModalBg").style.display="none";
 
-/* Roll */
 function rollChest(chest){
   const luck=totalLuck();
   const odds=Object.assign({},chest.odds);
   if(chest.money) odds.money=chest.money;
   const order=["E","D","C","B","A","S","X"];
   const present=order.filter(c=>odds[c]!==undefined);
-  if(luck>0 && present.length>1){
+  if(luck!==0 && present.length>1){
     const top=present[present.length-1];
     const second=present[present.length-2];
-    const boost=Math.min(luck*0.35,odds[top]*0.5);
+    const boost=Math.min(Math.abs(luck)*0.35,odds[top]*0.5) * Math.sign(luck||1);
     odds[top]+=boost;
-    if(odds[second]!==undefined) odds[second]=Math.max(0.1,odds[second]-boost*0.5);
+    if(odds[second]!==undefined) odds[second]=Math.max(0.1,odds[second]-Math.abs(boost)*0.5);
   }
   const pick=weightedPick(odds);
   if(pick==="money") return {type:"money",amount:Math.round(chest.price*(0.3+Math.random()*0.9))};
@@ -750,24 +749,29 @@ function animateReel(stripEl,viewportEl,pool,result,itemW,onLanded){
   setTimeout(onLanded,5750);
 }
 
-/* Single */
-let currentPending=null,currentChest=null,rolledResult=null;
+let currentPending=null,currentChest=null,rolledResult=null,isSpinning=false;
 function openModalFor(p,chest){
-  currentPending=p; currentChest=chest; rolledResult=null;
+  currentPending=p; currentChest=chest; rolledResult=null; isSpinning=false;
   document.getElementById("modalTitle").textContent=chest.name;
   document.getElementById("resultBox").classList.remove("show");
   const btn=document.getElementById("openBtn");
+  const closeBtn=document.getElementById("closeModalBtn");
   btn.disabled=false; btn.textContent="Open Case"; btn.onclick=startSpin;
+  closeBtn.disabled=false;
   buildIdleReel(document.getElementById("reelStrip"),Object.keys(chest.odds));
   document.getElementById("openModalBg").style.display="flex";
 }
 function startSpin(){
+  isSpinning=true;
   document.getElementById("openBtn").disabled=true;
+  document.getElementById("closeModalBtn").disabled=true;
   rolledResult=rollChest(currentChest);
   const strip=document.getElementById("reelStrip");
   animateReel(strip,strip.parentElement,Object.keys(currentChest.odds),rolledResult,112,()=>showResult(rolledResult));
 }
 function showResult(result){
+  isSpinning=false;
+  document.getElementById("closeModalBtn").disabled=false;
   const box=document.getElementById("resultBox");
   if(result.type==="money"){
     document.getElementById("resultEmoji").textContent="💵";
@@ -800,17 +804,18 @@ function applyResult(result){
   } else {
     state.inventory.push({uid:nextUid(),cls:result.cls,name:result.name,equipped:false,stats:result.stats});
     if(!state.seenClasses.includes(result.cls)) state.seenClasses.push(result.cls);
-    // Lifetime count
     state.gloveCounts[result.name]=(state.gloveCounts[result.name]||0)+1;
     toast(`Got ${result.name} (${CLASSES[result.cls].label})`);
     if(result.cls==="X") triggerXEffect();
   }
 }
-function closeOpenModal(){document.getElementById("openModalBg").style.display="none";}
+function closeOpenModal(){
+  if(isSpinning) return;
+  document.getElementById("openModalBg").style.display="none";
+}
 document.getElementById("closeModalBtn").onclick=closeOpenModal;
 
-/* Multi */
-let multiSession=null;
+let multiSession=null, multiSpinning=false;
 function openMultiModal(uids){
   const row=document.getElementById("multiReelRow"); row.innerHTML="";
   const items=[];
@@ -830,17 +835,21 @@ function openMultiModal(uids){
     items.push({pendingUid:uid,chest,stripEl,viewportEl,resultEl,pool,result:null});
   });
   multiSession={items};
+  multiSpinning=false;
   document.getElementById("multiStartBtn").style.display="inline-block";
   document.getElementById("multiStartBtn").disabled=false;
   document.getElementById("multiStartBtn").textContent=items.length>1?"Open All":"Open Case";
   document.getElementById("multiCollectBtn").style.display="none";
+  document.getElementById("closeMultiModalBtn").disabled=false;
   document.getElementById("multiModalBg").style.display="flex";
 }
 document.getElementById("multiStartBtn").onclick=()=>{
   if(!multiSession) return;
+  multiSpinning=true;
   document.getElementById("multiStartBtn").disabled=true;
+  document.getElementById("closeMultiModalBtn").disabled=true;
   let remaining=multiSession.items.length;
-  const itemW=multiSession.items.length===1?112:86;
+  const itemW=multiSession.items.length===1?112:80;
   multiSession.items.forEach(entry=>{
     entry.result=rollChest(entry.chest);
     entry.resultEl.textContent="Rolling...";
@@ -855,8 +864,10 @@ document.getElementById("multiStartBtn").onclick=()=>{
       entry.resultEl.classList.add("ready");
       remaining--;
       if(remaining===0){
+        multiSpinning=false;
         document.getElementById("multiCollectBtn").style.display="inline-block";
         document.getElementById("multiStartBtn").style.display="none";
+        document.getElementById("closeMultiModalBtn").disabled=false;
       }
     });
   });
@@ -873,10 +884,12 @@ document.getElementById("multiCollectBtn").onclick=()=>{
   saveState(); renderTop(); renderShop(); renderInventory(); renderUpgrade();
   checkAchievements(); closeMultiModal();
 };
-function closeMultiModal(){document.getElementById("multiModalBg").style.display="none"; multiSession=null;}
+function closeMultiModal(){
+  if(multiSpinning) return;
+  document.getElementById("multiModalBg").style.display="none"; multiSession=null;
+}
 document.getElementById("closeMultiModalBtn").onclick=closeMultiModal;
 
-/* Inventory */
 function renderInventory(){
   const grid=document.getElementById("gloveGrid");
   const search=document.getElementById("invSearch").value.trim().toLowerCase();
@@ -892,6 +905,7 @@ function renderInventory(){
   items.forEach(g=>{
     const c=CLASSES[g.cls];
     const stats=g.stats||{str:0,spd:0,dex:0,end:0};
+    const luck=getGloveLuck(g.name);
     const el=document.createElement("div");
     el.className="glove-card class-"+g.cls+(g.equipped?" equipped":"");
     el.innerHTML=`
@@ -900,6 +914,7 @@ function renderInventory(){
       <div class="glove-name">${g.name}</div>
       <div class="stat-mini">STR ${stats.str} · SPD ${stats.spd}</div>
       <div class="stat-mini">DEX ${stats.dex} · END ${stats.end}</div>
+      <div class="stat-mini" style="color:${luck<0?'#ff8a7a':'#8fe0ff'}">Luck ${luck>=0?'+':''}${luck}</div>
       <div class="glove-actions">
         <button class="${g.equipped?'btn-unequip':'btn-equip'}">${g.equipped?'Unequip':'Equip'}</button>
         <button class="btn-sell">Sell</button>
@@ -918,6 +933,7 @@ function openDetail(uid){
   const c=CLASSES[g.cls];
   const stats=g.stats||{str:0,spd:0,dex:0,end:0};
   const val=getGloveValue(g.name);
+  const luck=getGloveLuck(g.name);
   const scale=45;
   document.getElementById("detailHero").textContent=c.emoji;
   document.getElementById("detailHero").style.setProperty("--class-color",c.color);
@@ -927,6 +943,8 @@ function openDetail(uid){
   document.getElementById("detailResell").textContent=fmt(Math.round(val*0.05));
   document.getElementById("detailStatus").textContent=g.equipped?"● Equipped":"Unequipped";
   document.getElementById("detailEquipBtn").textContent=g.equipped?"Unequip":"Equip";
+  document.getElementById("detailLuck").textContent=`Luck: ${luck>=0?'+':''}${luck}`;
+  document.getElementById("detailLuck").style.color = luck<0 ? "#ff8a7a" : "#8fe0ff";
 
   function bar(stat,cls){
     const v=stats[stat];
@@ -958,13 +976,13 @@ function sellGlove(uid){
   const resell=Math.round(getGloveValue(g.name)*0.05);
   state.inventory.splice(idx,1);
   state.money+=resell;
+  state.stats.totalSold = (state.stats.totalSold||0) + resell;
   saveState(); renderTop(); renderInventory(); renderUpgrade();
   checkAchievements(); toast(`Sold ${g.name} for ${fmt(resell)}`);
 }
 document.getElementById("invSearch").addEventListener("input",renderInventory);
 document.getElementById("invSort").addEventListener("change",renderInventory);
 
-/* Combine */
 function countClass(cls){return state.inventory.filter(g=>g.cls===cls).length;}
 function renderUpgrade(){
   const list=document.getElementById("recipeList"); list.innerHTML="";
@@ -1003,7 +1021,6 @@ function doUpgrade(recipe){
   checkAchievements(); toast(`Upgraded into ${name}!`);
 }
 
-/* Debug */
 document.getElementById("debugToggle").onclick=()=>{
   const p=document.getElementById("debugPanel");
   p.style.display=p.style.display==="none"?"block":"none";
@@ -1012,6 +1029,7 @@ function addMoney(n){state.money+=n;saveState();renderTop();renderShop();toast(`
 document.getElementById("debugAdd1k").onclick=()=>addMoney(1000);
 document.getElementById("debugAdd100k").onclick=()=>addMoney(100000);
 document.getElementById("debugAdd1m").onclick=()=>addMoney(1000000);
+document.getElementById("debugAdd100m").onclick=()=>addMoney(100000000);
 document.getElementById("debugClearInv").onclick=()=>{state.inventory=[];saveState();renderTop();renderInventory();renderUpgrade();toast("Cleared");};
 document.getElementById("debugReset").onclick=()=>{
   if(!confirm("Reset money/inventory/pending?")) return;
@@ -1020,14 +1038,13 @@ document.getElementById("debugReset").onclick=()=>{
 };
 document.getElementById("debugErase").onclick=()=>{
   if(!confirm("⚠ Erase EVERYTHING?")) return;
-  localStorage.removeItem("gloveVaultState_v5");
-  state={money:500,inventory:[],pending:[],seenClasses:[],unlockedAch:[],maxMulti:1,maxEquip:2,gloveCounts:{},stats:{casesOpened:0}};
+  localStorage.removeItem("gloveVaultState_v6");
+  state={money:500,inventory:[],pending:[],seenClasses:[],unlockedAch:[],maxMulti:1,maxEquip:2,gloveCounts:{},stats:{casesOpened:0,totalSold:0}};
   selectedPending=[];selectMode=false;
   saveState(); renderTop();renderShop();renderInventory();renderUpgrade();renderAchievements();
   toast("All data erased");
 };
 
-/* Tabs */
 document.querySelectorAll(".tab").forEach(tab=>{
   tab.onclick=()=>{
     document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
@@ -1041,7 +1058,6 @@ document.querySelectorAll(".tab").forEach(tab=>{
   };
 });
 
-/* Init */
 loadState();
 renderTop();
 renderShop();
