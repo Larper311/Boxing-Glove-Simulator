@@ -42,10 +42,10 @@
   .tab:hover:not(.active){color:var(--ink);}
   .panel{background:linear-gradient(180deg,var(--panel),var(--panel-2));border:1px solid var(--line);border-radius:18px;padding:18px;}
   .section-title{font-size:13px;font-weight:800;color:var(--ink-dim);margin:2px 0 12px;letter-spacing:0.4px;}
-  .multi-bar{display:none;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap;
+  .multi-bar{display:none;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap;
     background:linear-gradient(90deg,#2a1208,#1a0905);border:1px solid var(--gold);border-radius:13px;
     padding:11px 16px;font-weight:800;font-size:13px;color:var(--gold);box-shadow:0 0 20px rgba(255,178,56,0.15);}
-  .select-mode-btn{padding:9px 16px;border:none;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer;
+  .select-mode-btn{padding:9px 14px;border:none;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer;
     background:linear-gradient(135deg,#3a6b4a,#2a4a35);color:#d0ffd8;}
   .select-mode-btn.active{background:linear-gradient(135deg,#ff7a4a,var(--accent));color:#2a0a04;}
   .pending-row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;min-height:0;}
@@ -186,17 +186,30 @@
   .ach-card.tier-legend.unlocked{background:radial-gradient(130% 150% at 50% 0%,rgba(255,210,58,0.35),transparent 58%),linear-gradient(150deg,#0a0705,#1a0e05);
     border-color:rgba(255,210,58,0.6);box-shadow:0 0 28px rgba(255,90,54,0.35);}
   .ach-card.tier-legend.unlocked::before{content:"";position:absolute;inset:-65%;z-index:-1;background:conic-gradient(from 0deg,#ffd23a,#ff5a36,#ff5fd0,#5fd0ff,#ffd23a);animation:sSpin 3.2s linear infinite;opacity:0.4;filter:blur(16px);}
-  .ach-card.tier-epic.unlocked .ach-name,.ach-card.tier-legend.unlocked .ach-name{background:linear-gradient(90deg,#ffd23a,#ff5fd0,#5fd0ff,#ffd23a);background-size:200% auto;
+  .ach-card.tier-mythic.unlocked{
+    background:radial-gradient(130% 150% at 50% 0%,rgba(255,210,58,0.5),transparent 50%),linear-gradient(150deg,#1a0505,#0a0202);
+    border:2px solid #ffd23a;box-shadow:0 0 40px rgba(255,90,54,0.6),0 0 80px rgba(255,210,58,0.3);
+    animation:mythicPulse 2s ease-in-out infinite;
+  }
+  @keyframes mythicPulse{0%,100%{box-shadow:0 0 40px rgba(255,90,54,0.6),0 0 80px rgba(255,210,58,0.3);}50%{box-shadow:0 0 60px rgba(255,90,54,0.9),0 0 120px rgba(255,210,58,0.5);}}
+  .ach-card.tier-mythic.unlocked::before{content:"";position:absolute;inset:-80%;z-index:-1;
+    background:conic-gradient(from 0deg,#ffd23a,#ff5a36,#ff5fd0,#5fd0ff,#7bff9e,#ffd23a);animation:sSpin 2s linear infinite;opacity:0.5;filter:blur(20px);}
+  .ach-card.tier-epic.unlocked .ach-name,.ach-card.tier-legend.unlocked .ach-name,.ach-card.tier-mythic.unlocked .ach-name{
+    background:linear-gradient(90deg,#ffd23a,#ff5fd0,#5fd0ff,#ffd23a);background-size:200% auto;
     -webkit-background-clip:text;background-clip:text;color:transparent;animation:textShine 2.8s linear infinite;}
   .ach-toast-layer{position:fixed;bottom:22px;right:22px;z-index:100;display:flex;flex-direction:column;gap:12px;pointer-events:none;}
   .ach-popup{width:290px;padding:13px 15px;border-radius:14px;display:flex;gap:12px;align-items:center;background:linear-gradient(150deg,#2b1206,#160605);
     border:1.5px solid var(--gold);box-shadow:0 12px 30px rgba(0,0,0,0.55),0 0 24px rgba(255,178,56,0.28);
     transform:translateX(340px);opacity:0;transition:transform .45s cubic-bezier(.2,.9,.3,1),opacity .45s;position:relative;overflow:hidden;isolation:isolate;}
   .ach-popup.show{transform:translateX(0);opacity:1;}
-  .ach-popup.tier-epic::before,.ach-popup.tier-legend::before{content:"";position:absolute;inset:-90%;z-index:-1;background:conic-gradient(from 0deg,#ffd23a,#ff5fd0,#5fd0ff,#7bff9e,#ffd23a);
-    animation:sSpin 2.8s linear infinite;opacity:0.3;filter:blur(18px);}
+  .ach-popup.tier-epic::before,.ach-popup.tier-legend::before,.ach-popup.tier-mythic::before{content:"";position:absolute;inset:-90%;z-index:-1;
+    background:conic-gradient(from 0deg,#ffd23a,#ff5fd0,#5fd0ff,#7bff9e,#ffd23a);animation:sSpin 2.8s linear infinite;opacity:0.3;filter:blur(18px);}
   .ach-popup .ap-icon{font-size:32px;flex:0 0 auto;} .ach-popup .ap-label{font-size:10px;font-weight:800;color:var(--gold);letter-spacing:.5px;}
   .ach-popup .ap-name{font-size:14px;font-weight:800;color:#fff;}
+  /* X class special effect */
+  .x-flash{position:fixed;inset:0;pointer-events:none;z-index:200;background:radial-gradient(circle,rgba(255,210,58,0.25),transparent 70%);
+    opacity:0;animation:xFlash 1.8s ease-out forwards;}
+  @keyframes xFlash{0%{opacity:0;}15%{opacity:1;}100%{opacity:0;}}
   @media(max-width:540px){.stats{width:100%;justify-content:flex-start;} .chip{padding:7px 12px;font-size:13px;} .detail-layout{flex-direction:column;align-items:center;}}
 </style>
 </head>
@@ -237,6 +250,7 @@
     <div id="tab-shop">
       <div id="multiBar" class="multi-bar">
         <button class="select-mode-btn" id="selectModeBtn">Enter Select Mode</button>
+        <button class="buy-btn" style="width:auto;padding:8px 14px;background:linear-gradient(135deg,#4a7a3a,#2a5a2a);" id="selectAllBtn">Select All</button>
         <span id="multiCount">0 selected</span>
         <button class="buy-btn" style="width:auto;padding:8px 16px;" id="multiOpenBtn">Open Selected</button>
         <button class="btn-close" style="padding:8px 16px;border-radius:10px;font-weight:800;cursor:pointer;" id="multiClearBtn">Clear</button>
@@ -244,7 +258,7 @@
       <div id="pendingRow" class="pending-row"></div>
       <div class="section-title">CASES</div>
       <div class="chest-grid" id="chestGrid"></div>
-      <div class="section-title" style="margin-top:22px;">MULTI-OPEN UPGRADES</div>
+      <div class="section-title" style="margin-top:22px;">UPGRADES</div>
       <div class="upgrade-grid" id="multiUpgradeGrid"></div>
     </div>
 
@@ -272,7 +286,7 @@
   </div>
 </div>
 
-<!-- Modals -->
+<!-- Modals (same structure as before) -->
 <div class="modal-bg" id="openModalBg" style="display:none;">
   <div class="modal">
     <h3 id="modalTitle">Case</h3>
@@ -358,476 +372,415 @@ const CLASSES = {
   X:{label:"Class X", color:"var(--c-X1)",luck:16, emoji:"👑"}
 };
 
-// Unique values per glove name
 const GLOVE_DATA = {
-  // Class E
-  "Basic Red":    {cls:"E", value:40},
-  "Basic Blue":   {cls:"E", value:45},
-  "Basic White":  {cls:"E", value:50},
-  "Basic Black":  {cls:"E", value:55},
-  "Rust":         {cls:"E", value:70},
-  "Faded":        {cls:"E", value:35},
-  "Torn":         {cls:"E", value:30},
-
-  // Class D
-  "Rookie":       {cls:"D", value:220},
-  "Scrapper":     {cls:"D", value:280},
-  "Trainee":      {cls:"D", value:310},
-  "Denim":        {cls:"D", value:350},
-  "Sandstone":    {cls:"D", value:390},
-  "Patchwork":    {cls:"D", value:260},
-  "Street":       {cls:"D", value:340},
-
-  // Class C
-  "Full Metal":   {cls:"C", value:1600},
-  "Night":        {cls:"C", value:1900},
-  "Bag":          {cls:"C", value:2100},
-  "Cyan Wrap":    {cls:"C", value:2400},
-  "Sans":         {cls:"C", value:2700},
-  "Carbon":       {cls:"C", value:2300},
-  "Phantom":      {cls:"C", value:2500},
-
-  // Class B
-  "Marble":       {cls:"B", value:12000},
-  "Gridiron":     {cls:"B", value:14500},
-  "Marte":        {cls:"B", value:16000},
-  "Hardwood":     {cls:"B", value:17500},
-  "Pact":         {cls:"B", value:19000},
-  "Viper":        {cls:"B", value:15500},
-  "Eclipse":      {cls:"B", value:18000},
-
-  // Class A
-  "Noobi":        {cls:"A", value:65000},
-  "Aw Man":       {cls:"A", value:72000},
-  "Giraffe":      {cls:"A", value:80000},
-  "Owl":          {cls:"A", value:88000},
-  "Fury":         {cls:"A", value:95000},
-  "Nebula":       {cls:"A", value:85000},
-  "Crimson":      {cls:"A", value:92000},
-
-  // Class S
-  "Dragon":       {cls:"S", value:320000},
-  "Biohazard":    {cls:"S", value:380000},
-  "Wave":         {cls:"S", value:420000},
-  "Skies":        {cls:"S", value:460000},
-  "Mummy":        {cls:"S", value:500000},
-  "Inferno":      {cls:"S", value:440000},
-  "Void":         {cls:"S", value:480000},
-
-  // Class X
-  "Overseer":     {cls:"X", value:3200000},
-  "Reactor":      {cls:"X", value:3600000},
-  "Voidbringer":  {cls:"X", value:4100000},
-  "Ember Core":   {cls:"X", value:4500000},
-  "Plasma King":  {cls:"X", value:5000000},
-  "Celestial":    {cls:"X", value:4800000},
-  "Apex":         {cls:"X", value:5200000}
+  // E
+  "Basic Red":{cls:"E",value:40},"Basic Blue":{cls:"E",value:45},"Basic White":{cls:"E",value:50},
+  "Basic Black":{cls:"E",value:55},"Rust":{cls:"E",value:70},"Faded":{cls:"E",value:35},"Torn":{cls:"E",value:30},
+  "Scrap":{cls:"E",value:42},"Dusty":{cls:"E",value:38},
+  // D
+  "Rookie":{cls:"D",value:220},"Scrapper":{cls:"D",value:280},"Trainee":{cls:"D",value:310},
+  "Denim":{cls:"D",value:350},"Sandstone":{cls:"D",value:390},"Patchwork":{cls:"D",value:260},"Street":{cls:"D",value:340},
+  "Grit":{cls:"D",value:300},"Ironclad":{cls:"D",value:370},
+  // C
+  "Full Metal":{cls:"C",value:1600},"Night":{cls:"C",value:1900},"Bag":{cls:"C",value:2100},
+  "Cyan Wrap":{cls:"C",value:2400},"Sans":{cls:"C",value:2700},"Carbon":{cls:"C",value:2300},"Phantom":{cls:"C",value:2500},
+  "Shadow":{cls:"C",value:2200},"Pulse":{cls:"C",value:2600},
+  // B
+  "Marble":{cls:"B",value:12000},"Gridiron":{cls:"B",value:14500},"Marte":{cls:"B",value:16000},
+  "Hardwood":{cls:"B",value:17500},"Pact":{cls:"B",value:19000},"Viper":{cls:"B",value:15500},"Eclipse":{cls:"B",value:18000},
+  "Titan":{cls:"B",value:17000},"Blaze":{cls:"B",value:18500},
+  // A
+  "Noobi":{cls:"A",value:65000},"Aw Man":{cls:"A",value:72000},"Giraffe":{cls:"A",value:80000},
+  "Owl":{cls:"A",value:88000},"Fury":{cls:"A",value:95000},"Nebula":{cls:"A",value:85000},"Crimson":{cls:"A",value:92000},
+  "Aurora":{cls:"A",value:90000},"Spectre":{cls:"A",value:87000},
+  // S
+  "Dragon":{cls:"S",value:320000},"Biohazard":{cls:"S",value:380000},"Wave":{cls:"S",value:420000},
+  "Skies":{cls:"S",value:460000},"Mummy":{cls:"S",value:500000},"Inferno":{cls:"S",value:440000},"Void":{cls:"S",value:480000},
+  "Phoenix":{cls:"S",value:470000},"Abyss":{cls:"S",value:490000},
+  // X
+  "Overseer":{cls:"X",value:3200000},"Reactor":{cls:"X",value:3600000},"Voidbringer":{cls:"X",value:4100000},
+  "Ember Core":{cls:"X",value:4500000},"Plasma King":{cls:"X",value:5000000},"Celestial":{cls:"X",value:4800000},"Apex":{cls:"X",value:5200000},
+  "Eternal":{cls:"X",value:5500000},"Omega":{cls:"X",value:5800000}
 };
 
-const GLOVE_NAMES = {
-  E: Object.keys(GLOVE_DATA).filter(n => GLOVE_DATA[n].cls === "E"),
-  D: Object.keys(GLOVE_DATA).filter(n => GLOVE_DATA[n].cls === "D"),
-  C: Object.keys(GLOVE_DATA).filter(n => GLOVE_DATA[n].cls === "C"),
-  B: Object.keys(GLOVE_DATA).filter(n => GLOVE_DATA[n].cls === "B"),
-  A: Object.keys(GLOVE_DATA).filter(n => GLOVE_DATA[n].cls === "A"),
-  S: Object.keys(GLOVE_DATA).filter(n => GLOVE_DATA[n].cls === "S"),
-  X: Object.keys(GLOVE_DATA).filter(n => GLOVE_DATA[n].cls === "X")
-};
+const GLOVE_NAMES = {};
+Object.keys(GLOVE_DATA).forEach(n=>{
+  const c = GLOVE_DATA[n].cls;
+  if(!GLOVE_NAMES[c]) GLOVE_NAMES[c]=[];
+  GLOVE_NAMES[c].push(n);
+});
 
 const CHESTS = [
-  {id:"silver",  name:"Silver Case",   price:250,    icon:"🥈", desc:"Common — D & C mostly", odds:{E:45,D:35,C:15,B:5}},
-  {id:"golden",  name:"Golden Case",   price:750,    icon:"🥇", desc:"Better D/C, real B, tiny A", odds:{E:20,D:35,C:25,B:15,A:5}},
-  {id:"coffer",  name:"Coffer",        price:2500,   icon:"⚪", desc:"First chance at S", odds:{E:8,D:22,C:30,B:25,A:12,S:3}},
-  {id:"obsidian",name:"Obsidian Case", price:8000,   icon:"⬛", desc:"Big jump — B/A common", odds:{D:8,C:20,B:32,A:38,S:2}},
-  {id:"robux",   name:"Robux Chest",   price:15000,  icon:"💚", desc:"Chance of a cash payout", odds:{D:5,C:18,B:27,A:30,S:5},money:15},
-  {id:"plasma",  name:"Plasma Chest",  price:40000,  icon:"🔷", desc:"Strong, but not too OP", odds:{C:11.1,B:27.75,A:38.85,S:22.2,X:0.09}},
-  {id:"ember",   name:"Ember Crate",   price:100000, icon:"🔥", desc:"Best chest — real B floor, real X shot", odds:{B:25,A:25,S:40,X:10}}
+  {id:"silver",name:"Silver Case",price:250,icon:"🥈",desc:"Common — D & C mostly",odds:{E:45,D:35,C:15,B:5}},
+  {id:"golden",name:"Golden Case",price:750,icon:"🥇",desc:"Better D/C, real B, tiny A",odds:{E:20,D:35,C:25,B:15,A:5}},
+  {id:"coffer",name:"Coffer",price:2500,icon:"⚪",desc:"First chance at S",odds:{E:8,D:22,C:30,B:25,A:12,S:3}},
+  {id:"obsidian",name:"Obsidian Case",price:8000,icon:"⬛",desc:"Big jump — B/A common",odds:{D:8,C:20,B:32,A:38,S:2}},
+  {id:"robux",name:"Robux Chest",price:15000,icon:"💚",desc:"Chance of a cash payout",odds:{D:5,C:18,B:27,A:30,S:5},money:15},
+  {id:"plasma",name:"Plasma Chest",price:40000,icon:"🔷",desc:"Strong, but not too OP",odds:{C:11.1,B:27.75,A:38.85,S:22.2,X:0.09}},
+  {id:"ember",name:"Ember Crate",price:100000,icon:"🔥",desc:"Best chest — real B floor, real X shot",odds:{B:25,A:25,S:40,X:10}}
 ];
 
 const RECIPES = [
-  {id:"r1", need:{E:10}, result:"D", label:"Basic Combine"},
-  {id:"r2", need:{D:10,E:5}, result:"C", label:"Trainee Combine"},
-  {id:"r3", need:{C:10,D:5}, result:"B", label:"Veteran Combine"},
-  {id:"r4", need:{B:10,C:5}, result:"A", label:"Elite Combine"},
-  {id:"r5", need:{A:10,B:5}, result:"S", label:"Mythic Combine"},
-  {id:"r6", need:{S:10,A:5}, result:"X", label:"Ultimate Combine"}
+  {id:"r1",need:{E:10},result:"D",label:"Basic Combine"},
+  {id:"r2",need:{D:10,E:5},result:"C",label:"Trainee Combine"},
+  {id:"r3",need:{C:10,D:5},result:"B",label:"Veteran Combine"},
+  {id:"r4",need:{B:10,C:5},result:"A",label:"Elite Combine"},
+  {id:"r5",need:{A:10,B:5},result:"S",label:"Mythic Combine"},
+  {id:"r6",need:{S:10,A:5},result:"X",label:"Ultimate Combine"}
 ];
 
 const ACHIEVEMENTS = [
-  {id:"first_E", name:"First Punch", desc:"Pull your first Class E", icon:"🥊", tier:"low", check:s=>s.seenClasses.includes("E")},
-  {id:"first_D", name:"Rookie Gloves", desc:"Pull your first Class D", icon:"🥊", tier:"low", check:s=>s.seenClasses.includes("D")},
-  {id:"first_C", name:"Getting Serious", desc:"Pull your first Class C", icon:"🧤", tier:"mid", check:s=>s.seenClasses.includes("C")},
-  {id:"first_B", name:"Veteran Hands", desc:"Pull your first Class B", icon:"🧤", tier:"mid", check:s=>s.seenClasses.includes("B")},
-  {id:"first_A", name:"Elite Acquisition", desc:"Pull your first Class A", icon:"🧤", tier:"high", check:s=>s.seenClasses.includes("A")},
-  {id:"first_S", name:"Mythic Drop", desc:"Pull your first Class S", icon:"🔥", tier:"epic", check:s=>s.seenClasses.includes("S")},
-  {id:"first_X", name:"God Tier", desc:"Pull your first Class X", icon:"👑", tier:"legend", check:s=>s.seenClasses.includes("X")},
-  {id:"val_100k", name:"Six Figures", desc:"Inventory worth $100k+", icon:"💰", tier:"mid", check:s=>invValue(s)>=100000},
-  {id:"val_1m", name:"Millionaire", desc:"Inventory worth $1M+", icon:"💎", tier:"high", check:s=>invValue(s)>=1000000},
-  {id:"val_10m", name:"Vault Overlord", desc:"Inventory worth $10M+", icon:"🏦", tier:"legend", check:s=>invValue(s)>=10000000},
-  {id:"open_50", name:"Case Addict", desc:"Open 50 cases", icon:"📦", tier:"mid", check:s=>(s.stats?.casesOpened||0)>=50},
-  {id:"open_200", name:"Case Machine", desc:"Open 200 cases", icon:"🏭", tier:"high", check:s=>(s.stats?.casesOpened||0)>=200},
-  {id:"multi_5", name:"Efficient", desc:"Reach 5 multi-open", icon:"⚡", tier:"mid", check:s=>(s.maxMulti||1)>=5},
-  {id:"multi_10", name:"Speedrunner", desc:"Reach 10 multi-open", icon:"🚀", tier:"high", check:s=>(s.maxMulti||1)>=10},
-  {id:"multi_20", name:"God Speed", desc:"Reach max 20 multi-open", icon:"👑", tier:"legend", check:s=>(s.maxMulti||1)>=20},
-  {id:"equip_pair", name:"Perfect Pair", desc:"Equip two gloves", icon:"🤝", tier:"low", check:s=>s.inventory.filter(g=>g.equipped).length>=2}
+  {id:"first_E",name:"First Punch",desc:"Pull your first Class E",icon:"🥊",tier:"low",check:s=>s.seenClasses.includes("E")},
+  {id:"first_D",name:"Rookie Gloves",desc:"Pull your first Class D",icon:"🥊",tier:"low",check:s=>s.seenClasses.includes("D")},
+  {id:"first_C",name:"Getting Serious",desc:"Pull your first Class C",icon:"🧤",tier:"mid",check:s=>s.seenClasses.includes("C")},
+  {id:"first_B",name:"Veteran Hands",desc:"Pull your first Class B",icon:"🧤",tier:"mid",check:s=>s.seenClasses.includes("B")},
+  {id:"first_A",name:"Elite Acquisition",desc:"Pull your first Class A",icon:"🧤",tier:"high",check:s=>s.seenClasses.includes("A")},
+  {id:"first_S",name:"Mythic Drop",desc:"Pull your first Class S",icon:"🔥",tier:"epic",check:s=>s.seenClasses.includes("S")},
+  {id:"first_X",name:"God Tier",desc:"Pull your first Class X",icon:"👑",tier:"legend",check:s=>s.seenClasses.includes("X")},
+  {id:"val_100k",name:"Six Figures",desc:"Inventory worth $100k+",icon:"💰",tier:"mid",check:s=>invValue(s)>=100000},
+  {id:"val_1m",name:"Millionaire",desc:"Inventory worth $1M+",icon:"💎",tier:"high",check:s=>invValue(s)>=1000000},
+  {id:"val_10m",name:"Vault Overlord",desc:"Inventory worth $10M+",icon:"🏦",tier:"legend",check:s=>invValue(s)>=10000000},
+  {id:"open_50",name:"Case Addict",desc:"Open 50 cases",icon:"📦",tier:"mid",check:s=>(s.stats?.casesOpened||0)>=50},
+  {id:"open_200",name:"Case Machine",desc:"Open 200 cases",icon:"🏭",tier:"high",check:s=>(s.stats?.casesOpened||0)>=200},
+  {id:"multi_10",name:"Speedrunner",desc:"Reach 10 multi-open",icon:"🚀",tier:"high",check:s=>(s.maxMulti||1)>=10},
+  {id:"multi_25",name:"God Speed",desc:"Reach 25 multi-open",icon:"⚡",tier:"legend",check:s=>(s.maxMulti||1)>=25},
+  {id:"multi_50",name:"Maximum Overdrive",desc:"Reach max 50 multi-open",icon:"👑",tier:"legend",check:s=>(s.maxMulti||1)>=50},
+  {id:"equip_3",name:"Triple Threat",desc:"Unlock 3-glove equip",icon:"🔥",tier:"legend",check:s=>(s.maxEquip||2)>=3},
+  {id:"meme_999",name:"999 Club",desc:"Obtain 999 of the SAME glove (lifetime)",icon:"🗿",tier:"mythic",
+    check:s=>Object.values(s.gloveCounts||{}).some(c=>c>=999)}
 ];
 
 function invValue(s){
-  return (s.inventory||[]).reduce((sum,g)=>{
-    const data = GLOVE_DATA[g.name];
-    return sum + (data ? data.value : 50);
-  },0);
+  return (s.inventory||[]).reduce((sum,g)=>sum+(GLOVE_DATA[g.name]?.value||50),0);
 }
 
-/* Stats: max around 40, can be negative, more sensitive bars */
 function generateStats(cls){
-  const ranges = {
-    E: [-8, 12],
-    D: [-5, 18],
-    C: [-3, 24],
-    B: [0, 30],
-    A: [5, 35],
-    S: [10, 40],
-    X: [15, 42]
-  };
-  const [min, max] = ranges[cls] || [-5, 20];
-  const rand = () => Math.floor(min + Math.random() * (max - min + 1));
-  // Make sure not all positive for lower classes
-  let stats = {str: rand(), spd: rand(), dex: rand(), end: rand()};
-  return stats;
+  const ranges={E:[-8,12],D:[-5,18],C:[-3,24],B:[0,30],A:[5,35],S:[10,40],X:[15,42]};
+  const [min,max]=ranges[cls]||[-5,20];
+  const rand=()=>Math.floor(min+Math.random()*(max-min+1));
+  return {str:rand(),spd:rand(),dex:rand(),end:rand()};
 }
 
 /* ================= STATE ================= */
-let state = {
-  money: 500,
-  inventory: [],
-  pending: [],
-  seenClasses: [],
-  unlockedAch: [],
-  maxMulti: 1,
-  stats: {casesOpened: 0}
+let state={
+  money:500, inventory:[], pending:[], seenClasses:[], unlockedAch:[],
+  maxMulti:1, maxEquip:2, gloveCounts:{}, stats:{casesOpened:0}
 };
 
 function loadState(){
   try{
-    const raw = localStorage.getItem("gloveVaultState_v4");
+    const raw=localStorage.getItem("gloveVaultState_v5");
     if(raw){
-      const parsed = JSON.parse(raw);
-      state = Object.assign({money:500,inventory:[],pending:[],seenClasses:[],unlockedAch:[],maxMulti:1,stats:{casesOpened:0}}, parsed);
+      const p=JSON.parse(raw);
+      state=Object.assign({money:500,inventory:[],pending:[],seenClasses:[],unlockedAch:[],maxMulti:1,maxEquip:2,gloveCounts:{},stats:{casesOpened:0}},p);
     }
   }catch(e){}
 }
-function saveState(){
-  try{ localStorage.setItem("gloveVaultState_v4", JSON.stringify(state)); }catch(e){}
-}
+function saveState(){ try{localStorage.setItem("gloveVaultState_v5",JSON.stringify(state));}catch(e){} }
 
-let uidCounter = 1;
-function nextUid(){ return "u"+(uidCounter++)+"_"+Date.now().toString(36); }
-
-function fmt(n){ return "$"+Math.round(n).toLocaleString(); }
-function totalLuck(){ return state.inventory.filter(g=>g.equipped).reduce((s,g)=>s+CLASSES[g.cls].luck,0); }
+let uidCounter=1;
+function nextUid(){return "u"+(uidCounter++)+"_"+Date.now().toString(36);}
+function fmt(n){return "$"+Math.round(n).toLocaleString();}
+function totalLuck(){return state.inventory.filter(g=>g.equipped).reduce((s,g)=>s+CLASSES[g.cls].luck,0);}
 function toast(msg){
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.classList.add("show");
-  clearTimeout(toast._h);
-  toast._h = setTimeout(()=>t.classList.remove("show"), 2300);
+  const t=document.getElementById("toast"); t.textContent=msg; t.classList.add("show");
+  clearTimeout(toast._h); toast._h=setTimeout(()=>t.classList.remove("show"),2300);
 }
 function weightedPick(odds){
-  const entries = Object.entries(odds);
-  const total = entries.reduce((s,[,w])=>s+w,0);
-  let r = Math.random()*total;
-  for(const [k,w] of entries){ if(r < w) return k; r -= w; }
+  const entries=Object.entries(odds); const total=entries.reduce((s,[,w])=>s+w,0);
+  let r=Math.random()*total;
+  for(const [k,w] of entries){if(r<w)return k; r-=w;}
   return entries[entries.length-1][0];
 }
-function randomGloveName(cls){
-  const list = GLOVE_NAMES[cls];
-  return list[Math.floor(Math.random()*list.length)];
-}
-function getGloveValue(name){
-  return GLOVE_DATA[name] ? GLOVE_DATA[name].value : 50;
-}
+function randomGloveName(cls){const list=GLOVE_NAMES[cls]; return list[Math.floor(Math.random()*list.length)];}
+function getGloveValue(name){return GLOVE_DATA[name]?.value||50;}
 
-/* ================= ACHIEVEMENTS ================= */
+/* Achievements */
 function checkAchievements(){
-  let newly = [];
+  let newly=[];
   ACHIEVEMENTS.forEach(a=>{
     if(state.unlockedAch.includes(a.id)) return;
-    if(a.check(state)){
-      state.unlockedAch.push(a.id);
-      newly.push(a);
-    }
+    if(a.check(state)){ state.unlockedAch.push(a.id); newly.push(a); }
   });
   if(newly.length){
     saveState();
-    newly.forEach((a,i)=> setTimeout(()=>showAchPopup(a), i*700));
+    newly.forEach((a,i)=>setTimeout(()=>showAchPopup(a),i*700));
     renderAchievements();
   }
 }
 function showAchPopup(a){
-  const layer = document.getElementById("achToastLayer");
-  const el = document.createElement("div");
-  el.className = "ach-popup tier-"+a.tier;
-  el.innerHTML = `<div class="ap-icon">${a.icon}</div><div><div class="ap-label">ACHIEVEMENT UNLOCKED</div><div class="ap-name">${a.name}</div></div>`;
+  const layer=document.getElementById("achToastLayer");
+  const el=document.createElement("div");
+  el.className="ach-popup tier-"+a.tier;
+  el.innerHTML=`<div class="ap-icon">${a.icon}</div><div><div class="ap-label">ACHIEVEMENT UNLOCKED</div><div class="ap-name">${a.name}</div></div>`;
   layer.appendChild(el);
-  requestAnimationFrame(()=> el.classList.add("show"));
-  setTimeout(()=>{ el.classList.remove("show"); setTimeout(()=>el.remove(),500); }, 4200);
+  requestAnimationFrame(()=>el.classList.add("show"));
+  setTimeout(()=>{el.classList.remove("show"); setTimeout(()=>el.remove(),500);},4500);
 }
 function renderAchievements(){
-  const grid = document.getElementById("achGrid");
-  grid.innerHTML = "";
+  const grid=document.getElementById("achGrid");
+  grid.innerHTML="";
   ACHIEVEMENTS.forEach(a=>{
-    const unlocked = state.unlockedAch.includes(a.id);
-    const el = document.createElement("div");
-    el.className = "ach-card tier-"+a.tier + (unlocked?" unlocked":"");
-    el.innerHTML = `<div class="ach-icon">${a.icon}</div><div class="ach-name">${a.name}</div><div class="ach-desc">${a.desc}</div>`;
+    const unlocked=state.unlockedAch.includes(a.id);
+    const el=document.createElement("div");
+    el.className="ach-card tier-"+a.tier+(unlocked?" unlocked":"");
+    el.innerHTML=`<div class="ach-icon">${a.icon}</div><div class="ach-name">${a.name}</div><div class="ach-desc">${a.desc}</div>`;
     grid.appendChild(el);
   });
 }
 
-/* ================= RENDER ================= */
+/* X flash effect */
+function triggerXEffect(){
+  const flash=document.createElement("div");
+  flash.className="x-flash";
+  document.body.appendChild(flash);
+  setTimeout(()=>flash.remove(),2000);
+}
+
+/* Render */
 function renderTop(){
-  document.getElementById("moneyDisplay").textContent = fmt(state.money).replace("$","");
-  document.getElementById("luckDisplay").textContent = totalLuck();
+  document.getElementById("moneyDisplay").textContent=fmt(state.money).replace("$","");
+  document.getElementById("luckDisplay").textContent=totalLuck();
 }
 
 function renderShop(){
-  const grid = document.getElementById("chestGrid");
-  grid.innerHTML = "";
+  const grid=document.getElementById("chestGrid");
+  grid.innerHTML="";
   CHESTS.forEach(chest=>{
-    const el = document.createElement("div");
-    el.className = "chest-card";
-    el.innerHTML = `
+    const el=document.createElement("div");
+    el.className="chest-card";
+    el.innerHTML=`
       <div class="chest-icon">${chest.icon}</div>
       <div class="chest-name">${chest.name}</div>
       <div class="chest-desc">${chest.desc}</div>
       <div class="chest-price">${fmt(chest.price)}</div>
-      <button class="buy-btn" ${state.money < chest.price ? "disabled":""}>Buy</button>
+      <button class="buy-btn" ${state.money<chest.price?"disabled":""}>Buy</button>
       <span class="odds-link">view odds</span>`;
-    el.querySelector(".buy-btn").onclick = ()=>buyChest(chest);
-    el.querySelector(".odds-link").onclick = ()=>showOdds(chest);
+    el.querySelector(".buy-btn").onclick=()=>buyChest(chest);
+    el.querySelector(".odds-link").onclick=()=>showOdds(chest);
     grid.appendChild(el);
   });
-  renderMultiUpgrades();
+  renderUpgrades();
   renderPending();
 }
 
 function getNextMultiPrice(){
-  // Gets more expensive each time
-  const level = state.maxMulti;
-  return Math.floor(1800 * Math.pow(1.65, level - 1));
+  const level=state.maxMulti;
+  return Math.floor(1500 * Math.pow(1.48, level-1));
 }
 
-function renderMultiUpgrades(){
-  const grid = document.getElementById("multiUpgradeGrid");
-  grid.innerHTML = "";
-  if(state.maxMulti >= 20){
-    grid.innerHTML = `<div class="upgrade-card"><div class="upgrade-title">Max Multi-Open Reached</div><div class="upgrade-desc">You can open 20 cases at once</div><div class="upgrade-price">✓ MAX</div></div>`;
-    return;
+function renderUpgrades(){
+  const grid=document.getElementById("multiUpgradeGrid");
+  grid.innerHTML="";
+
+  // Multi open
+  if(state.maxMulti>=50){
+    grid.innerHTML+=`<div class="upgrade-card"><div class="upgrade-title">Max Multi-Open</div><div class="upgrade-desc">50 cases at once</div><div class="upgrade-price">✓ MAX</div></div>`;
+  } else {
+    const price=getNextMultiPrice();
+    const el=document.createElement("div");
+    el.className="upgrade-card";
+    el.innerHTML=`
+      <div class="upgrade-title">+1 Open Slot</div>
+      <div class="upgrade-desc">Increase to ${state.maxMulti+1} simultaneous opens</div>
+      <div class="upgrade-price">${fmt(price)}</div>
+      <button class="buy-btn" ${state.money<price?"disabled":""}>Unlock</button>`;
+    el.querySelector(".buy-btn").onclick=()=>{
+      if(state.money<price) return;
+      state.money-=price; state.maxMulti+=1;
+      saveState(); renderTop(); renderShop(); checkAchievements();
+      toast(`Now you can open ${state.maxMulti} at once!`);
+    };
+    grid.appendChild(el);
   }
-  const price = getNextMultiPrice();
-  const el = document.createElement("div");
-  el.className = "upgrade-card";
-  el.innerHTML = `
-    <div class="upgrade-title">+1 Open Slot</div>
-    <div class="upgrade-desc">Increase max simultaneous opens to ${state.maxMulti + 1}</div>
-    <div class="upgrade-price">${fmt(price)}</div>
-    <button class="buy-btn" ${state.money < price ? "disabled":""}>Unlock</button>`;
-  el.querySelector(".buy-btn").onclick = ()=>{
-    if(state.money < price) return;
-    state.money -= price;
-    state.maxMulti += 1;
-    saveState();
-    renderTop();
-    renderShop();
-    checkAchievements();
-    toast(`Now you can open ${state.maxMulti} cases at once!`);
-  };
-  grid.appendChild(el);
+
+  // Equip 3 upgrade
+  if(state.maxEquip>=3){
+    grid.innerHTML+=`<div class="upgrade-card"><div class="upgrade-title">Triple Equip</div><div class="upgrade-desc">Equip 3 gloves at once</div><div class="upgrade-price">✓ OWNED</div></div>`;
+  } else {
+    const price=2500000;
+    const el=document.createElement("div");
+    el.className="upgrade-card";
+    el.innerHTML=`
+      <div class="upgrade-title">Triple Equip Slot</div>
+      <div class="upgrade-desc">Unlock ability to equip 3 gloves (very powerful)</div>
+      <div class="upgrade-price">${fmt(price)}</div>
+      <button class="buy-btn" ${state.money<price?"disabled":""}>Unlock</button>`;
+    el.querySelector(".buy-btn").onclick=()=>{
+      if(state.money<price) return;
+      state.money-=price; state.maxEquip=3;
+      saveState(); renderTop(); renderShop(); checkAchievements();
+      toast("You can now equip 3 gloves!");
+    };
+    grid.appendChild(el);
+  }
 }
 
 function buyChest(chest){
-  if(state.money < chest.price) return;
-  state.money -= chest.price;
-  state.pending.push({uid:nextUid(), chestId:chest.id});
-  saveState();
-  renderTop();
-  renderShop();
-  toast(`Bought ${chest.name}`);
+  if(state.money<chest.price) return;
+  state.money-=chest.price;
+  state.pending.push({uid:nextUid(),chestId:chest.id});
+  saveState(); renderTop(); renderShop(); toast(`Bought ${chest.name}`);
 }
 
-/* Select Mode */
-let selectMode = false;
-let selectedPending = [];
-
+/* Select Mode + Select All */
+let selectMode=false, selectedPending=[];
 function renderPending(){
-  const row = document.getElementById("pendingRow");
-  row.innerHTML = "";
+  const row=document.getElementById("pendingRow");
+  row.innerHTML="";
   state.pending.forEach(p=>{
-    const chest = CHESTS.find(c=>c.id===p.chestId);
-    const el = document.createElement("div");
-    el.className = "pending-chest" + (selectedPending.includes(p.uid)?" selected":"");
-    el.innerHTML = `${chest.icon}<span class="tag">${selectedPending.includes(p.uid)?"PICKED":"OPEN"}</span>`;
-    el.onclick = ()=>{
+    const chest=CHESTS.find(c=>c.id===p.chestId);
+    const el=document.createElement("div");
+    el.className="pending-chest"+(selectedPending.includes(p.uid)?" selected":"");
+    el.innerHTML=`${chest.icon}<span class="tag">${selectedPending.includes(p.uid)?"PICKED":"OPEN"}</span>`;
+    el.onclick=()=>{
       if(selectMode) toggleSelect(p.uid);
-      else openModalFor(p, chest);
+      else openModalFor(p,chest);
     };
     row.appendChild(el);
   });
   updateMultiBar();
 }
-
 function toggleSelect(uid){
-  const idx = selectedPending.indexOf(uid);
+  const idx=selectedPending.indexOf(uid);
   if(idx>=0) selectedPending.splice(idx,1);
   else {
-    if(selectedPending.length >= state.maxMulti){
-      toast(`Max ${state.maxMulti} cases (upgrade for more)`);
-      return;
-    }
+    if(selectedPending.length>=state.maxMulti){ toast(`Max ${state.maxMulti} (upgrade for more)`); return; }
     selectedPending.push(uid);
   }
   renderPending();
 }
-
 function updateMultiBar(){
-  const bar = document.getElementById("multiBar");
-  const count = document.getElementById("multiCount");
-  const btn = document.getElementById("selectModeBtn");
-  if(state.pending.length > 0){
-    bar.style.display = "flex";
-    count.textContent = `${selectedPending.length}/${state.maxMulti} selected`;
-    btn.textContent = selectMode ? "Exit Select Mode" : "Enter Select Mode";
-    btn.classList.toggle("active", selectMode);
+  const bar=document.getElementById("multiBar");
+  const count=document.getElementById("multiCount");
+  const btn=document.getElementById("selectModeBtn");
+  if(state.pending.length>0){
+    bar.style.display="flex";
+    count.textContent=`${selectedPending.length}/${state.maxMulti} selected`;
+    btn.textContent=selectMode?"Exit Select Mode":"Enter Select Mode";
+    btn.classList.toggle("active",selectMode);
   } else {
-    bar.style.display = "none";
-    selectMode = false;
-    selectedPending = [];
+    bar.style.display="none"; selectMode=false; selectedPending=[];
   }
 }
-
-document.getElementById("selectModeBtn").onclick = ()=>{
-  selectMode = !selectMode;
-  if(!selectMode) selectedPending = [];
+document.getElementById("selectModeBtn").onclick=()=>{
+  selectMode=!selectMode;
+  if(!selectMode) selectedPending=[];
   renderPending();
 };
-document.getElementById("multiClearBtn").onclick = ()=>{ selectedPending = []; renderPending(); };
-document.getElementById("multiOpenBtn").onclick = ()=>{
-  if(selectedPending.length === 0){ toast("Select cases first"); return; }
+document.getElementById("selectAllBtn").onclick=()=>{
+  if(!selectMode){ selectMode=true; }
+  selectedPending=[];
+  const limit=Math.min(state.pending.length, state.maxMulti);
+  for(let i=0;i<limit;i++) selectedPending.push(state.pending[i].uid);
+  renderPending();
+  toast(`Selected ${selectedPending.length} cases`);
+};
+document.getElementById("multiClearBtn").onclick=()=>{selectedPending=[];renderPending();};
+document.getElementById("multiOpenBtn").onclick=()=>{
+  if(selectedPending.length===0){toast("Select cases first");return;}
   openMultiModal(selectedPending.slice());
 };
 
 /* Odds */
 function showOdds(chest){
-  document.getElementById("oddsTitle").textContent = chest.name + " Odds";
-  const tbl = document.getElementById("oddsTable");
-  let rows = `<tr><th>Result</th><th>Chance</th></tr>`;
-  const entries = Object.entries(chest.odds);
-  const moneyWeight = chest.money || 0;
-  const total = entries.reduce((s,[,w])=>s+w,0) + moneyWeight;
+  document.getElementById("oddsTitle").textContent=chest.name+" Odds";
+  const tbl=document.getElementById("oddsTable");
+  let rows=`<tr><th>Result</th><th>Chance</th></tr>`;
+  const entries=Object.entries(chest.odds);
+  const moneyWeight=chest.money||0;
+  const total=entries.reduce((s,[,w])=>s+w,0)+moneyWeight;
   entries.forEach(([cls,w])=>{
-    rows += `<tr><td style="color:${CLASSES[cls].color}">${CLASSES[cls].label}</td><td>${((w/total)*100).toFixed(2)}%</td></tr>`;
+    rows+=`<tr><td style="color:${CLASSES[cls].color}">${CLASSES[cls].label}</td><td>${((w/total)*100).toFixed(2)}%</td></tr>`;
   });
-  if(moneyWeight) rows += `<tr><td style="color:var(--gold)">💵 Cash</td><td>${((moneyWeight/total)*100).toFixed(2)}%</td></tr>`;
-  tbl.innerHTML = rows;
-  document.getElementById("oddsModalBg").style.display = "flex";
+  if(moneyWeight) rows+=`<tr><td style="color:var(--gold)">💵 Cash</td><td>${((moneyWeight/total)*100).toFixed(2)}%</td></tr>`;
+  tbl.innerHTML=rows;
+  document.getElementById("oddsModalBg").style.display="flex";
 }
-document.getElementById("closeOddsBtn").onclick = ()=> document.getElementById("oddsModalBg").style.display = "none";
+document.getElementById("closeOddsBtn").onclick=()=>document.getElementById("oddsModalBg").style.display="none";
 
 /* Roll */
 function rollChest(chest){
-  const luck = totalLuck();
-  const odds = Object.assign({}, chest.odds);
-  if(chest.money) odds.money = chest.money;
-  const order = ["E","D","C","B","A","S","X"];
-  const present = order.filter(c=>odds[c]!==undefined);
+  const luck=totalLuck();
+  const odds=Object.assign({},chest.odds);
+  if(chest.money) odds.money=chest.money;
+  const order=["E","D","C","B","A","S","X"];
+  const present=order.filter(c=>odds[c]!==undefined);
   if(luck>0 && present.length>1){
-    const top = present[present.length-1];
-    const second = present[present.length-2];
-    const boost = Math.min(luck*0.35, odds[top]*0.5);
-    odds[top] += boost;
-    if(odds[second]!==undefined) odds[second] = Math.max(0.1, odds[second]-boost*0.5);
+    const top=present[present.length-1];
+    const second=present[present.length-2];
+    const boost=Math.min(luck*0.35,odds[top]*0.5);
+    odds[top]+=boost;
+    if(odds[second]!==undefined) odds[second]=Math.max(0.1,odds[second]-boost*0.5);
   }
-  const pick = weightedPick(odds);
-  if(pick === "money"){
-    return {type:"money", amount: Math.round(chest.price * (0.3 + Math.random()*0.9))};
-  }
-  const name = randomGloveName(pick);
-  return {type:"glove", cls:pick, name, stats:generateStats(pick)};
+  const pick=weightedPick(odds);
+  if(pick==="money") return {type:"money",amount:Math.round(chest.price*(0.3+Math.random()*0.9))};
+  const name=randomGloveName(pick);
+  return {type:"glove",cls:pick,name,stats:generateStats(pick)};
 }
 
 function makeReelItem(cls){
-  const div = document.createElement("div");
-  div.className = "reel-item rc-"+cls;
-  div.style.setProperty("--class-color", CLASSES[cls].color);
-  div.innerHTML = `${CLASSES[cls].emoji}<div class="rlabel">${cls}</div>`;
+  const div=document.createElement("div");
+  div.className="reel-item rc-"+cls;
+  div.style.setProperty("--class-color",CLASSES[cls].color);
+  div.innerHTML=`${CLASSES[cls].emoji}<div class="rlabel">${cls}</div>`;
   return div;
 }
-function buildIdleReel(stripEl, pool){
-  stripEl.style.transition = "none";
-  stripEl.style.transform = "translateX(0)";
-  stripEl.innerHTML = "";
+function buildIdleReel(stripEl,pool){
+  stripEl.style.transition="none"; stripEl.style.transform="translateX(0)"; stripEl.innerHTML="";
   for(let i=0;i<11;i++) stripEl.appendChild(makeReelItem(pool[Math.floor(Math.random()*pool.length)]));
 }
-function animateReel(stripEl, viewportEl, pool, result, itemW, onLanded){
-  const totalItems = 55, landIndex = 46;
-  stripEl.innerHTML = "";
-  let landedEl = null;
+function animateReel(stripEl,viewportEl,pool,result,itemW,onLanded){
+  const totalItems=55, landIndex=46;
+  stripEl.innerHTML=""; let landedEl=null;
   for(let i=0;i<totalItems;i++){
-    if(i === landIndex){
-      const cls = result.type==="money" ? "A" : result.cls;
-      const item = makeReelItem(cls);
-      if(result.type==="money"){
-        item.innerHTML = `💵<div class="rlabel">CASH</div>`;
-        item.className = "reel-item rc-A";
-        item.style.setProperty("--class-color","var(--gold)");
-      }
-      landedEl = item;
-      stripEl.appendChild(item);
-    } else {
-      stripEl.appendChild(makeReelItem(pool[Math.floor(Math.random()*pool.length)]));
-    }
+    if(i===landIndex){
+      const cls=result.type==="money"?"A":result.cls;
+      const item=makeReelItem(cls);
+      if(result.type==="money"){item.innerHTML=`💵<div class="rlabel">CASH</div>`;item.className="reel-item rc-A";item.style.setProperty("--class-color","var(--gold)");}
+      landedEl=item; stripEl.appendChild(item);
+    } else stripEl.appendChild(makeReelItem(pool[Math.floor(Math.random()*pool.length)]));
   }
-  const targetX = viewportEl.clientWidth/2 - (landIndex*itemW + itemW/2) + (Math.random()*18-9);
-  stripEl.style.transition = "none";
-  stripEl.style.transform = "translateX(0px)";
+  const targetX=viewportEl.clientWidth/2-(landIndex*itemW+itemW/2)+(Math.random()*18-9);
+  stripEl.style.transition="none"; stripEl.style.transform="translateX(0px)";
   void stripEl.offsetWidth;
-  stripEl.style.transition = "transform 5.1s cubic-bezier(0.08,0.75,0.06,1)";
-  stripEl.style.transform = `translateX(${targetX}px)`;
-  setTimeout(()=>{ if(landedEl) landedEl.classList.add("landed"); }, 5150);
-  setTimeout(onLanded, 5750);
+  stripEl.style.transition="transform 5.1s cubic-bezier(0.08,0.75,0.06,1)";
+  stripEl.style.transform=`translateX(${targetX}px)`;
+  setTimeout(()=>{if(landedEl)landedEl.classList.add("landed");},5150);
+  setTimeout(onLanded,5750);
 }
 
-/* Single Open */
-let currentPending=null, currentChest=null, rolledResult=null;
-function openModalFor(p, chest){
+/* Single */
+let currentPending=null,currentChest=null,rolledResult=null;
+function openModalFor(p,chest){
   currentPending=p; currentChest=chest; rolledResult=null;
-  document.getElementById("modalTitle").textContent = chest.name;
+  document.getElementById("modalTitle").textContent=chest.name;
   document.getElementById("resultBox").classList.remove("show");
-  const btn = document.getElementById("openBtn");
+  const btn=document.getElementById("openBtn");
   btn.disabled=false; btn.textContent="Open Case"; btn.onclick=startSpin;
-  buildIdleReel(document.getElementById("reelStrip"), Object.keys(chest.odds));
+  buildIdleReel(document.getElementById("reelStrip"),Object.keys(chest.odds));
   document.getElementById("openModalBg").style.display="flex";
 }
 function startSpin(){
   document.getElementById("openBtn").disabled=true;
-  rolledResult = rollChest(currentChest);
-  const strip = document.getElementById("reelStrip");
-  animateReel(strip, strip.parentElement, Object.keys(currentChest.odds), rolledResult, 112, ()=>showResult(rolledResult));
+  rolledResult=rollChest(currentChest);
+  const strip=document.getElementById("reelStrip");
+  animateReel(strip,strip.parentElement,Object.keys(currentChest.odds),rolledResult,112,()=>showResult(rolledResult));
 }
 function showResult(result){
-  const box = document.getElementById("resultBox");
+  const box=document.getElementById("resultBox");
   if(result.type==="money"){
     document.getElementById("resultEmoji").textContent="💵";
     document.getElementById("resultName").textContent=fmt(result.amount);
     document.getElementById("resultClass").textContent="Cash payout";
     document.getElementById("resultClass").style.color="var(--gold)";
   } else {
-    const c = CLASSES[result.cls];
+    const c=CLASSES[result.cls];
     document.getElementById("resultEmoji").textContent=c.emoji;
     document.getElementById("resultName").textContent=result.name;
     document.getElementById("resultClass").textContent=c.label;
-    document.getElementById("resultClass").style.color = c.color.startsWith("var")?"#ffd23a":c.color;
+    document.getElementById("resultClass").style.color=c.color.startsWith("var")?"#ffd23a":c.color;
+    if(result.cls==="X") triggerXEffect();
   }
   box.classList.add("show");
   document.getElementById("openBtn").textContent="Collect";
@@ -836,38 +789,35 @@ function showResult(result){
 }
 function collectResult(){
   applyResult(rolledResult);
-  state.pending = state.pending.filter(p=>p.uid!==currentPending.uid);
-  state.stats.casesOpened = (state.stats.casesOpened||0)+1;
-  saveState();
-  renderTop(); renderShop(); renderInventory(); renderUpgrade();
-  checkAchievements();
-  closeOpenModal();
+  state.pending=state.pending.filter(p=>p.uid!==currentPending.uid);
+  state.stats.casesOpened=(state.stats.casesOpened||0)+1;
+  saveState(); renderTop(); renderShop(); renderInventory(); renderUpgrade();
+  checkAchievements(); closeOpenModal();
 }
 function applyResult(result){
   if(result.type==="money"){
-    state.money += result.amount;
-    toast(`+${fmt(result.amount)}`);
+    state.money+=result.amount; toast(`+${fmt(result.amount)}`);
   } else {
-    state.inventory.push({uid:nextUid(), cls:result.cls, name:result.name, equipped:false, stats:result.stats});
+    state.inventory.push({uid:nextUid(),cls:result.cls,name:result.name,equipped:false,stats:result.stats});
     if(!state.seenClasses.includes(result.cls)) state.seenClasses.push(result.cls);
+    // Lifetime count
+    state.gloveCounts[result.name]=(state.gloveCounts[result.name]||0)+1;
     toast(`Got ${result.name} (${CLASSES[result.cls].label})`);
+    if(result.cls==="X") triggerXEffect();
   }
 }
-function closeOpenModal(){ document.getElementById("openModalBg").style.display="none"; }
-document.getElementById("closeModalBtn").onclick = closeOpenModal;
+function closeOpenModal(){document.getElementById("openModalBg").style.display="none";}
+document.getElementById("closeModalBtn").onclick=closeOpenModal;
 
-/* Multi Open */
+/* Multi */
 let multiSession=null;
 function openMultiModal(uids){
-  const row = document.getElementById("multiReelRow");
-  row.innerHTML="";
+  const row=document.getElementById("multiReelRow"); row.innerHTML="";
   const items=[];
   uids.forEach(uid=>{
-    const p = state.pending.find(x=>x.uid===uid);
-    if(!p) return;
-    const chest = CHESTS.find(c=>c.id===p.chestId);
-    const col = document.createElement("div");
-    col.className="multi-col";
+    const p=state.pending.find(x=>x.uid===uid); if(!p) return;
+    const chest=CHESTS.find(c=>c.id===p.chestId);
+    const col=document.createElement("div"); col.className="multi-col";
     col.innerHTML=`<div class="mc-label">${chest.icon} ${chest.name}</div>
       <div class="reel-viewport"><div class="reel-center-line"></div><div class="reel-strip"></div></div>
       <div class="mc-result">Ready</div>`;
@@ -900,6 +850,7 @@ document.getElementById("multiStartBtn").onclick=()=>{
       } else {
         const c=CLASSES[entry.result.cls];
         entry.resultEl.innerHTML=`${entry.result.name} <b style="color:${c.color.startsWith('var')?'#ffd23a':c.color}">(${c.label})</b>`;
+        if(entry.result.cls==="X") triggerXEffect();
       }
       entry.resultEl.classList.add("ready");
       remaining--;
@@ -919,12 +870,10 @@ document.getElementById("multiCollectBtn").onclick=()=>{
   state.stats.casesOpened=(state.stats.casesOpened||0)+multiSession.items.length;
   toast(multiSession.items.length>1?"Collected all!":"Collected!");
   selectedPending=[]; selectMode=false;
-  saveState();
-  renderTop(); renderShop(); renderInventory(); renderUpgrade();
-  checkAchievements();
-  closeMultiModal();
+  saveState(); renderTop(); renderShop(); renderInventory(); renderUpgrade();
+  checkAchievements(); closeMultiModal();
 };
-function closeMultiModal(){ document.getElementById("multiModalBg").style.display="none"; multiSession=null; }
+function closeMultiModal(){document.getElementById("multiModalBg").style.display="none"; multiSession=null;}
 document.getElementById("closeMultiModalBtn").onclick=closeMultiModal;
 
 /* Inventory */
@@ -938,15 +887,11 @@ function renderInventory(){
   else if(sort==="name") items.sort((a,b)=>a.name.localeCompare(b.name));
   else if(sort==="value") items.sort((a,b)=>getGloveValue(b.name)-getGloveValue(a.name));
 
-  if(items.length===0){
-    grid.innerHTML=`<div class="inv-empty">No gloves yet — open a case from the Shop.</div>`;
-    return;
-  }
+  if(items.length===0){grid.innerHTML=`<div class="inv-empty">No gloves yet — open a case from the Shop.</div>`;return;}
   grid.innerHTML="";
   items.forEach(g=>{
     const c=CLASSES[g.cls];
     const stats=g.stats||{str:0,spd:0,dex:0,end:0};
-    const val=getGloveValue(g.name);
     const el=document.createElement("div");
     el.className="glove-card class-"+g.cls+(g.equipped?" equipped":"");
     el.innerHTML=`
@@ -968,13 +913,11 @@ function renderInventory(){
 
 let detailUid=null;
 function openDetail(uid){
-  const g=state.inventory.find(x=>x.uid===uid);
-  if(!g) return;
+  const g=state.inventory.find(x=>x.uid===uid); if(!g) return;
   detailUid=uid;
   const c=CLASSES[g.cls];
   const stats=g.stats||{str:0,spd:0,dex:0,end:0};
   const val=getGloveValue(g.name);
-  // More sensitive bars (scale around 40)
   const scale=45;
   document.getElementById("detailHero").textContent=c.emoji;
   document.getElementById("detailHero").style.setProperty("--class-color",c.color);
@@ -985,19 +928,15 @@ function openDetail(uid){
   document.getElementById("detailStatus").textContent=g.equipped?"● Equipped":"Unequipped";
   document.getElementById("detailEquipBtn").textContent=g.equipped?"Unequip":"Equip";
 
-  function bar(stat, cls){
+  function bar(stat,cls){
     const v=stats[stat];
-    const pct=Math.min(100, Math.max(0, ((v+15)/scale)*100)); // shift so negatives still show
+    const pct=Math.min(100,Math.max(0,((v+15)/scale)*100));
     const isNeg=v<0;
-    return `<div class="stat-bar-row">
-      <div class="stat-label">${stat.toUpperCase()}</div>
+    return `<div class="stat-bar-row"><div class="stat-label">${stat.toUpperCase()}</div>
       <div class="stat-track"><div class="stat-fill ${isNeg?'neg':cls}" style="width:${pct}%"></div></div>
-      <div class="stat-val" style="color:${isNeg?'#ff8a7a':'#fff'}">${v>=0?'+':''}${v}</div>
-    </div>`;
+      <div class="stat-val" style="color:${isNeg?'#ff8a7a':'#fff'}">${v>=0?'+':''}${v}</div></div>`;
   }
-  document.getElementById("detailStats").innerHTML =
-    bar("str","str") + bar("spd","spd") + bar("dex","dex") + bar("end","end");
-
+  document.getElementById("detailStats").innerHTML=bar("str","str")+bar("spd","spd")+bar("dex","dex")+bar("end","end");
   document.getElementById("detailModalBg").style.display="flex";
 }
 document.getElementById("detailEquipBtn").onclick=()=>{if(detailUid){toggleEquip(detailUid);openDetail(detailUid);}};
@@ -1005,28 +944,22 @@ document.getElementById("detailSellBtn").onclick=()=>{if(detailUid){sellGlove(de
 document.getElementById("closeDetailBtn").onclick=()=>document.getElementById("detailModalBg").style.display="none";
 
 function toggleEquip(uid){
-  const g=state.inventory.find(x=>x.uid===uid);
-  if(!g) return;
-  if(!g.equipped && state.inventory.filter(x=>x.equipped).length>=2){
-    toast("You can only equip 2 gloves");
+  const g=state.inventory.find(x=>x.uid===uid); if(!g) return;
+  if(!g.equipped && state.inventory.filter(x=>x.equipped).length>=state.maxEquip){
+    toast(`You can only equip ${state.maxEquip} gloves`);
     return;
   }
   g.equipped=!g.equipped;
-  saveState();
-  renderTop(); renderInventory();
-  checkAchievements();
+  saveState(); renderTop(); renderInventory(); checkAchievements();
 }
 function sellGlove(uid){
-  const idx=state.inventory.findIndex(x=>x.uid===uid);
-  if(idx<0) return;
+  const idx=state.inventory.findIndex(x=>x.uid===uid); if(idx<0) return;
   const g=state.inventory[idx];
   const resell=Math.round(getGloveValue(g.name)*0.05);
   state.inventory.splice(idx,1);
   state.money+=resell;
-  saveState();
-  renderTop(); renderInventory(); renderUpgrade();
-  checkAchievements();
-  toast(`Sold ${g.name} for ${fmt(resell)}`);
+  saveState(); renderTop(); renderInventory(); renderUpgrade();
+  checkAchievements(); toast(`Sold ${g.name} for ${fmt(resell)}`);
 }
 document.getElementById("invSearch").addEventListener("input",renderInventory);
 document.getElementById("invSort").addEventListener("change",renderInventory);
@@ -1034,8 +967,7 @@ document.getElementById("invSort").addEventListener("change",renderInventory);
 /* Combine */
 function countClass(cls){return state.inventory.filter(g=>g.cls===cls).length;}
 function renderUpgrade(){
-  const list=document.getElementById("recipeList");
-  list.innerHTML="";
+  const list=document.getElementById("recipeList"); list.innerHTML="";
   RECIPES.forEach(r=>{
     const resultC=CLASSES[r.result];
     const needParts=Object.entries(r.need).map(([cls,n])=>{
@@ -1059,17 +991,16 @@ function doUpgrade(recipe){
   Object.entries(recipe.need).forEach(([cls,n])=>{
     let removed=0;
     state.inventory=state.inventory.filter(g=>{
-      if(g.cls===cls && removed<n){removed++;return false;}
+      if(g.cls===cls&&removed<n){removed++;return false;}
       return true;
     });
   });
   const name=randomGloveName(recipe.result);
   state.inventory.push({uid:nextUid(),cls:recipe.result,name,equipped:false,stats:generateStats(recipe.result)});
   if(!state.seenClasses.includes(recipe.result)) state.seenClasses.push(recipe.result);
-  saveState();
-  renderTop(); renderInventory(); renderUpgrade();
-  checkAchievements();
-  toast(`Upgraded into ${name}!`);
+  state.gloveCounts[name]=(state.gloveCounts[name]||0)+1;
+  saveState(); renderTop(); renderInventory(); renderUpgrade();
+  checkAchievements(); toast(`Upgraded into ${name}!`);
 }
 
 /* Debug */
@@ -1089,11 +1020,10 @@ document.getElementById("debugReset").onclick=()=>{
 };
 document.getElementById("debugErase").onclick=()=>{
   if(!confirm("⚠ Erase EVERYTHING?")) return;
-  localStorage.removeItem("gloveVaultState_v4");
-  state={money:500,inventory:[],pending:[],seenClasses:[],unlockedAch:[],maxMulti:1,stats:{casesOpened:0}};
+  localStorage.removeItem("gloveVaultState_v5");
+  state={money:500,inventory:[],pending:[],seenClasses:[],unlockedAch:[],maxMulti:1,maxEquip:2,gloveCounts:{},stats:{casesOpened:0}};
   selectedPending=[];selectMode=false;
-  saveState();
-  renderTop();renderShop();renderInventory();renderUpgrade();renderAchievements();
+  saveState(); renderTop();renderShop();renderInventory();renderUpgrade();renderAchievements();
   toast("All data erased");
 };
 
