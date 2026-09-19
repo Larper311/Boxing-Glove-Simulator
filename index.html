@@ -1165,4 +1165,35 @@ document.getElementById("debugReset").onclick = ()=>{
 document.getElementById("debugErase").onclick = ()=>{
   if(!confirm("⚠ ERASE EVERYTHING including achievements?")) return;
   localStorage.removeItem("gloveVaultState_v3");
-  state = 
+  state = {money:500,inventory:[],pending:[],seenClasses:[],unlockedAch:[],maxMulti:1,stats:{casesOpened:0}};
+  selectedPending=[]; selectMode=false;
+  saveState();
+  renderTop(); renderShop(); renderInventory(); renderUpgrade(); renderAchievements();
+  toast("All data erased");
+};
+
+/* ================= TABS ================= */
+document.querySelectorAll(".tab").forEach(tab=>{
+  tab.onclick = ()=>{
+    document.querySelectorAll(".tab").forEach(t=>t.classList.remove("active"));
+    tab.classList.add("active");
+    ["shop","inventory","upgrade","achievements"].forEach(name=>{
+      document.getElementById("tab-"+name).style.display = name===tab.dataset.tab ? "block" : "none";
+    });
+    if(tab.dataset.tab==="inventory") renderInventory();
+    if(tab.dataset.tab==="upgrade") renderUpgrade();
+    if(tab.dataset.tab==="achievements") renderAchievements();
+  };
+});
+
+/* ================= INIT ================= */
+loadState();
+renderTop();
+renderShop();
+renderInventory();
+renderUpgrade();
+renderAchievements();
+checkAchievements();
+</script>
+</body>
+</html>
