@@ -58,7 +58,7 @@
     font-size:9.5px;font-weight:800;padding:2px 7px;border-radius:6px;white-space:nowrap;}
   .pending-chest.selected .tag{background:#7bff9e;color:#0a2a12;}
   @keyframes bob{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
-  .chest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:14px;}
+  .chest-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px;}
   .chest-card{background:linear-gradient(160deg,rgba(255,255,255,0.06),rgba(0,0,0,0.18));border:1px solid var(--line);
     border-radius:16px;padding:16px 12px;text-align:center;transition:transform .18s,border-color .18s,box-shadow .18s;backdrop-filter:blur(8px);}
   .chest-card:hover{transform:translateY(-5px);border-color:var(--gold);box-shadow:0 14px 30px rgba(0,0,0,0.45),0 0 0 1px rgba(255,178,56,0.3);}
@@ -66,17 +66,25 @@
   .chest-card:hover .chest-icon{transform:scale(1.12) rotate(-5deg);}
   .chest-name{font-weight:800;font-size:14.5px;margin-bottom:3px;} .chest-desc{font-size:11px;color:var(--ink-dim);margin-bottom:10px;min-height:28px;}
   .chest-price{font-weight:800;color:var(--gold);font-size:13.5px;margin-bottom:10px;}
-  .buy-btn{width:100%;padding:9px 0;border:none;border-radius:10px;font-weight:800;font-size:13px;
+  .buy-row{display:flex;gap:6px;align-items:center;margin-bottom:6px;}
+  .qty-input{width:52px;padding:8px 6px;border:1px solid var(--line);border-radius:8px;background:var(--bg-0);color:var(--ink);font-weight:700;font-size:13px;text-align:center;outline:none;}
+  .qty-input:focus{border-color:var(--gold);}
+  .buy-btn{flex:1;padding:9px 0;border:none;border-radius:10px;font-weight:800;font-size:13px;
     background:linear-gradient(135deg,#ff7a4a,var(--accent));color:#2a0a04;cursor:pointer;}
   .buy-btn:disabled{background:#3a2a24;color:#7a655d;cursor:not-allowed;} .buy-btn:not(:disabled):hover{filter:brightness(1.1);}
-  .odds-link{display:block;margin-top:8px;font-size:10.5px;color:var(--ink-dim);cursor:pointer;text-decoration:underline;}
+  .odds-link{display:block;margin-top:6px;font-size:10.5px;color:var(--ink-dim);cursor:pointer;text-decoration:underline;}
   .upgrade-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;margin-top:8px;}
   .upgrade-card{background:linear-gradient(160deg,rgba(255,255,255,0.05),rgba(0,0,0,0.2));border:1px solid var(--line);border-radius:14px;padding:16px;text-align:center;}
   .upgrade-title{font-weight:800;font-size:15px;margin-bottom:4px;} .upgrade-desc{font-size:12px;color:var(--ink-dim);margin-bottom:10px;}
   .upgrade-price{font-weight:800;color:var(--gold);margin-bottom:10px;}
   .inv-toolbar{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:14px;align-items:center;}
   .inv-toolbar input,.inv-toolbar select{background:var(--bg-0);border:1px solid var(--line);color:var(--ink);padding:9px 13px;border-radius:10px;font-size:13.5px;outline:none;}
-  .inv-toolbar input{flex:1;min-width:150px;} .inv-empty{color:var(--ink-dim);text-align:center;padding:48px 12px;font-size:14px;}
+  .inv-toolbar input{flex:1;min-width:150px;}
+  .sell-all-btn{padding:9px 16px;border:none;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer;
+    background:linear-gradient(135deg,#5c2f5a,#3a1a3a);color:#f0d0ff;transition:all .2s;}
+  .sell-all-btn.confirm{background:linear-gradient(135deg,#ff4a4a,#c02020);color:#fff;animation:pulseConfirm 0.8s ease-in-out infinite;}
+  @keyframes pulseConfirm{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+  .inv-empty{color:var(--ink-dim);text-align:center;padding:48px 12px;font-size:14px;}
   .glove-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(162px,1fr));gap:14px;}
   .glove-card{border-radius:16px;padding:14px 12px 12px;text-align:center;position:relative;cursor:pointer;overflow:hidden;isolation:isolate;
     border:1.5px solid rgba(255,255,255,0.14);backdrop-filter:blur(12px) saturate(150%);
@@ -158,10 +166,10 @@
     box-shadow:0 0 16px var(--gold);transform:translateX(-1.5px);z-index:7;}
   .reel-center-line::before,.reel-center-line::after{content:'';position:absolute;left:50%;transform:translateX(-50%);border:9px solid transparent;}
   .reel-center-line::before{top:-4px;border-top-color:var(--gold);} .reel-center-line::after{bottom:-4px;border-bottom-color:var(--gold);}
-  .multi-reel-row{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;margin-bottom:18px;max-height:55vh;overflow-y:auto;padding:8px;}
-  .multi-col{width:140px;flex-shrink:0;}
+  .multi-reel-row{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-bottom:18px;max-height:55vh;overflow-y:auto;padding:8px;}
+  .multi-col{width:130px;flex-shrink:0;}
   .multi-col .mc-label{font-size:11px;font-weight:800;color:var(--ink-dim);margin-bottom:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-  .multi-col .reel-viewport{height:90px;margin-bottom:8px;} .multi-col .reel-item{width:70px;height:78px;font-size:24px;margin:0 4px;}
+  .multi-col .reel-viewport{height:82px;margin-bottom:6px;} .multi-col .reel-item{width:64px;height:70px;font-size:22px;margin:0 3px;}
   .multi-col .mc-result{font-size:11px;font-weight:800;min-height:16px;color:var(--ink-dim);} .multi-col .mc-result.ready{color:#fff;}
   .result-box{display:none;margin-bottom:16px;} .result-box.show{display:block;}
   .result-emoji{font-size:52px;} .result-name{font-weight:800;font-size:18px;margin-top:5px;} .result-class{font-size:12px;color:var(--ink-dim);margin-top:3px;}
@@ -207,9 +215,33 @@
     background:conic-gradient(from 0deg,#ffd23a,#ff5fd0,#5fd0ff,#7bff9e,#ffd23a);animation:sSpin 2.8s linear infinite;opacity:0.3;filter:blur(18px);}
   .ach-popup .ap-icon{font-size:32px;flex:0 0 auto;} .ach-popup .ap-label{font-size:10px;font-weight:800;color:var(--gold);letter-spacing:.5px;}
   .ach-popup .ap-name{font-size:14px;font-weight:800;color:#fff;}
-  .x-flash{position:fixed;inset:0;pointer-events:none;z-index:200;background:radial-gradient(circle,rgba(255,210,58,0.25),transparent 70%);
-    opacity:0;animation:xFlash 1.8s ease-out forwards;}
-  @keyframes xFlash{0%{opacity:0;}15%{opacity:1;}100%{opacity:0;}}
+
+  /* ===== MUCH COOLER CLASS X EFFECT ===== */
+  .x-overlay{position:fixed;inset:0;pointer-events:none;z-index:250;overflow:hidden;}
+  .x-flash{position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(255,210,58,0.55),rgba(255,90,54,0.25) 40%,transparent 70%);
+    opacity:0;animation:xFlashBig 2.4s ease-out forwards;}
+  @keyframes xFlashBig{0%{opacity:0;transform:scale(0.6);}12%{opacity:1;transform:scale(1.15);}100%{opacity:0;transform:scale(1.4);}}
+  .x-ring{position:absolute;left:50%;top:50%;width:20px;height:20px;border:3px solid #ffd23a;border-radius:50%;
+    transform:translate(-50%,-50%);opacity:0;animation:xRing 1.8s ease-out forwards;}
+  .x-ring:nth-child(2){animation-delay:0.12s;border-color:#ff5a36;}
+  .x-ring:nth-child(3){animation-delay:0.24s;border-color:#ff5fd0;}
+  @keyframes xRing{0%{width:20px;height:20px;opacity:1;}100%{width:900px;height:900px;opacity:0;border-width:1px;}}
+  .x-particle{position:absolute;width:8px;height:8px;border-radius:50%;background:#ffd23a;box-shadow:0 0 12px #ffd23a;
+    left:50%;top:50%;opacity:0;animation:xParticle 1.6s ease-out forwards;}
+  @keyframes xParticle{
+    0%{transform:translate(-50%,-50%) scale(0);opacity:1;}
+    20%{opacity:1;}
+    100%{transform:translate(calc(-50% + var(--tx)),calc(-50% + var(--ty))) scale(0.3);opacity:0;}
+  }
+  .x-text{position:absolute;left:50%;top:42%;transform:translate(-50%,-50%);font-size:clamp(28px,8vw,64px);font-weight:900;
+    letter-spacing:4px;color:#ffd23a;text-shadow:0 0 30px #ff5a36,0 0 60px #ffd23a,0 4px 0 #5a1800;
+    opacity:0;animation:xText 2.2s cubic-bezier(.2,.9,.3,1) forwards;white-space:nowrap;}
+  @keyframes xText{0%{opacity:0;transform:translate(-50%,-50%) scale(0.4) rotate(-8deg);}15%{opacity:1;transform:translate(-50%,-50%) scale(1.15) rotate(2deg);}
+    30%{transform:translate(-50%,-50%) scale(1) rotate(0deg);}80%{opacity:1;}100%{opacity:0;transform:translate(-50%,-60%) scale(1.1);}}
+  .x-shake{animation:xShake 0.55s ease-in-out;}
+  @keyframes xShake{0%,100%{transform:translateX(0);}20%{transform:translateX(-12px) rotate(-1deg);}40%{transform:translateX(10px) rotate(1deg);}
+    60%{transform:translateX(-8px);}80%{transform:translateX(6px);}}
+
   @media(max-width:540px){.stats{width:100%;justify-content:flex-start;} .chip{padding:7px 12px;font-size:13px;} .detail-layout{flex-direction:column;align-items:center;}}
 </style>
 </head>
@@ -271,6 +303,7 @@
           <option value="name">Sort by Name</option>
           <option value="value">Sort by Value</option>
         </select>
+        <button class="sell-all-btn" id="sellAllBtn">Sell All</button>
       </div>
       <div id="gloveGrid" class="glove-grid"></div>
     </div>
@@ -307,7 +340,7 @@
 <div class="modal-bg" id="multiModalBg" style="display:none;">
   <div class="modal" style="max-width:980px;">
     <h3>Multi Open</h3>
-    <div class="sub">All reels will land, then collect everything.</div>
+    <div class="sub" id="multiSub">All reels will land, then collect everything.</div>
     <div class="multi-reel-row" id="multiReelRow"></div>
     <div class="modal-actions">
       <button class="btn-open" id="multiStartBtn">Open All</button>
@@ -410,14 +443,22 @@ Object.keys(GLOVE_DATA).forEach(n=>{
   GLOVE_NAMES[c].push(n);
 });
 
+/* ===== UPDATED CHESTS WITH YOUR EXACT ODDS + MONEY RETURN ===== */
 const CHESTS = [
-  {id:"silver",name:"Silver Case",price:250,icon:"🥈",desc:"Common — D & C mostly",odds:{E:45,D:35,C:15,B:5}},
-  {id:"golden",name:"Golden Case",price:750,icon:"🥇",desc:"Better D/C, real B, tiny A",odds:{E:20,D:35,C:25,B:15,A:5}},
-  {id:"coffer",name:"Coffer",price:2500,icon:"⚪",desc:"First chance at S",odds:{E:8,D:22,C:30,B:25,A:12,S:3}},
-  {id:"obsidian",name:"Obsidian Case",price:8000,icon:"⬛",desc:"Big jump — B/A common",odds:{D:8,C:20,B:32,A:38,S:2}},
-  {id:"robux",name:"Robux Chest",price:15000,icon:"💚",desc:"Chance of a cash payout",odds:{D:5,C:18,B:27,A:30,S:5},money:15},
-  {id:"plasma",name:"Plasma Chest",price:40000,icon:"🔷",desc:"Strong, but not too OP",odds:{C:11.1,B:27.75,A:38.85,S:22.2,X:0.09}},
-  {id:"ember",name:"Ember Crate",price:100000,icon:"🔥",desc:"Best chest — real B floor, real X shot",odds:{B:25,A:25,S:40,X:10}}
+  {id:"silver",name:"Silver Case",price:250,icon:"🥈",desc:"Common — D & C mostly, B rare",
+   odds:{E:45,D:35,C:15,B:5}},
+  {id:"golden",name:"Golden Case",price:750,icon:"🥇",desc:"Better D/C, real B, tiny A",
+   odds:{E:14.28,D:42.85,C:25.71,B:14.28,A:2.85}, money:0.03},
+  {id:"coffer",name:"Coffer",price:2500,icon:"⚪",desc:"Strong C focus, first real A chance",
+   odds:{D:22.85,C:45.71,B:17.14,A:11.42}, money:2.88},
+  {id:"obsidian",name:"Obsidian Case",price:8000,icon:"⬛",desc:"Big jump — B/A common, solid S",
+   odds:{C:8.69,B:34.78,A:39.13,S:17.39}, money:0.01},
+  {id:"robux",name:"Robux Chest",price:15000,icon:"💚",desc:"High cash return chance",
+   odds:{B:32.43,A:40.54,S:10.81}, money:16.22},
+  {id:"plasma",name:"Plasma Chest",price:40000,icon:"🔷",desc:"Heavy A + real X shot",
+   odds:{E:2.83,C:1.88,B:23.58,A:47.41,S:8.49,X:0.94}, money:14.87},
+  {id:"ember",name:"Ember Crate",price:100000,icon:"🔥",desc:"Best chest — massive A floor + X",
+   odds:{A:78.74,S:18.89,X:2.36}, money:0.01}
 ];
 
 const RECIPES = [
@@ -534,11 +575,43 @@ function renderAchievements(){
   });
 }
 
+/* ===== WAY COOLER CLASS X EFFECT ===== */
 function triggerXEffect(){
-  const flash=document.createElement("div");
-  flash.className="x-flash";
-  document.body.appendChild(flash);
-  setTimeout(()=>flash.remove(),2000);
+  const overlay = document.createElement("div");
+  overlay.className = "x-overlay";
+  // big flash
+  const flash = document.createElement("div");
+  flash.className = "x-flash";
+  overlay.appendChild(flash);
+  // expanding rings
+  for(let i=0;i<3;i++){
+    const ring = document.createElement("div");
+    ring.className = "x-ring";
+    overlay.appendChild(ring);
+  }
+  // particles
+  for(let i=0;i<42;i++){
+    const p = document.createElement("div");
+    p.className = "x-particle";
+    const angle = (Math.PI*2*i)/42 + Math.random()*0.3;
+    const dist = 180 + Math.random()*280;
+    p.style.setProperty("--tx", Math.cos(angle)*dist + "px");
+    p.style.setProperty("--ty", Math.sin(angle)*dist + "px");
+    p.style.background = i%3===0 ? "#ffd23a" : (i%3===1 ? "#ff5a36" : "#ff5fd0");
+    p.style.boxShadow = `0 0 14px ${p.style.background}`;
+    p.style.animationDelay = (Math.random()*0.25) + "s";
+    overlay.appendChild(p);
+  }
+  // big text
+  const txt = document.createElement("div");
+  txt.className = "x-text";
+  txt.textContent = "CLASS X";
+  overlay.appendChild(txt);
+
+  document.body.appendChild(overlay);
+  document.body.classList.add("x-shake");
+  setTimeout(()=>document.body.classList.remove("x-shake"),600);
+  setTimeout(()=>overlay.remove(),2600);
 }
 
 function renderTop(){
@@ -557,9 +630,22 @@ function renderShop(){
       <div class="chest-name">${chest.name}</div>
       <div class="chest-desc">${chest.desc}</div>
       <div class="chest-price">${fmt(chest.price)}</div>
-      <button class="buy-btn" ${state.money<chest.price?"disabled":""}>Buy</button>
+      <div class="buy-row">
+        <input type="number" class="qty-input" min="1" max="50" value="1" title="Quantity">
+        <button class="buy-btn" ${state.money<chest.price?"disabled":""}>Buy</button>
+      </div>
       <span class="odds-link">view odds</span>`;
-    el.querySelector(".buy-btn").onclick=()=>buyChest(chest);
+    const qtyInput = el.querySelector(".qty-input");
+    const buyBtn = el.querySelector(".buy-btn");
+    buyBtn.onclick=()=>{
+      let qty = parseInt(qtyInput.value,10) || 1;
+      qty = Math.max(1, Math.min(50, qty));
+      buyChest(chest, qty);
+    };
+    qtyInput.oninput = ()=>{
+      let q = parseInt(qtyInput.value,10)||1;
+      buyBtn.disabled = state.money < chest.price * Math.max(1,q);
+    };
     el.querySelector(".odds-link").onclick=()=>showOdds(chest);
     grid.appendChild(el);
   });
@@ -568,7 +654,6 @@ function renderShop(){
 }
 
 function getNextMultiPrice(){
-  // Nerfed pricing
   const level=state.maxMulti;
   return Math.floor(900 * Math.pow(1.38, level-1));
 }
@@ -618,19 +703,38 @@ function renderUpgrades(){
   }
 }
 
-function buyChest(chest){
-  if(state.money<chest.price) return;
-  state.money-=chest.price;
-  state.pending.push({uid:nextUid(),chestId:chest.id});
-  saveState(); renderTop(); renderShop(); toast(`Bought ${chest.name}`);
+/* ===== FIXED BUY (supports quantity, no more freeze after ~40) ===== */
+function buyChest(chest, qty=1){
+  qty = Math.max(1, Math.min(50, parseInt(qty,10)||1));
+  const totalCost = chest.price * qty;
+  if(state.money < totalCost){
+    toast(`Need ${fmt(totalCost)}`);
+    return;
+  }
+  // soft limit to keep UI snappy
+  if(state.pending.length + qty > 80){
+    toast("Too many pending cases — open some first");
+    return;
+  }
+  state.money -= totalCost;
+  for(let i=0;i<qty;i++){
+    state.pending.push({uid:nextUid(),chestId:chest.id});
+  }
+  saveState();
+  renderTop();
+  renderShop();
+  toast(qty===1 ? `Bought ${chest.name}` : `Bought ${qty}× ${chest.name}`);
 }
 
 let selectMode=false, selectedPending=[];
 function renderPending(){
   const row=document.getElementById("pendingRow");
   row.innerHTML="";
-  state.pending.forEach(p=>{
+  // only show up to 60 for performance; rest are still in state
+  const show = state.pending.slice(0,60);
+  show.forEach(p=>{
     const chest=CHESTS.find(c=>c.id===p.chestId);
+    if(!chest) return;
     const el=document.createElement("div");
     el.className="pending-chest"+(selectedPending.includes(p.uid)?" selected":"");
     el.innerHTML=`${chest.icon}<span class="tag">${selectedPending.includes(p.uid)?"PICKED":"OPEN"}</span>`;
@@ -640,6 +744,12 @@ function renderPending(){
     };
     row.appendChild(el);
   });
+  if(state.pending.length > 60){
+    const more = document.createElement("div");
+    more.style.cssText="align-self:center;font-size:12px;color:var(--ink-dim);font-weight:700;";
+    more.textContent=`+${state.pending.length-60} more`;
+    row.appendChild(more);
+  }
   updateMultiBar();
 }
 function toggleSelect(uid){
@@ -693,7 +803,7 @@ function showOdds(chest){
   entries.forEach(([cls,w])=>{
     rows+=`<tr><td style="color:${CLASSES[cls].color}">${CLASSES[cls].label}</td><td>${((w/total)*100).toFixed(2)}%</td></tr>`;
   });
-  if(moneyWeight) rows+=`<tr><td style="color:var(--gold)">💵 Cash</td><td>${((moneyWeight/total)*100).toFixed(2)}%</td></tr>`;
+  if(moneyWeight) rows+=`<tr><td style="color:var(--gold)">💵 Money Return</td><td>${((moneyWeight/total)*100).toFixed(2)}%</td></tr>`;
   tbl.innerHTML=rows;
   document.getElementById("oddsModalBg").style.display="flex";
 }
@@ -727,26 +837,40 @@ function makeReelItem(cls){
 }
 function buildIdleReel(stripEl,pool){
   stripEl.style.transition="none"; stripEl.style.transform="translateX(0)"; stripEl.innerHTML="";
-  for(let i=0;i<11;i++) stripEl.appendChild(makeReelItem(pool[Math.floor(Math.random()*pool.length)]));
+  for(let i=0;i<9;i++) stripEl.appendChild(makeReelItem(pool[Math.floor(Math.random()*pool.length)]));
 }
-function animateReel(stripEl,viewportEl,pool,result,itemW,onLanded){
-  const totalItems=55, landIndex=46;
-  stripEl.innerHTML=""; let landedEl=null;
+
+/* Optimized reel animation – shorter & lighter for multi */
+function animateReel(stripEl,viewportEl,pool,result,itemW,onLanded, isMulti=false){
+  const totalItems = isMulti ? 32 : 48;
+  const landIndex  = isMulti ? 24 : 38;
+  const duration   = isMulti ? 2.6 : 4.8; // seconds
+
+  stripEl.innerHTML="";
+  let landedEl=null;
   for(let i=0;i<totalItems;i++){
     if(i===landIndex){
-      const cls=result.type==="money"?"A":result.cls;
-      const item=makeReelItem(cls);
-      if(result.type==="money"){item.innerHTML=`💵<div class="rlabel">CASH</div>`;item.className="reel-item rc-A";item.style.setProperty("--class-color","var(--gold)");}
-      landedEl=item; stripEl.appendChild(item);
-    } else stripEl.appendChild(makeReelItem(pool[Math.floor(Math.random()*pool.length)]));
+      const cls = result.type==="money" ? "A" : result.cls;
+      const item = makeReelItem(cls);
+      if(result.type==="money"){
+        item.innerHTML=`💵<div class="rlabel">CASH</div>`;
+        item.className="reel-item rc-A";
+        item.style.setProperty("--class-color","var(--gold)");
+      }
+      landedEl=item;
+      stripEl.appendChild(item);
+    } else {
+      stripEl.appendChild(makeReelItem(pool[Math.floor(Math.random()*pool.length)]));
+    }
   }
-  const targetX=viewportEl.clientWidth/2-(landIndex*itemW+itemW/2)+(Math.random()*18-9);
-  stripEl.style.transition="none"; stripEl.style.transform="translateX(0px)";
+  const targetX = viewportEl.clientWidth/2 - (landIndex*itemW + itemW/2) + (Math.random()*14-7);
+  stripEl.style.transition="none";
+  stripEl.style.transform="translateX(0px)";
   void stripEl.offsetWidth;
-  stripEl.style.transition="transform 5.1s cubic-bezier(0.08,0.75,0.06,1)";
+  stripEl.style.transition=`transform ${duration}s cubic-bezier(0.08,0.75,0.06,1)`;
   stripEl.style.transform=`translateX(${targetX}px)`;
-  setTimeout(()=>{if(landedEl)landedEl.classList.add("landed");},5150);
-  setTimeout(onLanded,5750);
+  setTimeout(()=>{if(landedEl)landedEl.classList.add("landed");}, duration*1000 + 50);
+  setTimeout(onLanded, duration*1000 + 450);
 }
 
 let currentPending=null,currentChest=null,rolledResult=null,isSpinning=false;
@@ -767,7 +891,7 @@ function startSpin(){
   document.getElementById("closeModalBtn").disabled=true;
   rolledResult=rollChest(currentChest);
   const strip=document.getElementById("reelStrip");
-  animateReel(strip,strip.parentElement,Object.keys(currentChest.odds),rolledResult,112,()=>showResult(rolledResult));
+  animateReel(strip,strip.parentElement,Object.keys(currentChest.odds),rolledResult,112,()=>showResult(rolledResult), false);
 }
 function showResult(result){
   isSpinning=false;
@@ -776,7 +900,7 @@ function showResult(result){
   if(result.type==="money"){
     document.getElementById("resultEmoji").textContent="💵";
     document.getElementById("resultName").textContent=fmt(result.amount);
-    document.getElementById("resultClass").textContent="Cash payout";
+    document.getElementById("resultClass").textContent="Money Return";
     document.getElementById("resultClass").style.color="var(--gold)";
   } else {
     const c=CLASSES[result.cls];
@@ -815,13 +939,21 @@ function closeOpenModal(){
 }
 document.getElementById("closeModalBtn").onclick=closeOpenModal;
 
+/* ===== MULTI OPEN – fixed lag + correct results ===== */
 let multiSession=null, multiSpinning=false;
 function openMultiModal(uids){
   const row=document.getElementById("multiReelRow"); row.innerHTML="";
   const items=[];
+  // for very large multi, show a simplified fast mode note
+  const isLarge = uids.length > 20;
+  document.getElementById("multiSub").textContent = isLarge
+    ? `Opening ${uids.length} cases (fast mode for performance)`
+    : "All reels will land, then collect everything.";
+
   uids.forEach(uid=>{
     const p=state.pending.find(x=>x.uid===uid); if(!p) return;
     const chest=CHESTS.find(c=>c.id===p.chestId);
+    if(!chest) return;
     const col=document.createElement("div"); col.className="multi-col";
     col.innerHTML=`<div class="mc-label">${chest.icon} ${chest.name}</div>
       <div class="reel-viewport"><div class="reel-center-line"></div><div class="reel-strip"></div></div>
@@ -834,7 +966,7 @@ function openMultiModal(uids){
     buildIdleReel(stripEl,pool);
     items.push({pendingUid:uid,chest,stripEl,viewportEl,resultEl,pool,result:null});
   });
-  multiSession={items};
+  multiSession={items, isLarge};
   multiSpinning=false;
   document.getElementById("multiStartBtn").style.display="inline-block";
   document.getElementById("multiStartBtn").disabled=false;
@@ -848,28 +980,38 @@ document.getElementById("multiStartBtn").onclick=()=>{
   multiSpinning=true;
   document.getElementById("multiStartBtn").disabled=true;
   document.getElementById("closeMultiModalBtn").disabled=true;
-  let remaining=multiSession.items.length;
-  const itemW=multiSession.items.length===1?112:80;
+
+  // pre-roll ALL results first so display always matches reality
   multiSession.items.forEach(entry=>{
-    entry.result=rollChest(entry.chest);
+    entry.result = rollChest(entry.chest);
+  });
+
+  let remaining = multiSession.items.length;
+  const itemW = multiSession.items.length===1 ? 112 : 70;
+  const isLarge = multiSession.isLarge;
+
+  multiSession.items.forEach((entry, idx)=>{
     entry.resultEl.textContent="Rolling...";
-    animateReel(entry.stripEl,entry.viewportEl,entry.pool,entry.result,itemW,()=>{
-      if(entry.result.type==="money"){
-        entry.resultEl.innerHTML=`💵 <b>${fmt(entry.result.amount)}</b>`;
-      } else {
-        const c=CLASSES[entry.result.cls];
-        entry.resultEl.innerHTML=`${entry.result.name} <b style="color:${c.color.startsWith('var')?'#ffd23a':c.color}">(${c.label})</b>`;
-        if(entry.result.cls==="X") triggerXEffect();
-      }
-      entry.resultEl.classList.add("ready");
-      remaining--;
-      if(remaining===0){
-        multiSpinning=false;
-        document.getElementById("multiCollectBtn").style.display="inline-block";
-        document.getElementById("multiStartBtn").style.display="none";
-        document.getElementById("closeMultiModalBtn").disabled=false;
-      }
-    });
+    // slight stagger so the browser doesn't choke
+    setTimeout(()=>{
+      animateReel(entry.stripEl, entry.viewportEl, entry.pool, entry.result, itemW, ()=>{
+        if(entry.result.type==="money"){
+          entry.resultEl.innerHTML=`💵 <b>${fmt(entry.result.amount)}</b>`;
+        } else {
+          const c=CLASSES[entry.result.cls];
+          entry.resultEl.innerHTML=`${entry.result.name} <b style="color:${c.color.startsWith('var')?'#ffd23a':c.color}">(${c.label})</b>`;
+          if(entry.result.cls==="X") triggerXEffect();
+        }
+        entry.resultEl.classList.add("ready");
+        remaining--;
+        if(remaining===0){
+          multiSpinning=false;
+          document.getElementById("multiCollectBtn").style.display="inline-block";
+          document.getElementById("multiStartBtn").style.display="none";
+          document.getElementById("closeMultiModalBtn").disabled=false;
+        }
+      }, true); // multi mode = shorter animation
+    }, isLarge ? idx*18 : idx*30);
   });
 };
 document.getElementById("multiCollectBtn").onclick=()=>{
@@ -889,6 +1031,47 @@ function closeMultiModal(){
   document.getElementById("multiModalBg").style.display="none"; multiSession=null;
 }
 document.getElementById("closeMultiModalBtn").onclick=closeMultiModal;
+
+/* ===== SELL ALL (double click to confirm) ===== */
+let sellAllConfirm = false;
+const sellAllBtn = document.getElementById("sellAllBtn");
+sellAllBtn.onclick = ()=>{
+  if(state.inventory.length===0){
+    toast("Inventory is empty");
+    return;
+  }
+  if(!sellAllConfirm){
+    sellAllConfirm = true;
+    sellAllBtn.textContent = "Confirm Sell All?";
+    sellAllBtn.classList.add("confirm");
+    // auto-reset after 4s
+    clearTimeout(sellAllBtn._t);
+    sellAllBtn._t = setTimeout(()=>{
+      sellAllConfirm=false;
+      sellAllBtn.textContent="Sell All";
+      sellAllBtn.classList.remove("confirm");
+    },4000);
+    return;
+  }
+  // confirmed
+  let total = 0;
+  state.inventory.forEach(g=>{
+    const resell = Math.round(getGloveValue(g.name)*0.05);
+    total += resell;
+  });
+  state.stats.totalSold = (state.stats.totalSold||0) + total;
+  state.money += total;
+  state.inventory = [];
+  sellAllConfirm=false;
+  sellAllBtn.textContent="Sell All";
+  sellAllBtn.classList.remove("confirm");
+  saveState();
+  renderTop();
+  renderInventory();
+  renderUpgrade();
+  checkAchievements();
+  toast(`Sold everything for ${fmt(total)}`);
+};
 
 function renderInventory(){
   const grid=document.getElementById("gloveGrid");
