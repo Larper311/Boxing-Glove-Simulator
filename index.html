@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>MERGE FIGHTERS</title>
+<title>MERGE FIGHTERS - HARD MODE</title>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#05050c;--pn:#0e0e18;--bd:#35355e;--tx:#eef;--ac:#ffe66d;--hp:#ff4d6d;--cy:#4ecdc4;--gr:#95e06c;--pu:#c77dff;--or:#ff9f1c;--sl:#151522}
@@ -154,6 +154,13 @@ h1{font-size:18px;margin:0;color:var(--ac);text-shadow:3px 3px 0 #000,0 0 12px r
 @keyframes chg{25%{transform:translate(-3px,1px) scale(1.07)}75%{transform:translate(3px,-1px) scale(1.07)}}
 .cb.enraged .eb{filter:saturate(2) brightness(1.15);box-shadow:0 0 18px #f22}
 .pf{animation:bob 2.2s ease-in-out infinite}
+.slot.flash{animation:pop2 .55s}
+@keyframes pulseGlow{0%,100%{box-shadow:0 0 8px var(--c)}50%{box-shadow:0 0 22px var(--c)}}
+.mythic{animation:pulseGlow 1.6s ease-in-out infinite}
+.fx.sparkline{width:4px;height:80px;background:linear-gradient(#fff,#ffe66d);animation:ln .3s forwards}
+.cb.hit{animation:wob .28s}
+.arena{position:relative;overflow:hidden}
+.arena::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(94,207,255,.06),transparent 60%);pointer-events:none}
 
 #sbox{display:none;text-align:center;margin:6px 0}
 #soul{width:100%;max-width:360px;background:#000;border:3px solid #fff;touch-action:none}
@@ -178,7 +185,7 @@ h1{font-size:18px;margin:0;color:var(--ac);text-shadow:3px 3px 0 #000,0 0 12px r
 <body>
 <div class="wrap" id="root">
 <header>
-  <h1>MERGE FIGHTERS</h1>
+  <h1>MERGE FIGHTERS <span style="font-size:10px;color:var(--hp)">HARD</span></h1>
   <div class="hb">
     <div>GOLD <span id="gold" style="color:var(--ac)"></span></div>
     <div>WAVE <span id="wave" style="color:var(--cy)"></span></div>
@@ -224,8 +231,8 @@ h1{font-size:18px;margin:0;color:var(--ac);text-shadow:3px 3px 0 #000,0 0 12px r
 <script>
 const $=id=>document.getElementById(id),rand=(a,b)=>Math.floor(Math.random()*(b-a+1))+a,sleep=ms=>new Promise(r=>setTimeout(r,ms)),uid=()=>Math.random().toString(36).slice(2,9),key=(a,b)=>[a,b].sort().join('+');
 const TC=['#9aa0b5','#8fd18f','#5ecfff','#c77dff','#ffe66d','#ff9f1c','#ff4d6d','#ffffff','#ff5ecf','#00ffd5','#ff00ff'];
-const PERK={dodge:'Chance to dodge attacks',bleed:'Bleeds foes over time',burn:'Burns foes over time',stun:'Chance to stun',life:'Heals wielder',pierce:'Also hits a 2nd foe',thorns:'Reflects damage',regen:'Regens HP each round'};
-const FXD={comet:'Comet strike',vine:'Thorn vines',holy:'Holy light',lightning:'Lightning bolt',ice:'Ice shards',inferno:'Inferno flames',rain:'Blade rain',nova:'Prism nova',bonk:'Weak stick bonk',slash:'Quick slash',redslash:'Red slash + bleed',twin:'Twin slash',heart:'Heart burst',xslash:'X slash + gush',cross:'Chaos cross',punch:'Punch impact',slam:'Slam shockwave',kick:'Kick',quake:'Earthquake',shock:'Shockwave',meteor:'Meteor strike',magic:'Magic sparks',star:'Star burst',rune:'Delta rune',void:'Void collapse',gun:'Gunshot',pierce:'Piercing shot',beam:'Beam'};
+const PERK={dodge:'Chance to dodge attacks',bleed:'Bleeds foes over time',burn:'Burns foes over time',stun:'Chance to stun',life:'Heals wielder (weak)',pierce:'Also hits a 2nd foe',thorns:'Reflects damage',regen:'Slow HP regen each round (heavily capped)'};
+const FXD={comet:'Comet strike',vine:'Thorn vines',holy:'Holy light',lightning:'Lightning bolt',ice:'Ice shards',inferno:'Inferno flames',rain:'Blade rain',nova:'Prism nova',bonk:'Weak stick bonk',slash:'Quick slash',redslash:'Red slash + bleed',twin:'Twin slash',heart:'Heart burst',xslash:'X slash + gush',cross:'Chaos cross',punch:'Punch impact',slam:'Slam shockwave',kick:'Kick',quake:'Earthquake',shock:'Shockwave',meteor:'Meteor strike',magic:'Magic sparks',star:'Star burst',rune:'Delta rune',void:'Void collapse',gun:'Gunshot',pierce:'Piercing shot',beam:'Beam',spiral:'Spiral slash',erupt:'Volcanic eruption',freeze:'Absolute freeze',chaosbolt:'Chaos bolt',soulcut:'Soul sever',prism:'Prism shatter',shadow:'Shadow step',bloom:'Nature bloom',crush:'Titan crush',flare:'Solar flare',abyss:'Abyss drain',spark:'Arc spark',howl:'Wolf howl',judgement:'Judgement ray'};
 const DB={},MERGE={};
 const LINES=[
  {k:'b',t:'BLADES',m:1,c:3,i:[['Stick','bonk',''],['Toy Knife','slash',''],['Real Knife','redslash','bleed'],['Worn Dagger','twin','bleed'],['Heart Locket','heart','life'],['The Knife','xslash','bleed'],['Chaos Saber','cross','bleed']]},
@@ -243,8 +250,8 @@ const ALINES=[
  {k:'q',t:'GHOST',hm:.85,dm:.9,p:'dodge',n:['Silk Scarf','Ninja Garb','Shadow Cloak','Wind Mantle','Ghost Veil','Phantom Robe','Void Shroud']},
  {k:'k',t:'CRYSTAL',hm:1.1,dm:1.1,p:'dodge,thorns',n:['Glass Shard','Quartz Vest','Amethyst Mail','Sapphire Plate','Ruby Guard','Diamond Armor','Prism Aegis']},
  {k:'w',t:'HOLY',hm:1.1,dm:1,p:'regen,dodge',n:['Holy Water','Pilgrim Robe','Monk Habit','Paladin Mail','Saint Vestments','Seraph Plate','Divine Regalia']}];
-const wst=(t,m)=>{const mn=Math.round(6*Math.pow(1.82,t)*m);return{atkMin:mn,atkMax:Math.round(mn*1.4)+1,cost:Math.round(12*Math.pow(2.2,t))}};
-const ast=(t,h,d)=>({hp:Math.round(20*Math.pow(1.75,t)*h),def:Math.round(2*Math.pow(1.7,t)*d),cost:Math.round(10*Math.pow(2.1,t))});
+const wst=(t,m)=>{const mn=Math.round(5.5*Math.pow(1.78,t)*m);return{atkMin:mn,atkMax:Math.round(mn*1.35)+1,cost:Math.round(18*Math.pow(2.35,t))}};
+const ast=(t,h,d)=>({hp:Math.round(18*Math.pow(1.72,t)*h),def:Math.round(2*Math.pow(1.65,t)*d),cost:Math.round(15*Math.pow(2.25,t))});
 LINES.forEach(L=>L.i.forEach((x,t)=>{DB[L.k+t]={id:L.k+t,type:'weapon',name:x[0],tier:t,fx:x[1],perk:x[2],crit:3+t*3+L.c,...wst(t,L.m)};if(t<6)MERGE[key(L.k+t,L.k+t)]=L.k+(t+1)}));
 ALINES.forEach(L=>L.n.forEach((n,t)=>{DB[L.k+t]={id:L.k+t,type:'armor',name:n,tier:t,perk:L.p,...ast(t,L.hm,L.dm)};if(t<6)MERGE[key(L.k+t,L.k+t)]=L.k+(t+1)}));
 const addW=(id,name,t,fx,perk,a,b,m=1.15)=>{DB[id]={id,type:'weapon',name,tier:t,fx,perk,crit:3+t*3+6,...wst(t,m)};MERGE[key(a,b)]=id};
@@ -284,20 +291,41 @@ addW('x58','Infinity Edge',10,'nova','bleed,burn,stun,pierce,life','x31','x30',1
 addA('y10','Crystal Knight',3,'thorns,dodge','k2','d2');addA('y11','Prism Cloak',5,'dodge,thorns','k3','q3');addA('y12','Blessed Candy',3,'regen,dodge','w2','r2');
 addA('y13','Holy Tutu',4,'regen,dodge','w3','a3');addA('y14','Radiant Mail',6,'regen,thorns,dodge','k4','w4');addA('y15','Diamond Titan',7,'thorns,dodge','k5','d5');
 addA('y16','Seraph Robe',7,'regen,dodge','w5','r5');addA('y17','Celestial Aegis',8,'regen,thorns,dodge','w6','k6',1.3);addA('y18','Infinity Armor',10,'thorns,regen,dodge','y9','y17',1.5);
-const GK=[['Gr','Ruby','a',6,'#ff4d6d'],['Gs','Sapphire','h',6,'#5ecfff'],['Gt','Topaz','c',3,'#ffe66d'],['Ge','Emerald','r',1.2,'#6dff8a'],['Ga','Amethyst','s',10,'#c77dff']];
-GK.forEach(k=>{for(let t=0;t<5;t++){DB[k[0]+t]={id:k[0]+t,type:'gem',name:['Chipped ','Cut ','Fine ','Flawless ','Perfect '][t]+k[1],tier:t,fx:{[k[2]]:Math.round(k[3]*(t+1)*10)/10},cost:Math.round(25*Math.pow(2.4,t))};if(t<4)MERGE[key(k[0]+t,k[0]+t)]=k[0]+(t+1)}});
-const addG=(id,name,t,fxo,a,b)=>{DB[id]={id,type:'gem',name,tier:t,fx:fxo,cost:Math.round(25*Math.pow(2.4,t))};MERGE[key(a,b)]=id};
-addG('Gx0','Bloodstone',5,{a:50,h:50},'Gr4','Gs4');addG('Gx1','Sunstone',5,{c:25,r:10},'Gt4','Ge4');addG('Gx2','Dragonstone',5,{s:90,a:40},'Ga4','Gr4');
-addG('Gx3','Prism Diamond',6,{a:60,h:60,c:30,r:12,s:50},'Gx0','Gx1');addG('Gx4','Star of Chaos',7,{a:90,h:90,c:40,r:16,s:100},'Gx3','Gx2');
+/* NEW RECIPES - many more hybrids, harder high-end */
+addW('x60','Poison Stick',1,'vine','bleed','b0','n0');addW('x61','Spark Knife',2,'spark','stun','b1','e2');
+addW('x62','Bone Club',2,'crush','stun','h0','n1');addW('x63','Shadow Pan',3,'slam','bleed,stun','h1','v1');
+addW('x64','Frost Notebook',3,'freeze','stun','m1','e1');addW('x65','Chaos Revolver',3,'chaosbolt','burn,pierce','g1','v2');
+addW('x66','Thorn Rifle',4,'vine','bleed,pierce','g2','n2');addW('x67','Solar Glove',4,'flare','burn,stun','h2','e3');
+addW('x68','Abyss Wand',4,'abyss','bleed,life','m3','v2');addW('x69','Howling Hammer',5,'howl','stun,bleed','h3','n3');
+addW('x70','Prism Blade',5,'prism','burn,pierce','b4','k3');addW('x71','Soul Spiral',5,'spiral','bleed,life','b3','v3');
+addW('x72','Judgement Gun',6,'judgement','pierce,stun','g4','w4');addW('x73','Volcano Maul',6,'erupt','burn,stun','h4','e4');
+addW('x74','Night Bloom',6,'bloom','life,bleed','n4','v4');addW('x75','Void Crush',7,'crush','stun,pierce','h5','v5');
+addW('x76','Star Sever',7,'soulcut','bleed,burn,life','b5','c4');addW('x77','Eclipse Nova',7,'nova','bleed,burn,stun','v5','c5');
+addW('x78','Titan Genesis',8,'crush','stun,life,pierce','x45','x46',1.2);addW('x79','Chaos Infinity',8,'chaosbolt','bleed,burn,stun,pierce','x50','x31',1.25);
+addW('x80','World Ender',9,'abyss','bleed,burn,stun,pierce,life','x58','x54',1.4);addW('x81','Finality',10,'judgement','bleed,burn,stun,pierce,life','x80','x58',1.55);
+addA('y20','Thorn Cloak',2,'thorns,bleed','a1','n1');addA('y21','Frost Plate',3,'dodge','d2','e1');
+addA('y22','Shadow Mail',4,'dodge,thorns','d3','q3');addA('y23','Vital Crystal',4,'regen,dodge','r3','k3');
+addA('y24','Holy Thorn',5,'thorns,regen','w3','n3');addA('y25','Dragon Veil',5,'dodge,thorns','q4','d4');
+addA('y26','Prism Soul',6,'regen,dodge,thorns','k4','r4');addA('y27','Abyss Guard',7,'thorns,dodge','d5','v5');
+addA('y28','Celestial Thorn',7,'regen,thorns','w5','n5');addA('y29','Omega Veil',8,'dodge,regen,thorns','y8','y5',1.25);
+addA('y30','Infinity Shroud',9,'thorns,regen,dodge','y18','y29',1.4);addA('y31','Absolute Aegis',10,'thorns,regen,dodge','y30','y17',1.5);
+const GK=[['Gr','Ruby','a',5.5,'#ff4d6d'],['Gs','Sapphire','h',5.5,'#5ecfff'],['Gt','Topaz','c',2.5,'#ffe66d'],['Ge','Emerald','r',0.7,'#6dff8a'],['Ga','Amethyst','s',8,'#c77dff']];
+GK.forEach(k=>{for(let t=0;t<5;t++){DB[k[0]+t]={id:k[0]+t,type:'gem',name:['Chipped ','Cut ','Fine ','Flawless ','Perfect '][t]+k[1],tier:t,fx:{[k[2]]:Math.round(k[3]*(t+1)*10)/10},cost:Math.round(35*Math.pow(2.5,t))};if(t<4)MERGE[key(k[0]+t,k[0]+t)]=k[0]+(t+1)}});
+const addG=(id,name,t,fxo,a,b)=>{DB[id]={id,type:'gem',name,tier:t,fx:fxo,cost:Math.round(35*Math.pow(2.5,t))};MERGE[key(a,b)]=id};
+addG('Gx0','Bloodstone',5,{a:40,h:40},'Gr4','Gs4');addG('Gx1','Sunstone',5,{c:20,r:5},'Gt4','Ge4');addG('Gx2','Dragonstone',5,{s:70,a:30},'Ga4','Gr4');
+addG('Gx3','Prism Diamond',6,{a:50,h:50,c:25,r:6,s:40},'Gx0','Gx1');addG('Gx4','Star of Chaos',7,{a:70,h:70,c:35,r:8,s:80},'Gx3','Gx2');
+addG('Gx5','Voidstone',5,{a:40,s:70,r:6},'Ga4','Gx0');addG('Gx6','Lifeblood',5,{h:55,r:8,a:20},'Ge4','Gr4');
+addG('Gx7','Chaos Prism',6,{a:70,c:35,s:60,r:8},'Gx3','Gx5');addG('Gx8','Eternal Core',7,{a:80,h:80,c:45,r:10,s:80},'Gx4','Gx6');
+addG('Gx9','World Gem',8,{a:100,h:100,c:50,r:12,s:110},'Gx7','Gx8');
 const icon=n=>n.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
 const LOOT=[...LINES.map(l=>l.k),...ALINES.map(l=>l.k)];
 const E=[['Froggit','#6dbb5a','30%',1,.9,.7,'','Ribbit.'],['Whimsun','#cfd8ff','50%',.7,.55,.4,'','*sniff*'],['Moldsmal','#b57edc','50% 50% 10% 10%',1.3,.8,1.1,'','...'],['Loox','#e8e8f8','8px',1.1,1.2,.8,'','Do not look!'],['Vegetoid','#3fa34d','4px',1.4,1,1.2,'heal','Eat greens!'],['Migosp','#8a5b3a','30%',.9,1.35,.6,'','Lonely...'],['Pyrope','#ff6a2a','50% 50% 10% 10%',1.5,1.45,.9,'','HOT!!!'],['Napstablook','#bfeaff','50%',1.1,1.2,.5,'','oh... hi...'],['Shyren','#4ea7ff','50%',1,1.1,.9,'multi','~~~'],['Tsunderplane','#e7e7ff','4px',1.6,1.25,1.2,'','I-it is not!'],['Final Froggit','#4a9a46','30%',1.8,1.4,1.3,'guard','Ribbit.'],['Whimsalot','#9ab6ff','8px',1.3,1.5,.9,'multi','Courage!'],['Knight Knight','#6b6bff','8px',2,1.5,1.6,'guard','Fear me.'],['Madjick','#a14bff','30%',1.7,1.7,1,'multi','Abra!'],['Astigmatism','#f4d35e','50%',1.9,1.6,1.3,'heal','See clearly.'],['Mad Mew','#ff8fd1','30%',2,1.8,1.2,'multi','Meow!'],['Amalgamate','#8890a8','50% 50% 10% 10%',2.5,1.9,1.5,'heal','...help...'],['Lancer','#2a2a55','8px',2.2,2,1.6,'multi','Ha ha!'],['Rudinn','#ff4d6d','8px',2.4,2.1,1.7,'guard','Diamonds.'],['Hathy','#ff7aa2','50%',2.6,2.2,1.5,'heal','Heart!']];
 const B=[['Dummy','#d9c28a','8px',2.4,1,1.6,'','...'],['Toriel','#e8e8ff','30%',3.3,1.5,1.9,'multi','My child...'],['Papyrus','#f2f2f2','8px',3.9,1.85,1.7,'multi','NYEH HEH HEH!'],['Undyne','#4ea7ff','30%',4.6,2.4,2.1,'guard','NGAAAHHH!'],['Mettaton','#ff5ecf','8px',5.1,2.2,2.4,'multi','Oh yes~'],['Muffet','#9b59ff','50%',5.6,2.5,2.2,'heal','Ahuhuhu~'],['Asgore','#ffc857','4px',6.2,2.7,2.7,'guard','...'],['Spamton','#ffe66d','8px',6.6,2.9,2.4,'multi','BIG SHOT!'],['Jevil','#6a4cff','50%',7,3,2.4,'multi','CHAOS CHAOS!'],['Flowey','#ffdd33','50%',7.6,3.2,2.2,'heal','Howdy!'],['Roaring Knight','#202040','4px',8.6,3.6,3.2,'guard','Cut it out.'],['Omega Flowey','#ff3355','4px',10,4,3,'multi','Become one.']];
 const FT=[{name:'Kris',color:'#5ecfff',hp:95,amin:10,amax:17,def:4,crit:5,skill:'Slash Storm',sd:'Hits ALL foes for 80%'},{name:'Susie',color:'#ff5ecf',hp:130,amin:15,amax:25,def:5,crit:6,skill:'Rude Buster',sd:'One foe takes 280%'},{name:'Ralsei',color:'#6dff8a',hp:110,amin:11,amax:20,def:5,crit:8,skill:'Heal Prayer',sd:'Heals/revives party 30%'}];
 const RELICS=[{id:'coin',n:'Lucky Coin',d:'+30% gold',c:150},{id:'glass',n:'Time Glass',d:'Aim bar 30% slower',c:200},{id:'edge',n:'Sharp Edge',d:'+15% damage',c:250},{id:'heart',n:'Spare Heart',d:'+20% max HP',c:250},{id:'crown',n:'Loot Crown',d:'+1 loot drop',c:350},{id:'feather',n:'Phoenix Feather',d:'Revives 1st fallen each wave',c:400},{id:'lens',n:'Weakness Lens',d:'+25% weakness damage',c:300},{id:'tome',n:'Ancient Tome',d:'+25% XP',c:250},{id:'dice',n:'Lucky Dice',d:'2x variant chance',c:450},{id:'shield',n:'Soul Shield',d:'Blocks 1st hit of each dodge',c:350},{id:'magnet',n:'Gem Magnet',d:'+1 gem per win',c:300}];
-let gold=150,wave=0,fw=1,farm=false,SP=1.6,relics=[],braceRes=null,phoenix=false,pg=0,bench=[],tower=false,tf=1,tbest=0,tops=[],tmod=null,isBoss=false,slots=Array(20).fill(null),sel=[],fighters=[],enemies=[],inBattle=false,bid=0,auto=false,target=0,combo=0,dragIdx=null,aiming=false,aimPos=0,raf=0,aimRes=null,blog=[];
+let gold=120,wave=0,fw=1,farm=false,SP=1.5,relics=[],braceRes=null,phoenix=false,pg=0,bench=[],tower=false,tf=1,tbest=0,tops=[],tmod=null,isBoss=false,slots=Array(20).fill(null),sel=[],fighters=[],enemies=[],inBattle=false,bid=0,auto=false,target=0,combo=0,dragIdx=null,aiming=false,aimPos=0,raf=0,aimRes=null,blog=[];
 const VAR={'':{p:'',m:1,cb:0,cm:1,col:null},shiny:{p:'Shiny ',m:1.25,cb:3,cm:2,col:'#7dffea'},golden:{p:'Golden ',m:1.4,cb:0,cm:3,col:'#ffd23f'},dark:{p:'Dark ',m:1.3,cb:8,cm:2.5,col:'#9b6bff'},prismatic:{p:'Prismatic ',m:1.8,cb:10,cm:6,col:'rainbow'}};
-function rollVar(b=1){const r=Math.random()/b;return r<.01?'prismatic':r<.04?'dark':r<.08?'golden':r<.16?'shiny':''}
+function rollVar(b=1){const r=Math.random()/b;return r<.006?'prismatic':r<.025?'dark':r<.055?'golden':r<.12?'shiny':''}
 const sockN=id=>DB[id].type==='gem'?0:Math.min(3,Math.floor(DB[id].tier/2));
 const item=(id,v='')=>({type:DB[id].type,id,uid:uid(),v,g:Array(sockN(id)).fill(null)});
 function put(id,v){const i=slots.indexOf(null);if(i<0)return false;slots[i]=item(id,v||'');return true}
@@ -311,7 +339,7 @@ const ELW={Froggit:['bolt','nature'],Whimsun:['fire','arcane'],Moldsmal:['fire',
 const RC={Toriel:{name:'Toriel',color:'#e8e8ff',hp:120,amin:12,amax:20,def:6,crit:5,skill:'Fire Magic',sd:'Burns ALL foes'},Papyrus:{name:'Papyrus',color:'#f2f2f2',hp:105,amin:13,amax:22,def:4,crit:8,skill:'Bone Volley',sd:'3 hits on random foes'},Undyne:{name:'Undyne',color:'#4ea7ff',hp:140,amin:17,amax:27,def:6,crit:7,skill:'Spear Barrage',sd:'4 hits on one foe'},Mettaton:{name:'Mettaton',color:'#ff5ecf',hp:115,amin:14,amax:24,def:5,crit:10,skill:'Disco Blast',sd:'Hits ALL foes, may stun'},Muffet:{name:'Muffet',color:'#9b59ff',hp:100,amin:12,amax:21,def:4,crit:6,skill:'Web Trap',sd:'Big hit, stun + bleed'},Asgore:{name:'Asgore',color:'#ffc857',hp:170,amin:19,amax:30,def:8,crit:5,skill:'Trident Smash',sd:'One foe takes 320%'},Spamton:{name:'Spamton',color:'#ffe66d',hp:100,amin:15,amax:25,def:3,crit:12,skill:'Pipis Rain',sd:'5 random hits'},Jevil:{name:'Jevil',color:'#6a4cff',hp:110,amin:16,amax:26,def:4,crit:14,skill:'Chaos Chaos',sd:'6 random hits, mixed elements'}};
 const MODS=[{id:'rage',n:'Enemy Rage',d:'Enemies +30% ATK'},{id:'tank',n:'Iron Skin',d:'Enemies +40% HP'},{id:'rich',n:'Gold Rush',d:'Double gold'},{id:'nohl',n:'No Healing',d:'All healing disabled'},{id:'fast',n:'Haste',d:'Aim bar 30% faster'},{id:'fire',n:'Ember Rain',d:'Party burns every round'},{id:'swarm',n:'Swarm',d:'+2 enemies'},{id:'glass',n:'Glass Cannon',d:'You deal and take +40%'}];
 const TREE=[['a','MIGHT','+8% ATK'],['h','VIGOR','+8% HP'],['c','FOCUS','+2% CRIT'],['m','MASTERY','+15% skill, faster CD']];
-const xpNeed=l=>40+l*35;
+const xpNeed=l=>50+l*42;
 function st(f){const lv=f.lv||1,lm=1+.07*(lv-1),tr=f.tr||{},am=lm*(1+.08*(tr.a||0));
  const s={amin:Math.round(f.amin*am),amax:Math.round(f.amax*am),def:f.def+Math.floor((lv-1)*.8),crit:f.crit+2*(tr.c||0),maxHp:Math.round(f.hp0*lm*(1+.08*(tr.h||0))),wp:[],ap:[],regen:0,skill:0},gl=[];
  if(f.weapon){const w=ef(f.weapon);s.amin+=w.atkMin;s.amax+=w.atkMax;s.crit+=w.crit;s.wp=w.perk?w.perk.split(','):[];(f.weapon.g||[]).forEach(g=>g&&gl.push(g))}
@@ -329,7 +357,7 @@ function tipItem(it){const d=ef(it),V=VAR[it.v||''],col=V.col&&V.col!=='rainbow'
  if(d.perk)h+=d.perk.split(',').map(p=>'+ '+PERK[p]).join('<br>')+'<br>';if(it.g&&it.g.length)h+='Sockets: '+it.g.map(g=>g?DB[g].name:'empty').join(', ')+'<br>';return h+`<span style="color:#789">Worth ${Math.floor(d.cost*.5)}G</span>`}
 document.addEventListener('mousemove',e=>{const t=e.target.closest&&e.target.closest('[data-u],[data-id]'),tp=$('tip');let h=null;if(t){if(t.dataset.u){const it=findItem(t.dataset.u);if(it)h=tipItem(it)}else if(DB[t.dataset.id])h=tipItem({id:t.dataset.id,v:'',g:[]})}if(h){tp.innerHTML=h;tp.style.display='block';tp.style.left=Math.min(e.clientX+14,innerWidth-230)+'px';tp.style.top=(e.clientY+14)+'px'}else tp.style.display='none'});
 const chip=(d,x='')=>`<span class="chip ${d.tier>6?'mythic':''}" style="--c:${TC[d.tier]}" data-id="${d.id}">${d.name}${disc.has(d.id)?' *':''}${x}</span>`;
-function render(){$('gold').textContent=gold;$('wave').textContent=inBattle?(tower?'T'+tf:fw):wave+1;rGrid();rShop();rFighters();rRoster();rRec();rTower();$('bHeal').textContent='HEAL ALL ('+(30+wave*6)+'G)';$('bFarm').disabled=wave<1||inBattle;$('bFarm').textContent=wave<1?'FARM':'FARM W'+wave;$('bTower').disabled=wave<12||inBattle;$('bTower').textContent=wave<12?'TOWER (W12)':'TOWER F'+tf;if(inBattle)rBattle();else save()}
+function render(){$('gold').textContent=gold;$('wave').textContent=inBattle?(tower?'T'+tf:fw):wave+1;rGrid();rShop();rFighters();rRoster();rRec();rTower();$('bHeal').textContent='HEAL ALL ('+(55+wave*12)+'G)';$('bFarm').disabled=wave<1||inBattle;$('bFarm').textContent=wave<1?'FARM':'FARM W'+wave;$('bTower').disabled=wave<15||inBattle;$('bTower').textContent=wave<15?'TOWER (W15)':'TOWER F'+tf;if(inBattle)rBattle();else save()}
 function rGrid(){const g=$('grid');g.innerHTML='';slots.forEach((it,i)=>{const s=document.createElement('div');s.className='slot'+(it?'':' empty')+(sel.includes(i)?' sel':'');s.dataset.i=i;
  if(it){const d=ef(it),V=VAR[it.v||''],col=V.col&&V.col!=='rainbow'?V.col:TC[d.tier];s.dataset.u=it.uid;s.style.setProperty('--c',col);if(d.tier>6)s.classList.add('mythic');if(it.v)s.classList.add('v-'+it.v);s.draggable=true;
   const sm=d.type==='weapon'?d.atkMin+'-'+d.atkMax:d.type==='armor'?'+'+d.hp+'HP '+d.def+'D':gemTxt(d.fx);
@@ -362,8 +390,8 @@ function rFighters(){const c=$('fighters');c.innerHTML='';fighters.forEach((f,fi
 function rRoster(){const r=$('roster');r.innerHTML='';[...fighters,...bench].forEach(f=>{const on=fighters.includes(f),d=document.createElement('div');d.className='rr';d.innerHTML=`<span style="color:${f.color}">${f.name} LV${f.lv}</span><button class="btn" ${inBattle?'disabled':''}>${on?'ACTIVE':'BENCH'}</button>`;
  d.querySelector('button').onclick=()=>{if(inBattle)return;if(on){if(fighters.length<=1){msg('Need at least 1 fighter');return}fighters=fighters.filter(x=>x!==f);bench.push(f)}else{if(fighters.length>=4){msg('Party is full (max 4)');return}bench=bench.filter(x=>x!==f);fighters.push(f)}render()};r.appendChild(d)});
  if(!bench.length&&fighters.length<4)r.insertAdjacentHTML('beforeend','<div style="font-size:7px;color:#789">Beat bosses to recruit them!</div>')}
-function rTower(){const e=$('tw');if(!e)return;e.innerHTML=`<div style="color:var(--ac)">Best floor: ${tbest} | Current floor: ${tf}</div><div>Unlocks at wave 12. Floors scale with your progress, every floor has a random modifier, and every 5th floor is a boss. Lose a run and you restart at floor 1.</div><h3>TOP RUNS</h3>${tops.length?tops.map((t,i)=>`<div>${i+1}. Floor ${t}</div>`).join(''):'<div>No runs yet</div>'}<h3>MODIFIERS</h3>`+MODS.map(m=>`<div><span style="color:var(--or)">${m.n}</span> - ${m.d}</div>`).join('')+`<div style="margin-top:8px"><button class="btn p" id="bTower2" ${wave<12||inBattle?'disabled':''}>CLIMB FLOOR ${tf}</button></div>`;const b=$('bTower2');if(b)b.onclick=()=>startWave('tower')}
-function rShop(){const s=$('shop');s.innerHTML='';const mt=Math.min(5,Math.floor(wave/2));
+function rTower(){const e=$('tw');if(!e)return;e.innerHTML=`<div style="color:var(--ac)">Best floor: ${tbest} | Current floor: ${tf}</div><div>Unlocks at wave 15. Floors scale hard, every floor has a random modifier, every 5th is a boss. Lose a run and restart at floor 1. High risk, high reward.</div><h3>TOP RUNS</h3>${tops.length?tops.map((t,i)=>`<div>${i+1}. Floor ${t}</div>`).join(''):'<div>No runs yet</div>'}<h3>MODIFIERS</h3>`+MODS.map(m=>`<div><span style="color:var(--or)">${m.n}</span> - ${m.d}</div>`).join('')+`<div style="margin-top:8px"><button class="btn p" id="bTower2" ${wave<15||inBattle?'disabled':''}>CLIMB FLOOR ${tf}</button></div>`;const b=$('bTower2');if(b)b.onclick=()=>startWave('tower')}
+function rShop(){const s=$('shop');s.innerHTML='';const mt=Math.min(4,Math.floor(wave/2.5));
  Object.values(DB).filter(d=>d.tier<=mt&&d.id.length<=2&&/^[bhmgadrevqcnkw]/.test(d.id)).forEach(d=>{const e=document.createElement('div');e.className='si';e.style.setProperty('--c',TC[d.tier]);e.dataset.id=d.id;e.innerHTML=`<b class="ic" style="background:${TC[d.tier]}">${icon(d.name)}</b><div class="nm">${d.name}</div><div class="sm">${d.type==='weapon'?d.atkMin+'-'+d.atkMax:'+'+d.hp+'HP'}</div><div class="pr">${d.cost}G</div>`;e.onclick=()=>buy(d.id,d.cost);s.appendChild(e)});
  GK.forEach(k=>{const d=DB[k[0]+'0'],e=document.createElement('div');e.className='si';e.style.setProperty('--c',k[4]);e.dataset.id=d.id;e.innerHTML=`<b class="ic" style="background:${k[4]}">${k[1][0]}</b><div class="nm">${d.name}</div><div class="sm">${gemTxt(d.fx)}</div><div class="pr">${d.cost}G</div>`;e.onclick=()=>buy(d.id,d.cost);s.appendChild(e)});
  const bc=90+wave*15,b=document.createElement('div');b.className='si';b.style.setProperty('--c','#ff5ecf');b.innerHTML=`<b class="ic" style="background:#ff5ecf">?</b><div class="nm">Mystery Box</div><div class="sm">gear, boosted variant odds</div><div class="pr">${bc}G</div>`;
@@ -379,7 +407,7 @@ function autoMerge(){if(inBattle)return;let n=0,dg=0,sv=[],ch=true;while(ch){ch=
 function sortInv(){slots.sort((a,b)=>!a?1:!b?-1:DB[b.id].tier-DB[a.id].tier||a.id.localeCompare(b.id));render()}
 function autoEquip(){if(inBattle)return;['weapon','armor'].forEach(t=>{const sc=d=>t==='weapon'?(d.atkMin+d.atkMax)/2+d.crit:d.hp+d.def*4,pool=[];slots.forEach((it,i)=>{if(it&&DB[it.id].type===t){pool.push(it);slots[i]=null}});fighters.forEach(f=>{if(f[t]){pool.push(f[t]);f[t]=null}});pool.sort((a,b)=>sc(DB[b.id])-sc(DB[a.id]));fighters.forEach(f=>{if(pool.length)f[t]=pool.shift()});pool.forEach(it=>{slots[slots.indexOf(null)]=it})});fighters.forEach(f=>recalc(f));sel=[];msg('Best gear equipped!');render()}
 function sell(){if(!sel.length){msg('Select items first');return}let g=0;sel.forEach(i=>{if(slots[i]){g+=Math.floor(ef(slots[i]).cost*.5);slots[i]=null}});gold+=g;sel=[];msg('+'+g+'G');render()}
-function heal(){const c=30+wave*6;if(inBattle)return;if(gold<c){msg('Need '+c+'G');return}gold-=c;fighters.forEach(f=>f.hp=f.maxHp);msg('Party healed!');render()}
+function heal(){const c=55+wave*12;if(inBattle)return;if(gold<c){msg('Need '+c+'G');return}gold-=c;fighters.forEach(f=>f.hp=f.maxHp);msg('Party healed!');render()}
 /* ---------- effects ---------- */
 function mk(cls,x,y,css,ms,txt){const d=document.createElement('div');d.className='fx '+cls;d.style.cssText=`left:${x}px;top:${y}px;${css||''}`;if(txt!=null)d.textContent=txt;document.body.appendChild(d);setTimeout(()=>d.remove(),ms||600);return d}
 function burst(x,y,ch,n,col,sp=60){for(let i=0;i<n;i++){const a=Math.PI*2*i/n,d=sp*(.5+Math.random()*.6);mk('part',x,y,`color:${col};font-size:16px;--tx:${Math.cos(a)*d}px;--ty:${Math.sin(a)*d}px`,750,ch)}}
@@ -412,6 +440,20 @@ function fx(k,el,crit){if(!el)return;const r=el.getBoundingClientRect(),x=r.left
  case 'inferno':ring(x,y,'#f60',100);burst(x,y+8,'\u25B2',9,'#ff7a1a',55);burst(x,y+8,'*',6,'#ffd27a',40);break;
  case 'rain':for(let i=0;i<7;i++)line(x+rand(-28,28),y+rand(-24,24),rand(-70,70),i%2?'#fff':'#c77dff',90,i*70);blood(x,y,6);shake();break;
  case 'nova':ring(x,y,'#fff',160,600);ring(x,y,'#ff5ecf',110,500);ring(x,y,'#4ecdc4',70,420);burst(x,y,'\u2605',12,'#ffe66d',80);flash();shake();break;
+ case 'spiral':for(let i=0;i<5;i++)line(x,y,i*72-36,'#c77dff',110,i*60);burst(x,y,'*',8,'#c77dff',45);break;
+ case 'erupt':ring(x,y,'#f40',140);burst(x,y+10,'\u25B2',12,'#ff5a1a',70);burst(x,y,'*',8,'#ffd27a',50);shake();flash();break;
+ case 'freeze':ring(x,y,'#aef',130);burst(x,y,'\u25C6',12,'#dff',60);mk('txt',x-30,y-30,'color:#aef;font-size:13px',600,'FREEZE');shake();break;
+ case 'chaosbolt':mk('bolt',x-20,y-210,'',430);burst(x,y,'*',10,'#c77dff',55);ring(x,y,'#ff5ecf',90);flash();break;
+ case 'soulcut':line(x,y,40,'#ff2244',130);line(x,y,-40,'#c77dff',130,80);blood(x,y,10);burst(x,y,'\u2665',4,'#ff5ecf',40);break;
+ case 'prism':ring(x,y,'#fff',120);burst(x,y,'\u25C6',10,'#ffe66d',55);burst(x,y,'*',6,'#4ecdc4',40);flash();break;
+ case 'shadow':line(x,y,0,'#8a6aff',140);burst(x,y,'*',7,'#9b6bff',45);mk('txt',x-22,y-26,'color:#9b6bff',500,'SHADOW');break;
+ case 'bloom':burst(x,y,'\u273F',10,'#6fdc6f',60);burst(x,y,'*',6,'#95e06c',40);ring(x,y,'#6fdc6f',100);break;
+ case 'crush':ring(x,y+10,'#a67c52',160);ring(x,y+10,'#8a6a45',100);burst(x,y+10,'\u25A0',10,'#6b4c30',55);shake();break;
+ case 'flare':ring(x,y,'#ff9f1c',140);burst(x,y,'*',12,'#ffe66d',70);burst(x,y,'\u2605',6,'#ff7a1a',50);flash();shake();break;
+ case 'abyss':ring(x,y,'#4a2080',140,650).style.background='radial-gradient(#1a0a30,#60c)';burst(x,y,'*',8,'#9b6bff',50);blood(x,y,6);break;
+ case 'spark':line(x,y,-20,'#ffe66d',90);line(x,y,25,'#fff',80,70);burst(x,y,'/',6,'#ffe66d',35);break;
+ case 'howl':ring(x,y,'#cfd8ff',110);burst(x,y,'*',9,'#e8e8ff',50);mk('txt',x-20,y-28,'color:#cfd8ff',560,'HOWL');shake();break;
+ case 'judgement':mk('beam',x-18,Math.max(0,y-280),`width:36px;height:280px;background:linear-gradient(#fff,#ffe66d,#ff9f1c)`,550);ring(x,y,'#ffe66d',120);flash();shake();break;
  default:mk('beam',x-15,Math.max(0,y-260),`width:30px;height:${260}px`,500)}}
 function float(el,t,c){if(!el)return;const r=el.getBoundingClientRect(),d=document.createElement('div');d.className='fl '+(c||'');d.textContent=t;d.style.left=(r.left+r.width/2-14+rand(-10,10))+'px';d.style.top=(r.top+4)+'px';document.body.appendChild(d);setTimeout(()=>d.remove(),950)}
 /* ---------- battle ---------- */
@@ -438,16 +480,16 @@ function banner(t,ms){const w=$('warn');w.textContent=t;w.className='show';clear
 function flash(){const f=$('flash');f.classList.remove('on');void f.offsetWidth;f.classList.add('on')}
 function proj(cls,x1,y1,x2,y2,ms,txt){const d=mk(cls,x1,y1,`transition:left ${ms*SP}ms linear,top ${ms*SP}ms linear`,ms*SP+250,txt);requestAnimationFrame(()=>requestAnimationFrame(()=>{d.style.left=x2+'px';d.style.top=y2+'px'}));return d}
 function startWave(mode){if(inBattle)return;if(fighters.every(f=>f.hp<=0)){msg('Heal first!');return}
- farm=mode==='farm';tower=mode==='tower';if(tower&&wave<12){msg('Tower unlocks at wave 12');return}
+ farm=mode==='farm';tower=mode==='tower';if(tower&&wave<15){msg('Tower unlocks at wave 15');return}
  fw=tower?Math.max(wave,10)+tf*2:farm?wave:wave+1;if(fw<1)return;
  isBoss=tower?tf%5===0:fw%3===0;tmod=tower?MODS[rand(0,MODS.length-1)]:null;
  inBattle=true;blog=[];auto=false;combo=0;target=0;pg=0;phoenix=relics.includes('feather');$('bAutoB').textContent='AUTO: OFF';
  fighters.forEach(f=>{f.burn=0;f.stun=false});
- const M=id=>tmod&&tmod.id===id,hpB=(30*Math.pow(1.19,fw)+fw*18)*(M('tank')?1.4:1),atB=(9*Math.pow(1.14,fw)+fw*2.2)*(M('rage')?1.3:1),dfB=2+fw*1.3;
+ const M=id=>tmod&&tmod.id===id,hpB=(38*Math.pow(1.23,fw)+fw*24)*(M('tank')?1.5:1),atB=(11*Math.pow(1.17,fw)+fw*2.8)*(M('rage')?1.35:1),dfB=3+fw*1.55;
  const mk2=(t,bm)=>{const w=ELW[t[0]]||['',''];return{name:t[0],col:t[1],sh:t[2],hp:Math.round(hpB*t[3]*bm),maxHp:Math.round(hpB*t[3]*bm),atk:Math.round(atB*t[4]),def:Math.round(dfB*t[5]),ab:t[6],fl:t[7],boss:bm>1,wk:w[0],rs:w[1]}};
  const n=Math.min(M('swarm')?6:5,(isBoss?Math.min(2,Math.floor(fw/4)):Math.min(5,1+Math.floor(fw/2.5)))+(M('swarm')?2:0)),pool=E.slice(0,Math.min(E.length,3+Math.floor(fw*1.1)));
  enemies=[];for(let i=0;i<n;i++)enemies.push(mk2(pool[rand(0,pool.length-1)],1));
- if(isBoss){const bi=Math.floor(tower?tf/5-1:fw/3-1)%B.length,b=mk2(B[bi],tower?1.6:1.45);b.sp=SPC[bi];b.spi=0;b.spc=1;enemies.unshift(b);log('BOSS: '+b.name+'!','lc');log('"'+b.fl+'"','lf');log('Watch for '+b.sp.map(k=>SPN[k]).join(' / ')+' - dodge the patterns!','li');banner('BOSS: '+b.name.toUpperCase(),1800)}
+ if(isBoss){const bi=Math.floor(tower?tf/5-1:fw/3-1)%B.length,b=mk2(B[bi],tower?1.85:1.65);b.sp=SPC[bi];b.spi=0;b.spc=1;enemies.unshift(b);log('BOSS: '+b.name+'!','lc');log('"'+b.fl+'"','lf');log('Watch for '+b.sp.map(k=>SPN[k]).join(' / ')+' - dodge the patterns!','li');banner('BOSS: '+b.name.toUpperCase(),1800)}
  else log((tower?'Tower floor '+tf:farm?'Farming wave '+fw:'Wave '+fw)+' - '+n+' foes','li');
  if(tmod){log('MODIFIER: '+tmod.n+' - '+tmod.d,'lc');if(!isBoss)banner(tmod.n.toUpperCase(),1400)}
  $('inv').style.display='none';$('bp').classList.add('show');$('bStart').disabled=true;render();battle(++bid)}
@@ -456,7 +498,7 @@ async function battle(id){while(bid===id){
  if(bid!==id)return;if(!aliveE().length){endBattle(true);return}
  await enemyPhase(id);if(bid!==id)return;if(!aliveE().length){endBattle(true);return}
  fighters.forEach(f=>{f.cd=Math.max(0,f.cd-1);if(f.hp>0){if(tmod&&tmod.id==='fire'&&f.burn<1)f.burn=2;if(f.burn){const b=Math.max(1,Math.round(f.maxHp*.04));f.hp=Math.max(0,f.hp-b);float($('fc-'+fighters.indexOf(f)),b,'burn');f.burn--;if(f.hp<=0)log(f.name+' burned out!','lc')}
-  if(f.hp>0){const s=st(f);if(s.ap.includes('regen'))healF(f,Math.round(f.maxHp*(.04+DB[f.armor.id].tier*.012)));if(s.regen>0)healF(f,Math.round(f.maxHp*s.regen/100))}}});rBattle();
+  if(f.hp>0){const s=st(f);let reg=0;if(s.ap.includes('regen'))reg+=Math.min(0.035,0.012+DB[f.armor.id].tier*.0035);if(s.regen>0)reg+=Math.min(0.06,s.regen/100);healF(f,Math.round(f.maxHp*Math.min(0.08,reg)))}}});rBattle();
  if(fighters.every(f=>f.hp<=0)){endBattle(false);return}await w8(300)}}
 function healF(f,n){if(tmod&&tmod.id==='nohl')return;const b=f.hp;f.hp=Math.min(f.maxHp,f.hp+n);if(f.hp>b)float($('fc-'+fighters.indexOf(f)),'+'+(f.hp-b),'heal')}
 function hurtF(f,d){const el=$('fc-'+fighters.indexOf(f));float(el,d);f.hp=Math.max(0,f.hp-d);f.hitT=Date.now();if(f.hp<=0){if(phoenix){phoenix=false;f.hp=Math.round(f.maxHp*.4);log('Phoenix Feather revives '+f.name+'!','lc');float(el,'REVIVED','heal')}else log(f.name+' is down!','lc')}}
@@ -479,7 +521,7 @@ function perks(f,s,tg,dealt,mult,noP){const w=f.weapon?DB[f.weapon.id]:null,t=w?
  s.wp.forEach(p=>{if(p==='bleed'&&tg.hp>0&&Math.random()<Math.min(1,.7+t*.05)){tg.bleed={t:3+(t>>1),d:Math.max(1,Math.round(avg*.15))};log(tg.name+' is bleeding!','ld')}
   if(p==='burn'&&tg.hp>0){tg.burn={t:3,d:Math.max(1,Math.round(avg*.13))};log(tg.name+' is burning!','ld')}
   if(p==='stun'&&tg.hp>0&&Math.random()<.22+t*.05){tg.stun=true;log(tg.name+' is stunned!','li')}
-  if(p==='life')healF(f,Math.max(1,Math.round(dealt*.15)));
+  if(p==='life')healF(f,Math.max(1,Math.round(dealt*.08)));
   if(p==='pierce'&&!noP){const o=aliveE().filter(e=>e!==tg);if(o.length){const e2=o[rand(0,o.length-1)];strike(f,s,e2,mult,.55,w.fx,true)}}})}
 async function bossAttack(e,id){
  let k=e.sp[e.spi++%e.sp.length];if(k==='random')k=['fire','bone','spear','bomb','trident','cut','chaos','beam'][rand(0,7)];
@@ -522,7 +564,7 @@ async function turn(f,id){const s=st(f),w=f.weapon?DB[f.weapon.id]:null;fighters
   if(f.name==='Kris')aliveE().forEach(e=>{const r=strike(f,s,e,1,.8*ms,fxn,true);perks(f,s,e,r.d,1,true)});
   else if(f.name==='Susie'){const r=strike(f,s,tg,1,2.8*ms,'beam',true);shake();perks(f,s,tg,r.d,1,true)}
   else if(SKX[f.name])SKX[f.name](f,s,tg,fxn,ms);
-  else fighters.forEach(x=>{const el=$('fc-'+fighters.indexOf(x));if(x.hp<=0)x.hp=1;healF(x,Math.round(x.maxHp*.3*ms));if(el){const r=el.getBoundingClientRect();burst(r.left+r.width/2,r.top+20,'+',5,'#6dff8a',30)}})}
+  else fighters.forEach(x=>{const el=$('fc-'+fighters.indexOf(x));if(x.hp<=0)x.hp=1;healF(x,Math.round(x.maxHp*.22*ms));if(el){const r=el.getBoundingClientRect();burst(r.left+r.width/2,r.top+20,'+',5,'#6dff8a',30)}})}
  else{if(a.grade==='PERFECT'||a.grade==='GREAT')combo=Math.min(6,combo+1);else if(a.grade==='WEAK'||a.grade==='OK')combo=0;
   if(a.grade==='PERFECT'){pg+=2+Math.floor(fw/2);flash()}
   f.lungeT=Date.now();const r=strike(f,s,tg,a.mult,1,fxn);log(`${f.name} > ${tg.name} [${a.grade}] ${r.d}${r.crit?' CRIT':''}`,r.crit?'lc':'ld');perks(f,s,tg,r.d,a.mult)}
@@ -595,13 +637,13 @@ async function enemyPhase(id){fighters.forEach(f=>f.act=false);$('turn').textCon
   if(auto){await legacy(e,id);if(bid!==id)return}else grp.push(e)}
  if(bid!==id)return;await flush()}
 function endBattle(won){bid++;inBattle=false;aiming=false;dodging=false;$('sbox').style.display='none';cancelAnimationFrame(raf);aimRes=null;braceRes=null;$('bBrace').style.display='none';$('aimw').classList.remove('show');fighters.forEach(f=>{f.act=false;f.burn=0;f.stun=false});$('bStart').disabled=false;$('turn').textContent='';
- const base=(60+fw*40+(isBoss?250:0))*(relics.includes('coin')?1.3:1)*(tower?1.6:1)*(tmod&&tmod.id==='rich'?2:1);
+ const base=(45+fw*28+(isBoss?180:0))*(relics.includes('coin')?1.25:1)*(tower?1.45:1)*(tmod&&tmod.id==='rich'?1.8:1);
  if(won){const rw=Math.round(base)+pg;gold+=rw;if(!farm&&!tower)wave=fw;
-  const tm=Math.min(6,Math.floor(fw/3)+(isBoss?1:0)+(tower?1:0)),dn=isBoss?3:1+(Math.random()<.5?1:0)+(relics.includes('crown')?1:0)+(tower?1:0),dr=[],vb=relics.includes('dice')?2:1;
+  const tm=Math.min(5,Math.floor(fw/3.5)+(isBoss?1:0)+(tower?1:0)),dn=isBoss?2+(Math.random()<.4?1:0):1+(Math.random()<.35?1:0)+(relics.includes('crown')?1:0)+(tower?1:0),dr=[],vb=relics.includes('dice')?1.7:1;
   for(let i=0;i<dn;i++){const lid=LOOT[rand(0,LOOT.length-1)]+rand(Math.max(0,tm-1),tm),v=rollVar(vb);if(put(lid,v))dr.push((v?VAR[v].p:'')+DB[lid].name)}
   const gn=(relics.includes('magnet')?1:0)+(isBoss?1:0)+(Math.random()<.35?1:0);for(let i=0;i<gn;i++){const gid=GK[rand(0,4)][0]+Math.min(4,Math.floor(fw/7)+rand(0,1));if(put(gid))dr.push(DB[gid].name)}
-  const xg=Math.round((30+fw*10)*(farm?.6:1)*(tower?1.4:1)*(relics.includes('tome')?1.25:1)),lu=[];
-  fighters.forEach(f=>{if(f.lv<30){f.xp+=xg;while(f.lv<30&&f.xp>=xpNeed(f.lv)){f.xp-=xpNeed(f.lv);f.lv++;f.pts++;lu.push(f.name+' LV'+f.lv)}}recalc(f);if(f.hp<=0)f.hp=Math.round(f.maxHp*.3)});
+  const xg=Math.round((22+fw*7)*(farm?.45:1)*(tower?1.25:1)*(relics.includes('tome')?1.2:1)),lu=[];
+  fighters.forEach(f=>{if(f.lv<30){f.xp+=xg;while(f.lv<30&&f.xp>=xpNeed(f.lv)){f.xp-=xpNeed(f.lv);f.lv++;f.pts++;lu.push(f.name+' LV'+f.lv)}}recalc(f);if(f.hp<=0)f.hp=Math.round(f.maxHp*.18)});
   let rc='';if(isBoss){const b=enemies.find(e=>e.boss);if(b&&RC[b.name]&&![...fighters,...bench].some(x=>x.name===b.name)){const nf=mkF(RC[b.name]);recalc(nf);nf.hp=nf.maxHp;if(fighters.length<4)fighters.push(nf);else bench.push(nf);rc=b.name+' joined your party!'}}
   if(tower){tbest=Math.max(tbest,tf);tf++}
   msg(rc||(tower?'FLOOR CLEAR':'WAVE '+fw+' CLEAR')+'! +'+rw+'G',2800);
@@ -628,7 +670,7 @@ function load(){try{let d=JSON.parse(localStorage.getItem('mf2')),old=false;if(!
  if(old){fighters=FT.map((t,i)=>{const o=mkF(t),q=d.f[i];if(q&&q.w)o.weapon=de(q.w);if(q&&q.a)o.armor=de(q.a);recalc(o);o.hp=Math.min(o.maxHp,q?Math.max(0,q.hp):o.maxHp);return o});bench=[]}
  else{fighters=d.f.map(deF).filter(Boolean);bench=(d.b||[]).map(deF).filter(Boolean)}
  return fighters.length>0}catch(e){return false}}
-if(!load())init();render();msg('SOUL dodge phases, gems, shiny variants, recruits and the Tower are in!',3200);
+if(!load())init();render();msg('HARDER MODE: stronger foes, capped regen, more recipes & effects. Omega armor no longer invincible!',3800);
 </script>
 </body>
 </html>
